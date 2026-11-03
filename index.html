@@ -151,10 +151,12 @@
           </div>
         </div>
 
-        <!-- Selector Lună și An cu săgeți de navigare: < Noiembrie 2026 Azi > -->
-        <div class="glass-card rounded-2xl py-2 px-4 flex items-center justify-between mb-3 shadow-xs">
+        <!-- Selector Lună și An cu săgeți de navigare: < Noiembrie 2026 Azi > (#909CFC - Bleu/Lavandă Pastel) -->
+        <div class="rounded-2xl py-2 px-4 flex items-center justify-between mb-3 shadow-xs"
+          style="background: linear-gradient(135deg, rgba(144, 156, 252, 0.24) 0%, rgba(255, 255, 255, 0.90) 100%); border: 1.5px solid rgba(144, 156, 252, 0.50); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);">
           <button id="btnPrevMonth"
-            class="w-8 h-8 rounded-full flex items-center justify-center text-gray-600 hover:bg-black/5 active:scale-95 transition"
+            class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-[#909CFC]/20 active:scale-95 transition"
+            style="color: #3B47B8;"
             aria-label="Luna anterioară">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
@@ -162,16 +164,18 @@
           </button>
 
           <div class="flex items-center gap-2">
-            <span id="currentMonthYearLabel" class="text-base font-extrabold text-gray-800 tracking-tight">Iunie
+            <span id="currentMonthYearLabel" class="text-base font-extrabold text-gray-900 tracking-tight">Iunie
               2026</span>
             <button id="btnCurrentMonth"
-              class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-purple-100/70 text-purple-700 hover:bg-purple-200 transition">
+              class="text-[11px] font-bold px-2.5 py-0.5 rounded-full hover:brightness-95 active:scale-95 transition shadow-2xs"
+              style="background-color: rgba(144, 156, 252, 0.40); color: #2E3891;">
               Azi
             </button>
           </div>
 
           <button id="btnNextMonth"
-            class="w-8 h-8 rounded-full flex items-center justify-center text-gray-600 hover:bg-black/5 active:scale-95 transition"
+            class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-[#909CFC]/20 active:scale-95 transition"
+            style="color: #3B47B8;"
             aria-label="Luna următoare">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
