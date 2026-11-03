@@ -57,36 +57,31 @@
     /* Stiluri iOS Glassmorphism & fundal ambiental difuz */
     body {
       font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-      background: linear-gradient(135deg, #FAF8F5 0%, #F5F7FF 35%, #F4FBF6 70%, #FFF5F9 100%);
+      background-color: #FAF8F5;
+      background-image: url('background.jpg');
+      background-size: cover;
+      background-position: center top;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
       min-height: 100vh;
       color: #2D3142;
       -webkit-font-smoothing: antialiased;
     }
 
     .glass-panel {
-      background: rgba(255, 255, 255, 0.72);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 1px solid rgba(255, 255, 255, 0.85);
-      box-shadow: 0 10px 30px -10px rgba(74, 58, 112, 0.07);
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 10px 30px -10px rgba(74, 58, 112, 0.08);
     }
 
     .glass-card {
-      background: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.82);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.95);
-      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.03);
-    }
-
-    /* Ambient blobs */
-    .blob {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(70px);
-      opacity: 0.55;
-      pointer-events: none;
-      z-index: 0;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
     }
 
     /* Scrollbar ascuns */
@@ -115,18 +110,14 @@
 
 <body class="relative min-h-screen flex justify-center py-0 sm:py-6 selection:bg-[#EE9DCB]/30 overflow-x-clip">
 
-  <!-- Ambient Light Gradients (Clipped safely inside fixed viewport wrapper) -->
-  <div class="fixed inset-0 overflow-hidden pointer-events-none -z-10" aria-hidden="true">
-    <div class="blob w-80 h-80 bg-[#EE9DCB]/35 top-0 -left-12 sm:left-12"></div>
-    <div class="blob w-72 h-72 bg-[#909CFC]/30 top-[25%] -right-12 sm:right-16"></div>
-    <div class="blob w-80 h-80 bg-[#FCEF9F]/40 top-[50%] -left-8"></div>
-    <div class="blob w-72 h-72 bg-[#B6F5A7]/35 top-[70%] -right-8"></div>
-    <div class="blob w-80 h-80 bg-[#ACEDF3]/40 bottom-0 left-8"></div>
+  <!-- Imagine de fundal ambientală aplicată pe ambele pagini (Fixă, cover complet) -->
+  <div class="fixed inset-0 pointer-events-none -z-10 overflow-hidden" aria-hidden="true">
+    <img src="background.jpg" alt="" class="w-full h-full object-cover object-center select-none" />
   </div>
 
   <!-- Mobile Container (max-w-md conform layoutului iOS Stitch) -->
   <div
-    class="relative z-10 w-full max-w-md min-h-screen sm:min-h-0 sm:rounded-[40px] bg-white/40 sm:border sm:border-white/80 shadow-2xl backdrop-blur-3xl flex flex-col pb-28 overflow-x-clip">
+    class="relative z-10 w-full max-w-md min-h-screen sm:min-h-0 sm:rounded-[40px] bg-white/20 sm:border sm:border-white/60 shadow-2xl flex flex-col pb-28 overflow-x-clip">
 
     <!-- ======================================================== -->
     <!-- PAGINA 1: CALENDAR & PILULE PROPORȚIONALE (Conform Screenshot) -->
