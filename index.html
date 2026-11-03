@@ -281,6 +281,82 @@
             </div>
           </div>
         </section>
+
+        <!-- Grila Celor 4 Carduri Informative (Stitch) Mutată la Baza Paginii Calendar -->
+        <section class="space-y-3">
+          <h2 class="text-sm font-bold text-gray-800 tracking-tight px-1">Indicatori Cheie</h2>
+          
+          <div class="grid grid-cols-2 gap-3">
+            <!-- Card 1: Următoarea Menstruație -->
+            <div class="glass-card rounded-2xl p-4 flex flex-col justify-between hover:shadow-md transition">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-semibold text-gray-500">Următoarea Menstruație</span>
+                <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-xs" style="background-color: #EE9DCB25; color: #EE9DCB;">
+                  💧
+                </div>
+              </div>
+              <div>
+                <p id="stitchNextPeriodDate" class="text-base font-extrabold text-gray-800 leading-tight">--</p>
+                <p id="stitchNextPeriodCountdown" class="text-[11px] text-gray-500 font-medium mt-0.5">În așteptare</p>
+              </div>
+            </div>
+
+            <!-- Card 2: Fereastră Fertilă -->
+            <div class="glass-card rounded-2xl p-4 flex flex-col justify-between hover:shadow-md transition">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-semibold text-gray-500">Fereastră Fertilă</span>
+                <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-xs" style="background-color: #B6F5A730; color: #2D6A28;">
+                  🌿
+                </div>
+              </div>
+              <div>
+                <p id="stitchFertileWindowRange" class="text-base font-extrabold text-gray-800 leading-tight">--</p>
+                <p class="text-[11px] text-emerald-700 font-medium mt-0.5">Șanse ridicate</p>
+              </div>
+            </div>
+
+            <!-- Card 3: Ziua Ovulației -->
+            <div class="glass-card rounded-2xl p-4 flex flex-col justify-between hover:shadow-md transition">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-semibold text-gray-500">Ziua Ovulației</span>
+                <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-xs" style="background-color: #909CFC25; color: #5866DB;">
+                  ⭐
+                </div>
+              </div>
+              <div>
+                <p id="stitchOvulationDate" class="text-base font-extrabold text-gray-800 leading-tight">--</p>
+                <p class="text-[11px] text-indigo-700 font-medium mt-0.5">Vârf fertil (Z14)</p>
+              </div>
+            </div>
+
+            <!-- Card 4: Ziua din Ciclu -->
+            <div class="glass-card rounded-2xl p-4 flex flex-col justify-between hover:shadow-md transition">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-semibold text-gray-500">Ziua din Ciclu</span>
+                <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-xs" style="background-color: #FCEF9F40; color: #9A7B0C;">
+                  📅
+                </div>
+              </div>
+              <div>
+                <p id="stitchCycleDayRatio" class="text-base font-extrabold text-gray-800 leading-tight">Ziua -- / 28</p>
+                <p id="stitchCurrentPhaseName" class="text-[11px] text-gray-500 font-medium mt-0.5">Nedefinit</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Recomandare Zilnică pentru Faza Activă -->
+        <section class="glass-panel rounded-3xl p-4 flex items-start gap-3.5 shadow-sm">
+          <div class="w-10 h-10 rounded-2xl flex-shrink-0 flex items-center justify-center text-lg bg-emerald-100 text-emerald-800 border border-emerald-200">
+            🌿
+          </div>
+          <div>
+            <h4 class="text-xs font-bold uppercase tracking-wider text-gray-700">Recomandare pentru faza de azi</h4>
+            <p id="dailyAdviceText" class="text-xs text-gray-600 mt-1 leading-relaxed">
+              Apasă pe butonul de mai sus sau pe orice zi din calendar pentru a genera recomandările personalizate conform etapei fiziologice.
+            </p>
+          </div>
+        </section>
       </main>
     </div>
 
@@ -441,82 +517,6 @@
                 Progesteronul domină pentru pregătirea uterului. Faza se încheie la debutul următorului ciclu.
               </p>
             </div>
-          </div>
-        </section>
-
-        <!-- Grila Celor 4 Carduri Informative (Stitch) -->
-        <section class="space-y-3">
-          <h2 class="text-sm font-bold text-gray-800 tracking-tight px-1">Indicatori Cheie</h2>
-          
-          <div class="grid grid-cols-2 gap-3">
-            <!-- Card 1: Următoarea Menstruație -->
-            <div class="glass-card rounded-2xl p-4 flex flex-col justify-between hover:shadow-md transition">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-semibold text-gray-500">Următoarea Menstruație</span>
-                <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-xs" style="background-color: #EE9DCB25; color: #EE9DCB;">
-                  💧
-                </div>
-              </div>
-              <div>
-                <p id="stitchNextPeriodDate" class="text-base font-extrabold text-gray-800 leading-tight">--</p>
-                <p id="stitchNextPeriodCountdown" class="text-[11px] text-gray-500 font-medium mt-0.5">În așteptare</p>
-              </div>
-            </div>
-
-            <!-- Card 2: Fereastră Fertilă -->
-            <div class="glass-card rounded-2xl p-4 flex flex-col justify-between hover:shadow-md transition">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-semibold text-gray-500">Fereastră Fertilă</span>
-                <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-xs" style="background-color: #B6F5A730; color: #2D6A28;">
-                  🌿
-                </div>
-              </div>
-              <div>
-                <p id="stitchFertileWindowRange" class="text-base font-extrabold text-gray-800 leading-tight">--</p>
-                <p class="text-[11px] text-emerald-700 font-medium mt-0.5">Șanse ridicate</p>
-              </div>
-            </div>
-
-            <!-- Card 3: Ziua Ovulației -->
-            <div class="glass-card rounded-2xl p-4 flex flex-col justify-between hover:shadow-md transition">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-semibold text-gray-500">Ziua Ovulației</span>
-                <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-xs" style="background-color: #909CFC25; color: #5866DB;">
-                  ⭐
-                </div>
-              </div>
-              <div>
-                <p id="stitchOvulationDate" class="text-base font-extrabold text-gray-800 leading-tight">--</p>
-                <p class="text-[11px] text-indigo-700 font-medium mt-0.5">Vârf fertil (Z14)</p>
-              </div>
-            </div>
-
-            <!-- Card 4: Ziua din Ciclu -->
-            <div class="glass-card rounded-2xl p-4 flex flex-col justify-between hover:shadow-md transition">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-semibold text-gray-500">Ziua din Ciclu</span>
-                <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-xs" style="background-color: #FCEF9F40; color: #9A7B0C;">
-                  📅
-                </div>
-              </div>
-              <div>
-                <p id="stitchCycleDayRatio" class="text-base font-extrabold text-gray-800 leading-tight">Ziua -- / 28</p>
-                <p id="stitchCurrentPhaseName" class="text-[11px] text-gray-500 font-medium mt-0.5">Nedefinit</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Recomandare Zilnică pentru Faza Activă -->
-        <section class="glass-panel rounded-3xl p-4 flex items-start gap-3.5 shadow-sm">
-          <div class="w-10 h-10 rounded-2xl flex-shrink-0 flex items-center justify-center text-lg bg-emerald-100 text-emerald-800 border border-emerald-200">
-            🌿
-          </div>
-          <div>
-            <h4 class="text-xs font-bold uppercase tracking-wider text-gray-700">Recomandare pentru faza de azi</h4>
-            <p id="dailyAdviceText" class="text-xs text-gray-600 mt-1 leading-relaxed">
-              Apasă pe butonul de mai sus sau pe orice zi din calendar pentru a genera recomandările personalizate conform etapei fiziologice.
-            </p>
           </div>
         </section>
       </main>
