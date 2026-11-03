@@ -559,10 +559,11 @@
   </div>
 
   <!-- ======================================================== -->
-  <!-- 8. STICKY BOTTOM NAVIGATION BAR (2 Pagini + Dată + Reset) -->
+  <!-- 8. STICKY BOTTOM NAVIGATION BAR (#909CFC - Bleu/Lavandă Pastel) -->
   <!-- ======================================================== -->
   <nav
-    class="fixed bottom-4 left-4 right-4 mx-auto max-w-sm bg-white/90 backdrop-blur-2xl rounded-full py-2.5 px-6 shadow-[0_10px_35px_rgba(0,0,0,0.12)] flex items-center justify-between border border-white/90 z-50 pointer-events-auto"
+    class="fixed bottom-4 left-4 right-4 mx-auto max-w-sm rounded-full py-2.5 px-6 flex items-center justify-between z-50 pointer-events-auto"
+    style="background: linear-gradient(135deg, rgba(144, 156, 252, 0.25) 0%, rgba(255, 255, 255, 0.92) 100%); border: 1.5px solid rgba(144, 156, 252, 0.50); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); box-shadow: 0 12px 35px -5px rgba(144, 156, 252, 0.25);"
     aria-label="Navigare rapidă">
     <!-- Tab 1: Calendar Menstrual (Iconiță Acasă) -->
     <button id="navBtnTabCalendar" class="p-2 transition active:scale-95 flex items-center justify-center"
@@ -578,7 +579,7 @@
 
     <!-- Tab 2: Starea Ciclului Tău (Iconiță Calendar) -->
     <button id="navBtnTabDashboard"
-      class="p-2 transition active:scale-95 flex items-center justify-center text-gray-500 hover:text-gray-800"
+      class="p-2 transition active:scale-95 flex items-center justify-center text-gray-500 hover:text-[#3B47B8]"
       aria-label="Pagina 2: Starea Ciclului Tău">
       <div id="navTabDashboardIndicator" class="w-10 h-10 rounded-full flex items-center justify-center">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -589,7 +590,7 @@
     </button>
 
     <!-- Tab 3: Alege Data Manual (Deschide Date Picker Modal) -->
-    <button id="navBtnDateSelect" class="p-2 text-gray-500 hover:text-gray-800 transition active:scale-95"
+    <button id="navBtnDateSelect" class="p-2 text-gray-500 hover:text-[#3B47B8] transition active:scale-95"
       aria-label="Alege data manual" title="Alege data manual">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
