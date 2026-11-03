@@ -21,7 +21,8 @@ Aplicație web completă într-o singură pagină (Single Page Application - SPA
 - **Grilă Calendar Lunar Interactivă:** Permite navigarea între luni și selectarea oricărei zile prin click direct pentru a declanșa un nou ciclu. Zilele sunt colorate în nuanțele pastel ale etapelor fiziologice.
 - **Pilule Verticale Proporționale:** 5 pilule a căror înălțime vizuală reflectă cu fidelitate durata în zile a fiecărei faze (de la 1 zi pentru Ovulație la 12 zile pentru Faza Luteală).
 - **Carduri de Stare ale Fazelor:** 5 carduri biologice detaliate, faza activă primind inel luminos de evidențiere.
-- **4 Carduri Informative Stitch:** Next Period, Fertile Window, Ovulation, Cycle Day.
+- **4 Carduri Informative:** Următoarea Menstruație, Fereastră Fertilă, Ziua Ovulației, Ziua din Ciclu.
 - **Recomandare Zilnică:** Sfaturi medicale și de stare de bine adaptate fazei curente.
 - **Persistență Locală:** Toate datele sunt salvate în `localStorage`.
 - **Resetare Completă:** Buton dedicat pentru a reseta oricând aplicația la starea inițială goală.
+

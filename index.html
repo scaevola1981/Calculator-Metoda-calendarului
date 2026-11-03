@@ -495,13 +495,13 @@
 
         <!-- Grila Celor 4 Carduri Informative (Stitch) -->
         <section class="space-y-3">
-          <h2 class="text-sm font-bold text-gray-800 tracking-tight px-1">Indicatori Cheie (Stitch)</h2>
+          <h2 class="text-sm font-bold text-gray-800 tracking-tight px-1">Indicatori Cheie</h2>
           
           <div class="grid grid-cols-2 gap-3">
-            <!-- Card 1: Next Period -->
+            <!-- Card 1: Următoarea Menstruație -->
             <div class="glass-card rounded-2xl p-4 flex flex-col justify-between hover:shadow-md transition">
               <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-semibold text-gray-500">Next Period</span>
+                <span class="text-xs font-semibold text-gray-500">Următoarea Menstruație</span>
                 <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-xs" style="background-color: #EE9DCB25; color: #EE9DCB;">
                   💧
                 </div>
@@ -512,10 +512,10 @@
               </div>
             </div>
 
-            <!-- Card 2: Fertile Window -->
+            <!-- Card 2: Fereastră Fertilă -->
             <div class="glass-card rounded-2xl p-4 flex flex-col justify-between hover:shadow-md transition">
               <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-semibold text-gray-500">Fertile Window</span>
+                <span class="text-xs font-semibold text-gray-500">Fereastră Fertilă</span>
                 <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-xs" style="background-color: #B6F5A730; color: #2D6A28;">
                   🌿
                 </div>
@@ -526,10 +526,10 @@
               </div>
             </div>
 
-            <!-- Card 3: Ovulation -->
+            <!-- Card 3: Ziua Ovulației -->
             <div class="glass-card rounded-2xl p-4 flex flex-col justify-between hover:shadow-md transition">
               <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-semibold text-gray-500">Ovulation</span>
+                <span class="text-xs font-semibold text-gray-500">Ziua Ovulației</span>
                 <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-xs" style="background-color: #909CFC25; color: #5866DB;">
                   ⭐
                 </div>
@@ -540,16 +540,16 @@
               </div>
             </div>
 
-            <!-- Card 4: Cycle Day -->
+            <!-- Card 4: Ziua din Ciclu -->
             <div class="glass-card rounded-2xl p-4 flex flex-col justify-between hover:shadow-md transition">
               <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-semibold text-gray-500">Cycle Day</span>
+                <span class="text-xs font-semibold text-gray-500">Ziua din Ciclu</span>
                 <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-xs" style="background-color: #FCEF9F40; color: #9A7B0C;">
                   📅
                 </div>
               </div>
               <div>
-                <p id="stitchCycleDayRatio" class="text-base font-extrabold text-gray-800 leading-tight">Day -- / 28</p>
+                <p id="stitchCycleDayRatio" class="text-base font-extrabold text-gray-800 leading-tight">Ziua -- / 28</p>
                 <p id="stitchCurrentPhaseName" class="text-[11px] text-gray-500 font-medium mt-0.5">Nedefinit</p>
               </div>
             </div>
@@ -963,14 +963,14 @@
           ovulDate.setDate(currentCycleStart.getDate() + 13); // Ziua 14 (index 13)
           stitchOvulationDate.textContent = formatRomanianDate(ovulDate);
 
-          stitchCycleDayRatio.textContent = currentCycleDay ? `Day ${currentCycleDay} / ${CYCLE_LENGTH}` : `Day -- / 28`;
+          stitchCycleDayRatio.textContent = currentCycleDay ? `Ziua ${currentCycleDay} / ${CYCLE_LENGTH}` : `Ziua -- / 28`;
           stitchCurrentPhaseName.textContent = currentPhase.name;
         } else {
           stitchNextPeriodDate.textContent = '--';
           stitchNextPeriodCountdown.textContent = 'Alege data de start';
           stitchFertileWindowRange.textContent = '--';
           stitchOvulationDate.textContent = '--';
-          stitchCycleDayRatio.textContent = 'Day -- / 28';
+          stitchCycleDayRatio.textContent = 'Ziua -- / 28';
           stitchCurrentPhaseName.textContent = 'Ciclul nu este setat';
         }
 
