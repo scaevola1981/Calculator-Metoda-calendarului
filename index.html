@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="ro">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Calendar Menstrual — AuraCycle & Metoda Calendarului</title>
-
+  
   <!-- Google Fonts: Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
-    rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -43,8 +41,7 @@
 
   <style>
     /* Prevenire totală overflow orizontal pe dispozitive mobile & touch */
-    html,
-    body {
+    html, body {
       overflow-x: clip;
       max-width: 100%;
       width: 100%;
@@ -93,14 +90,12 @@
     .no-scrollbar::-webkit-scrollbar {
       display: none;
     }
-
     .no-scrollbar {
       -ms-overflow-style: none;
       scrollbar-width: none;
     }
   </style>
 </head>
-
 <body class="relative min-h-screen flex justify-center py-0 sm:py-6 selection:bg-[#EE9DCB]/30 overflow-x-clip">
 
   <!-- Ambient Light Gradients (Clipped safely inside fixed viewport wrapper) -->
@@ -113,20 +108,35 @@
   </div>
 
   <!-- Mobile Container (max-w-md conform layoutului iOS Stitch) -->
-  <div
-    class="relative z-10 w-full max-w-md min-h-screen sm:min-h-0 sm:rounded-[40px] bg-white/40 sm:border sm:border-white/80 shadow-2xl backdrop-blur-3xl flex flex-col pb-28 overflow-x-clip">
+  <div class="relative z-10 w-full max-w-md min-h-screen sm:min-h-0 sm:rounded-[40px] bg-white/40 sm:border sm:border-white/80 shadow-2xl backdrop-blur-3xl flex flex-col pb-28 overflow-x-clip">
 
     <!-- ======================================================== -->
     <!-- PAGINA 1: CALENDAR & PILULE PROPORȚIONALE (Conform Screenshot) -->
     <!-- ======================================================== -->
     <div id="viewCalendar" class="flex flex-col">
       <!-- 1. Header Pagina 1 -->
-      <header class="pt-5 px-5 pb-2">
+      <header class="pt-3 px-5 pb-2">
+        <!-- iOS Status Bar Mockup -->
+        <div class="flex justify-between items-center text-xs font-semibold tracking-tight text-gray-700 mb-3 px-1">
+          <span class="statusBarTime">09:41</span>
+          <div class="w-20 h-4 bg-black/10 rounded-full mx-auto hidden sm:block"></div>
+          <div class="flex items-center gap-1.5 text-gray-700">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 18.25A10.95 10.95 0 0 1 1 12C1 5.92 5.92 1 12 1s11 4.92 11 11c0 2.45-.8 4.71-2.16 6.54l-.62-.62A9.97 9.97 0 0 0 21 12c0-4.97-4.03-9-9-9z"/>
+            </svg>
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 4C7.31 4 3.07 5.9 0 8.98L12 21 24 8.98A16.88 16.88 0 0 0 12 4z"/>
+            </svg>
+            <svg class="w-4 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm4 4v4h2v-4h-2z"/>
+            </svg>
+          </div>
+        </div>
+
         <!-- Titlu Curat conform prompt.md: „Calendar Menstrual” + Acțiuni -->
-        <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center justify-between mt-1 mb-3">
           <div class="flex items-center gap-2.5">
-            <div
-              class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#EE9DCB] to-[#909CFC] flex items-center justify-center text-lg text-white shadow-sm border border-white">
+            <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#EE9DCB] to-[#909CFC] flex items-center justify-center text-lg text-white shadow-sm border border-white">
               🌸
             </div>
             <div>
@@ -136,13 +146,16 @@
           </div>
 
           <div class="flex items-center gap-1.5">
-            <!-- Buton Info Metodă -->
-            <button
-              class="btnInfoTrigger w-9 h-9 rounded-full glass-card flex items-center justify-center text-gray-600 hover:text-[#909CFC] transition active:scale-95 shadow-sm"
-              aria-label="Deschide detalii metodă" title="Informații Metoda Calendarului">
+            <!-- Buton Resetare Ciclul -->
+            <button class="btnResetTrigger w-9 h-9 rounded-full glass-card flex items-center justify-center text-gray-600 hover:text-red-500 hover:bg-red-50 transition active:scale-95 shadow-sm" aria-label="Resetează ciclul" title="Resetează toate datele">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+            </button>
+            <!-- Buton Info Metodă -->
+            <button class="btnInfoTrigger w-9 h-9 rounded-full glass-card flex items-center justify-center text-gray-600 hover:text-[#909CFC] transition active:scale-95 shadow-sm" aria-label="Deschide detalii metodă" title="Informații Metoda Calendarului">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
               </svg>
             </button>
           </div>
@@ -150,37 +163,26 @@
 
         <!-- Selector Lună și An cu săgeți de navigare: < Noiembrie 2026 Azi > -->
         <div class="glass-card rounded-2xl py-2 px-4 flex items-center justify-between mb-3 shadow-xs">
-          <button id="btnPrevMonth"
-            class="w-8 h-8 rounded-full flex items-center justify-center text-gray-600 hover:bg-black/5 active:scale-95 transition"
-            aria-label="Luna anterioară">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
-            </svg>
+          <button id="btnPrevMonth" class="w-8 h-8 rounded-full flex items-center justify-center text-gray-600 hover:bg-black/5 active:scale-95 transition" aria-label="Luna anterioară">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
           </button>
-
+          
           <div class="flex items-center gap-2">
-            <span id="currentMonthYearLabel" class="text-base font-extrabold text-gray-800 tracking-tight">Iunie
-              2026</span>
-            <button id="btnCurrentMonth"
-              class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-purple-100/70 text-purple-700 hover:bg-purple-200 transition">
+            <span id="currentMonthYearLabel" class="text-base font-extrabold text-gray-800 tracking-tight">Iunie 2026</span>
+            <button id="btnCurrentMonth" class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-purple-100/70 text-purple-700 hover:bg-purple-200 transition">
               Azi
             </button>
           </div>
 
-          <button id="btnNextMonth"
-            class="w-8 h-8 rounded-full flex items-center justify-center text-gray-600 hover:bg-black/5 active:scale-95 transition"
-            aria-label="Luna următoare">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
-            </svg>
+          <button id="btnNextMonth" class="w-8 h-8 rounded-full flex items-center justify-center text-gray-600 hover:bg-black/5 active:scale-95 transition" aria-label="Luna următoare">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
           </button>
         </div>
 
         <!-- Butonul de Pornire Rapidă (Stil Pastilă Roz): + A început menstruația astăzi -->
         <!-- NOTĂ: Rândul redundant "Punct de start... Alege o dată manual" A FOST COMPLET ELIMINAT conform cerinței! -->
         <div>
-          <button id="btnMainPeriodAction"
-            class="w-full py-4 px-6 rounded-2xl font-bold text-white shadow-lg transition-all transform active:scale-98 flex items-center justify-center gap-2.5 text-base tracking-wide bg-gradient-to-r from-[#EE9DCB] to-[#e47fb6] hover:brightness-105 shadow-[#EE9DCB]/35">
+          <button id="btnMainPeriodAction" class="w-full py-4 px-6 rounded-2xl font-bold text-white shadow-lg transition-all transform active:scale-98 flex items-center justify-center gap-2.5 text-base tracking-wide bg-gradient-to-r from-[#EE9DCB] to-[#e47fb6] hover:brightness-105 shadow-[#EE9DCB]/35">
             <span class="text-xl">💧</span>
             <span id="btnPeriodActionText">+ A început menstruația astăzi</span>
           </button>
@@ -229,9 +231,8 @@
             <div class="flex items-end justify-between gap-2.5 pt-3 pb-1 px-1 h-44">
               <!-- 1. Menstruație: 5 zile -> 68px -->
               <div id="pillMenstrual" class="flex-1 flex flex-col items-center justify-end transition-all duration-300">
-                <div
-                  class="w-full rounded-2xl flex flex-col items-center justify-between py-2.5 px-1 shadow-sm transition-all border border-[#EE9DCB]/60"
-                  style="background-color: #EE9DCB; height: 68px;">
+                <div class="w-full rounded-2xl flex flex-col items-center justify-between py-2.5 px-1 shadow-sm transition-all border border-[#EE9DCB]/60"
+                     style="background-color: #EE9DCB; height: 68px;">
                   <span class="text-[11px] font-extrabold text-white">5z</span>
                   <span class="text-[9px] font-bold text-white/90 truncate">Menstr.</span>
                 </div>
@@ -239,11 +240,9 @@
               </div>
 
               <!-- 2. Foliculară: 5 zile -> 68px -->
-              <div id="pillFollicular"
-                class="flex-1 flex flex-col items-center justify-end transition-all duration-300">
-                <div
-                  class="w-full rounded-2xl flex flex-col items-center justify-between py-2.5 px-1 shadow-sm transition-all border border-[#FCEF9F]/80"
-                  style="background-color: #FCEF9F; height: 68px;">
+              <div id="pillFollicular" class="flex-1 flex flex-col items-center justify-end transition-all duration-300">
+                <div class="w-full rounded-2xl flex flex-col items-center justify-between py-2.5 px-1 shadow-sm transition-all border border-[#FCEF9F]/80"
+                     style="background-color: #FCEF9F; height: 68px;">
                   <span class="text-[11px] font-extrabold text-amber-900">5z</span>
                   <span class="text-[9px] font-bold text-amber-800 truncate">Folic.</span>
                 </div>
@@ -252,9 +251,8 @@
 
               <!-- 3. Fertilă: 5 zile -> 68px -->
               <div id="pillFertile" class="flex-1 flex flex-col items-center justify-end transition-all duration-300">
-                <div
-                  class="w-full rounded-2xl flex flex-col items-center justify-between py-2.5 px-1 shadow-sm transition-all border border-[#B6F5A7]/80"
-                  style="background-color: #B6F5A7; height: 68px;">
+                <div class="w-full rounded-2xl flex flex-col items-center justify-between py-2.5 px-1 shadow-sm transition-all border border-[#B6F5A7]/80"
+                     style="background-color: #B6F5A7; height: 68px;">
                   <span class="text-[11px] font-extrabold text-emerald-900">5z</span>
                   <span class="text-[9px] font-bold text-emerald-800 truncate">Fertil</span>
                 </div>
@@ -263,9 +261,8 @@
 
               <!-- 4. Ovulație: 1 zi -> 36px (cea mai mică pilulă) -->
               <div id="pillOvulation" class="flex-1 flex flex-col items-center justify-end transition-all duration-300">
-                <div
-                  class="w-full rounded-2xl flex flex-col items-center justify-between py-1.5 px-1 shadow-sm transition-all border border-[#909CFC]"
-                  style="background-color: #909CFC; height: 36px;">
+                <div class="w-full rounded-2xl flex flex-col items-center justify-between py-1.5 px-1 shadow-sm transition-all border border-[#909CFC]"
+                     style="background-color: #909CFC; height: 36px;">
                   <span class="text-[11px] font-extrabold text-white leading-none">1z</span>
                   <span class="text-[8px] font-bold text-white/95 leading-none">Ovul.</span>
                 </div>
@@ -274,9 +271,8 @@
 
               <!-- 5. Luteală: 12 zile -> 136px (cea mai înaltă pilulă) -->
               <div id="pillLuteal" class="flex-1 flex flex-col items-center justify-end transition-all duration-300">
-                <div
-                  class="w-full rounded-2xl flex flex-col items-center justify-between py-3 px-1 shadow-sm transition-all border border-[#ACEDF3]"
-                  style="background-color: #ACEDF3; height: 136px;">
+                <div class="w-full rounded-2xl flex flex-col items-center justify-between py-3 px-1 shadow-sm transition-all border border-[#ACEDF3]"
+                     style="background-color: #ACEDF3; height: 136px;">
                   <span class="text-[11px] font-extrabold text-cyan-900">12z</span>
                   <span class="text-[10px] font-bold text-cyan-800 truncate">Luteală</span>
                 </div>
@@ -293,11 +289,27 @@
     <!-- ======================================================== -->
     <div id="viewDashboard" class="flex flex-col hidden">
       <!-- 1. Header Pagina 2 -->
-      <header class="pt-5 px-5 pb-3">
-        <div class="flex items-center justify-between mb-2">
+      <header class="pt-3 px-5 pb-3">
+        <!-- iOS Status Bar Mockup -->
+        <div class="flex justify-between items-center text-xs font-semibold tracking-tight text-gray-700 mb-3 px-1">
+          <span class="statusBarTime">09:41</span>
+          <div class="w-20 h-4 bg-black/10 rounded-full mx-auto hidden sm:block"></div>
+          <div class="flex items-center gap-1.5 text-gray-700">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 18.25A10.95 10.95 0 0 1 1 12C1 5.92 5.92 1 12 1s11 4.92 11 11c0 2.45-.8 4.71-2.16 6.54l-.62-.62A9.97 9.97 0 0 0 21 12c0-4.97-4.03-9-9-9z"/>
+            </svg>
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 4C7.31 4 3.07 5.9 0 8.98L12 21 24 8.98A16.88 16.88 0 0 0 12 4z"/>
+            </svg>
+            <svg class="w-4 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm4 4v4h2v-4h-2z"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between mt-1 mb-2">
           <div class="flex items-center gap-2.5">
-            <div
-              class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#909CFC] to-[#EE9DCB] flex items-center justify-center text-lg text-white shadow-sm border border-white">
+            <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#909CFC] to-[#EE9DCB] flex items-center justify-center text-lg text-white shadow-sm border border-white">
               🌸
             </div>
             <div>
@@ -307,12 +319,14 @@
           </div>
 
           <div class="flex items-center gap-1.5">
-            <button
-              class="btnInfoTrigger w-9 h-9 rounded-full glass-card flex items-center justify-center text-gray-600 hover:text-[#909CFC] transition active:scale-95 shadow-sm"
-              aria-label="Deschide detalii metodă" title="Informații Metoda Calendarului">
+            <button class="btnResetTrigger w-9 h-9 rounded-full glass-card flex items-center justify-center text-gray-600 hover:text-red-500 hover:bg-red-50 transition active:scale-95 shadow-sm" aria-label="Resetează ciclul" title="Resetează toate datele">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+            </button>
+            <button class="btnInfoTrigger w-9 h-9 rounded-full glass-card flex items-center justify-center text-gray-600 hover:text-[#909CFC] transition active:scale-95 shadow-sm" aria-label="Deschide detalii metodă" title="Informații Metoda Calendarului">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
               </svg>
             </button>
           </div>
@@ -334,12 +348,10 @@
 
           <div class="space-y-2.5">
             <!-- Card 1: Menstruație -->
-            <div id="cardPhaseMenstrual"
-              class="glass-card rounded-2xl p-4 transition-all duration-300 border-l-4 border-l-[#EE9DCB]">
+            <div id="cardPhaseMenstrual" class="glass-card rounded-2xl p-4 transition-all duration-300 border-l-4 border-l-[#EE9DCB]">
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                  <div class="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-base shadow-xs"
-                    style="background-color: #EE9DCB25; color: #EE9DCB;">
+                  <div class="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-base shadow-xs" style="background-color: #EE9DCB25; color: #EE9DCB;">
                     🩸
                   </div>
                   <div>
@@ -347,8 +359,7 @@
                     <p class="text-xs text-gray-500">Zilele 1 – 5 • Eliminarea endometrului</p>
                   </div>
                 </div>
-                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-[#EE9DCB]/20 text-[#A0356C]">5
-                  zile</span>
+                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-[#EE9DCB]/20 text-[#A0356C]">5 zile</span>
               </div>
               <p class="text-xs text-gray-600 mt-2 pl-12 leading-relaxed">
                 Estrogen și progesteron la nivel minim. Corpul se reînnoiește; acordă atenție odihnei și hidratării.
@@ -356,12 +367,10 @@
             </div>
 
             <!-- Card 2: Foliculară -->
-            <div id="cardPhaseFollicular"
-              class="glass-card rounded-2xl p-4 transition-all duration-300 border-l-4 border-l-[#FCEF9F]">
+            <div id="cardPhaseFollicular" class="glass-card rounded-2xl p-4 transition-all duration-300 border-l-4 border-l-[#FCEF9F]">
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                  <div class="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-base shadow-xs"
-                    style="background-color: #FCEF9F40; color: #9A7B0C;">
+                  <div class="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-base shadow-xs" style="background-color: #FCEF9F40; color: #9A7B0C;">
                     🌱
                   </div>
                   <div>
@@ -369,8 +378,7 @@
                     <p class="text-xs text-gray-500">Zilele 6 – 10 • Creșterea estrogenului</p>
                   </div>
                 </div>
-                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-[#FCEF9F]/50 text-amber-900">5
-                  zile</span>
+                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-[#FCEF9F]/50 text-amber-900">5 zile</span>
               </div>
               <p class="text-xs text-gray-600 mt-2 pl-12 leading-relaxed">
                 Foliculii ovarieni se maturizează. Energia fizică și claritatea mentală sunt în creștere continuă.
@@ -378,12 +386,10 @@
             </div>
 
             <!-- Card 3: Fereastră Fertilă -->
-            <div id="cardPhaseFertile"
-              class="glass-card rounded-2xl p-4 transition-all duration-300 border-l-4 border-l-[#B6F5A7]">
+            <div id="cardPhaseFertile" class="glass-card rounded-2xl p-4 transition-all duration-300 border-l-4 border-l-[#B6F5A7]">
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                  <div class="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-base shadow-xs"
-                    style="background-color: #B6F5A730; color: #2D6A28;">
+                  <div class="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-base shadow-xs" style="background-color: #B6F5A730; color: #2D6A28;">
                     🌿
                   </div>
                   <div>
@@ -391,22 +397,18 @@
                     <p class="text-xs text-gray-500">Zilele 11 – 16 • Șanse maxime de concepție</p>
                   </div>
                 </div>
-                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-[#B6F5A7]/40 text-emerald-900">5-6
-                  zile</span>
+                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-[#B6F5A7]/40 text-emerald-900">5-6 zile</span>
               </div>
               <p class="text-xs text-gray-600 mt-2 pl-12 leading-relaxed">
-                Spermatozoizii pot supraviețui până la 5 zile în mucusul cervical fertil pregătind fertilizarea
-                ovulului.
+                Spermatozoizii pot supraviețui până la 5 zile în mucusul cervical fertil pregătind fertilizarea ovulului.
               </p>
             </div>
 
             <!-- Card 4: Ovulație -->
-            <div id="cardPhaseOvulation"
-              class="glass-card rounded-2xl p-4 transition-all duration-300 border-l-4 border-l-[#909CFC]">
+            <div id="cardPhaseOvulation" class="glass-card rounded-2xl p-4 transition-all duration-300 border-l-4 border-l-[#909CFC]">
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                  <div class="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-base shadow-xs"
-                    style="background-color: #909CFC25; color: #5866DB;">
+                  <div class="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-base shadow-xs" style="background-color: #909CFC25; color: #5866DB;">
                     ⭐
                   </div>
                   <div>
@@ -422,12 +424,10 @@
             </div>
 
             <!-- Card 5: Faza Luteală -->
-            <div id="cardPhaseLuteal"
-              class="glass-card rounded-2xl p-4 transition-all duration-300 border-l-4 border-l-[#ACEDF3]">
+            <div id="cardPhaseLuteal" class="glass-card rounded-2xl p-4 transition-all duration-300 border-l-4 border-l-[#ACEDF3]">
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                  <div class="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-base shadow-xs"
-                    style="background-color: #ACEDF330; color: #166574;">
+                  <div class="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-base shadow-xs" style="background-color: #ACEDF330; color: #166574;">
                     🌙
                   </div>
                   <div>
@@ -435,8 +435,7 @@
                     <p class="text-xs text-gray-500">Zilele 17 – 28 • Fertilitate minimă</p>
                   </div>
                 </div>
-                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-[#ACEDF3]/40 text-cyan-950">12
-                  zile</span>
+                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-[#ACEDF3]/40 text-cyan-950">12 zile</span>
               </div>
               <p class="text-xs text-gray-600 mt-2 pl-12 leading-relaxed">
                 Progesteronul domină pentru pregătirea uterului. Faza se încheie la debutul următorului ciclu.
@@ -448,14 +447,13 @@
         <!-- Grila Celor 4 Carduri Informative (Stitch) -->
         <section class="space-y-3">
           <h2 class="text-sm font-bold text-gray-800 tracking-tight px-1">Indicatori Cheie</h2>
-
+          
           <div class="grid grid-cols-2 gap-3">
             <!-- Card 1: Următoarea Menstruație -->
             <div class="glass-card rounded-2xl p-4 flex flex-col justify-between hover:shadow-md transition">
               <div class="flex items-center justify-between mb-2">
                 <span class="text-xs font-semibold text-gray-500">Următoarea Menstruație</span>
-                <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-xs"
-                  style="background-color: #EE9DCB25; color: #EE9DCB;">
+                <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-xs" style="background-color: #EE9DCB25; color: #EE9DCB;">
                   💧
                 </div>
               </div>
@@ -469,8 +467,7 @@
             <div class="glass-card rounded-2xl p-4 flex flex-col justify-between hover:shadow-md transition">
               <div class="flex items-center justify-between mb-2">
                 <span class="text-xs font-semibold text-gray-500">Fereastră Fertilă</span>
-                <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-xs"
-                  style="background-color: #B6F5A730; color: #2D6A28;">
+                <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-xs" style="background-color: #B6F5A730; color: #2D6A28;">
                   🌿
                 </div>
               </div>
@@ -484,8 +481,7 @@
             <div class="glass-card rounded-2xl p-4 flex flex-col justify-between hover:shadow-md transition">
               <div class="flex items-center justify-between mb-2">
                 <span class="text-xs font-semibold text-gray-500">Ziua Ovulației</span>
-                <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-xs"
-                  style="background-color: #909CFC25; color: #5866DB;">
+                <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-xs" style="background-color: #909CFC25; color: #5866DB;">
                   ⭐
                 </div>
               </div>
@@ -499,14 +495,12 @@
             <div class="glass-card rounded-2xl p-4 flex flex-col justify-between hover:shadow-md transition">
               <div class="flex items-center justify-between mb-2">
                 <span class="text-xs font-semibold text-gray-500">Ziua din Ciclu</span>
-                <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-xs"
-                  style="background-color: #FCEF9F40; color: #9A7B0C;">
+                <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-xs" style="background-color: #FCEF9F40; color: #9A7B0C;">
                   📅
                 </div>
               </div>
               <div>
-                <p id="stitchCycleDayRatio" class="text-base font-extrabold text-gray-800 leading-tight">Ziua -- / 28
-                </p>
+                <p id="stitchCycleDayRatio" class="text-base font-extrabold text-gray-800 leading-tight">Ziua -- / 28</p>
                 <p id="stitchCurrentPhaseName" class="text-[11px] text-gray-500 font-medium mt-0.5">Nedefinit</p>
               </div>
             </div>
@@ -515,15 +509,13 @@
 
         <!-- Recomandare Zilnică pentru Faza Activă -->
         <section class="glass-panel rounded-3xl p-4 flex items-start gap-3.5 shadow-sm">
-          <div
-            class="w-10 h-10 rounded-2xl flex-shrink-0 flex items-center justify-center text-lg bg-emerald-100 text-emerald-800 border border-emerald-200">
+          <div class="w-10 h-10 rounded-2xl flex-shrink-0 flex items-center justify-center text-lg bg-emerald-100 text-emerald-800 border border-emerald-200">
             🌿
           </div>
           <div>
             <h4 class="text-xs font-bold uppercase tracking-wider text-gray-700">Recomandare pentru faza de azi</h4>
             <p id="dailyAdviceText" class="text-xs text-gray-600 mt-1 leading-relaxed">
-              Apasă pe butonul de mai sus sau pe orice zi din calendar pentru a genera recomandările personalizate
-              conform etapei fiziologice.
+              Apasă pe butonul de mai sus sau pe orice zi din calendar pentru a genera recomandările personalizate conform etapei fiziologice.
             </p>
           </div>
         </section>
@@ -535,74 +527,48 @@
   <!-- ======================================================== -->
   <!-- 8. STICKY BOTTOM NAVIGATION BAR (2 Pagini + Dată + Reset) -->
   <!-- ======================================================== -->
-  <nav
-    class="fixed bottom-4 left-4 right-4 mx-auto max-w-sm bg-white/90 backdrop-blur-2xl rounded-full py-2.5 px-6 shadow-[0_10px_35px_rgba(0,0,0,0.12)] flex items-center justify-between border border-white/90 z-50 pointer-events-auto"
-    aria-label="Navigare rapidă">
-    <!-- Tab 1: Calendar Menstrual (Iconiță Acasă) -->
-    <button id="navBtnTabCalendar" class="p-2 transition active:scale-95 flex items-center justify-center"
-      aria-label="Pagina 1: Calendar Menstrual">
-      <div id="navTabCalendarIndicator"
-        class="w-10 h-10 rounded-full bg-gradient-to-tr from-[#909CFC] to-[#EE9DCB] text-white flex items-center justify-center shadow-md">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-        </svg>
+  <nav class="fixed bottom-4 left-4 right-4 mx-auto max-w-sm bg-white/90 backdrop-blur-2xl rounded-full py-2.5 px-6 shadow-[0_10px_35px_rgba(0,0,0,0.12)] flex items-center justify-between border border-white/90 z-50 pointer-events-auto" aria-label="Navigare rapidă">
+    <!-- Tab 1: Calendar (Pagina 1) -->
+    <button id="navBtnTabCalendar" class="p-2 transition active:scale-95 flex items-center justify-center" aria-label="Pagina 1: Calendar">
+      <div id="navTabCalendarIndicator" class="w-10 h-10 rounded-full bg-gradient-to-tr from-[#909CFC] to-[#EE9DCB] text-white flex items-center justify-center shadow-md">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
       </div>
     </button>
 
-    <!-- Tab 2: Starea Ciclului Tău (Iconiță Calendar) -->
-    <button id="navBtnTabDashboard"
-      class="p-2 transition active:scale-95 flex items-center justify-center text-gray-500 hover:text-gray-800"
-      aria-label="Pagina 2: Starea Ciclului Tău">
+    <!-- Tab 2: Dashboard / Ceas (Pagina 2) -->
+    <button id="navBtnTabDashboard" class="p-2 transition active:scale-95 flex items-center justify-center text-gray-500 hover:text-gray-800" aria-label="Pagina 2: Prezentare Generală">
       <div id="navTabDashboardIndicator" class="w-10 h-10 rounded-full flex items-center justify-center">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-        </svg>
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
       </div>
     </button>
 
     <!-- Tab 3: Alege Data Manual (Deschide Date Picker Modal) -->
-    <button id="navBtnDateSelect" class="p-2 text-gray-500 hover:text-gray-800 transition active:scale-95"
-      aria-label="Alege data manual" title="Alege data manual">
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-      </svg>
+    <button id="navBtnDateSelect" class="p-2 text-gray-500 hover:text-gray-800 transition active:scale-95" aria-label="Alege data manual" title="Alege data manual">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
     </button>
 
     <!-- Tab 4: Resetare Ciclul -->
-    <button id="navBtnReset" class="p-2 text-gray-500 hover:text-red-500 transition active:scale-95"
-      aria-label="Resetează datele" title="Resetează ciclul">
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-      </svg>
+    <button id="navBtnReset" class="p-2 text-gray-500 hover:text-red-500 transition active:scale-95" aria-label="Resetează datele" title="Resetează ciclul">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
     </button>
   </nav>
 
   <!-- Modal 1: Selector Dată Personalizată -->
-  <dialog id="datePickerModal"
-    class="rounded-3xl p-6 glass-panel border border-white/80 shadow-2xl max-w-sm w-full mx-auto backdrop:bg-black/30 backdrop:backdrop-blur-sm">
+  <dialog id="datePickerModal" class="rounded-3xl p-6 glass-panel border border-white/80 shadow-2xl max-w-sm w-full mx-auto backdrop:bg-black/30 backdrop:backdrop-blur-sm">
     <div class="text-center">
-      <div
-        class="w-12 h-12 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center mx-auto text-xl mb-3">
+      <div class="w-12 h-12 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center mx-auto text-xl mb-3">
         📅
       </div>
       <h3 class="text-lg font-bold text-gray-800">Alege Data Primei Zile</h3>
-      <p class="text-xs text-gray-500 mt-1 mb-4">Selectează ziua în care a început ultima menstruație pentru
-        recalcularea ciclului.</p>
-
-      <input type="date" id="customDateInput"
-        class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/80 text-gray-800 font-semibold focus:outline-none focus:ring-2 focus:ring-[#EE9DCB] mb-5">
-
+      <p class="text-xs text-gray-500 mt-1 mb-4">Selectează ziua în care a început ultima menstruație pentru recalcularea ciclului.</p>
+      
+      <input type="date" id="customDateInput" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/80 text-gray-800 font-semibold focus:outline-none focus:ring-2 focus:ring-[#EE9DCB] mb-5">
+      
       <div class="flex gap-2">
-        <button id="btnCloseDatePicker"
-          class="flex-1 py-2.5 rounded-xl text-xs font-semibold text-gray-600 bg-gray-100 hover:bg-gray-200 transition">
+        <button id="btnCloseDatePicker" class="flex-1 py-2.5 rounded-xl text-xs font-semibold text-gray-600 bg-gray-100 hover:bg-gray-200 transition">
           Anulează
         </button>
-        <button id="btnApplyCustomDate"
-          class="flex-1 py-2.5 rounded-xl text-xs font-bold text-white bg-[#EE9DCB] hover:brightness-105 transition shadow-sm">
+        <button id="btnApplyCustomDate" class="flex-1 py-2.5 rounded-xl text-xs font-bold text-white bg-[#EE9DCB] hover:brightness-105 transition shadow-sm">
           Setează Data
         </button>
       </div>
@@ -610,22 +576,19 @@
   </dialog>
 
   <!-- Modal 2: Informații Metoda Calendarului -->
-  <dialog id="infoModal"
-    class="rounded-3xl p-6 glass-panel border border-white/80 shadow-2xl max-w-sm w-full mx-auto backdrop:bg-black/30 backdrop:backdrop-blur-sm">
+  <dialog id="infoModal" class="rounded-3xl p-6 glass-panel border border-white/80 shadow-2xl max-w-sm w-full mx-auto backdrop:bg-black/30 backdrop:backdrop-blur-sm">
     <div class="space-y-4">
       <div class="flex items-center justify-between border-b border-gray-100 pb-3">
         <h3 class="text-base font-bold text-gray-800 flex items-center gap-2">
           <span>🌸</span> Metoda Calendarului
         </h3>
-        <button id="btnCloseInfoModal"
-          class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:text-gray-800">
+        <button id="btnCloseInfoModal" class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:text-gray-800">
           ✕
         </button>
       </div>
 
       <div class="text-xs text-gray-600 space-y-2.5 leading-relaxed">
-        <p><strong>Despre algoritm:</strong> Aplicația utilizează logica fiziologică standard a ciclului menstrual
-          regulat de 28 de zile:</p>
+        <p><strong>Despre algoritm:</strong> Aplicația utilizează logica fiziologică standard a ciclului menstrual regulat de 28 de zile:</p>
         <ul class="space-y-1.5 list-disc pl-4 text-[11px]">
           <li><span class="font-bold text-[#EE9DCB]">Zilele 1–5:</span> Menstruație (sângerare normală).</li>
           <li><span class="font-bold text-amber-600">Zilele 6–10:</span> Faza foliculară (estrogen în creștere).</li>
@@ -633,12 +596,10 @@
           <li><span class="font-bold text-indigo-600">Ziua 14:</span> Ziua Ovulației (vârful fertil).</li>
           <li><span class="font-bold text-cyan-700">Zilele 17–28:</span> Faza luteală (fertilitate scăzută).</li>
         </ul>
-        <p class="text-[10px] text-gray-400 italic">Notă medicală: Această aplicație are scop educativ și informativ.
-          Metoda calendarului nu este o metodă contraceptivă sigură 100%.</p>
+        <p class="text-[10px] text-gray-400 italic">Notă medicală: Această aplicație are scop educativ și informativ. Metoda calendarului nu este o metodă contraceptivă sigură 100%.</p>
       </div>
 
-      <button id="btnCloseInfoModalBottom"
-        class="w-full py-2.5 rounded-xl text-xs font-bold text-white bg-gray-800 hover:bg-gray-900 transition">
+      <button id="btnCloseInfoModalBottom" class="w-full py-2.5 rounded-xl text-xs font-bold text-white bg-gray-800 hover:bg-gray-900 transition">
         Am înțeles
       </button>
     </div>
@@ -646,587 +607,586 @@
 
   <!-- JavaScript Logică Aplicată & Persistență LocalStorage -->
   <script>
-      (function () {
-        'use strict';
+    (function() {
+      'use strict';
 
-        // Constante Ciclul Biologic (28 zile conform prompt.md)
-        const CYCLE_LENGTH = 28;
-        const PERIOD_DURATION = 5;
-        const OVULATION_DAY = 14;
+      // Constante Ciclul Biologic (28 zile conform prompt.md)
+      const CYCLE_LENGTH = 28;
+      const PERIOD_DURATION = 5;
+      const OVULATION_DAY = 14;
 
-        // Numele Lunilor în Limba Română
-        const MONTH_NAMES_RO = [
-          "Ianuarie", "Februarie", "Martie", "Aprilie", "Mai", "Iunie",
-          "Iulie", "August", "Septembrie", "Octombrie", "Noiembrie", "Decembrie"
-        ];
+      // Numele Lunilor în Limba Română
+      const MONTH_NAMES_RO = [
+        "Ianuarie", "Februarie", "Martie", "Aprilie", "Mai", "Iunie",
+        "Iulie", "August", "Septembrie", "Octombrie", "Noiembrie", "Decembrie"
+      ];
 
-        // Stare aplicație
-        let state = {
-          cycleStartDate: null, // format 'YYYY-MM-DD'
-          calendarYear: new Date().getFullYear(),
-          calendarMonth: new Date().getMonth(), // 0-11
-          activeView: 'calendar' // 'calendar' (Pagina 1) sau 'dashboard' (Pagina 2)
-        };
+      // Stare aplicație
+      let state = {
+        cycleStartDate: null, // format 'YYYY-MM-DD'
+        calendarYear: new Date().getFullYear(),
+        calendarMonth: new Date().getMonth(), // 0-11
+        activeView: 'calendar' // 'calendar' (Pagina 1) sau 'dashboard' (Pagina 2)
+      };
 
-        // Helper Formatare Dată 'YYYY-MM-DD'
-        function formatDateISO(date) {
-          const y = date.getFullYear();
-          const m = String(date.getMonth() + 1).padStart(2, '0');
-          const d = String(date.getDate()).padStart(2, '0');
-          return `${y}-${m}-${d}`;
-        }
+      // Helper Formatare Dată 'YYYY-MM-DD'
+      function formatDateISO(date) {
+        const y = date.getFullYear();
+        const m = String(date.getMonth() + 1).padStart(2, '0');
+        const d = String(date.getDate()).padStart(2, '0');
+        return `${y}-${m}-${d}`;
+      }
 
-        function parseDateISO(str) {
-          if (!str) return null;
-          const [y, m, d] = str.split('-').map(Number);
-          return new Date(y, m - 1, d);
-        }
+      function parseDateISO(str) {
+        if (!str) return null;
+        const [y, m, d] = str.split('-').map(Number);
+        return new Date(y, m - 1, d);
+      }
 
-        // Formatare prietenoasă în limba română (ex: "14 Noiembrie")
-        function formatRomanianDate(date) {
-          if (!date) return '--';
-          return `${date.getDate()} ${MONTH_NAMES_RO[date.getMonth()]}`;
-        }
+      // Formatare prietenoasă în limba română (ex: "14 Noiembrie")
+      function formatRomanianDate(date) {
+        if (!date) return '--';
+        return `${date.getDate()} ${MONTH_NAMES_RO[date.getMonth()]}`;
+      }
 
-        // Încărcare stare din localStorage
-        function loadState() {
-          const saved = localStorage.getItem('auracycle_state');
-          if (saved) {
-            try {
-              const parsed = JSON.parse(saved);
-              if (parsed.cycleStartDate) {
-                state.cycleStartDate = parsed.cycleStartDate;
-                const d = parseDateISO(parsed.cycleStartDate);
-                if (d) {
-                  state.calendarYear = d.getFullYear();
-                  state.calendarMonth = d.getMonth();
-                }
+      // Încărcare stare din localStorage
+      function loadState() {
+        const saved = localStorage.getItem('auracycle_state');
+        if (saved) {
+          try {
+            const parsed = JSON.parse(saved);
+            if (parsed.cycleStartDate) {
+              state.cycleStartDate = parsed.cycleStartDate;
+              const d = parseDateISO(parsed.cycleStartDate);
+              if (d) {
+                state.calendarYear = d.getFullYear();
+                state.calendarMonth = d.getMonth();
               }
-            } catch (e) {
-              console.warn('Nu s-au putut parsa datele salvate:', e);
             }
-          }
-
-          const savedView = localStorage.getItem('auracycle_active_view');
-          if (savedView === 'dashboard' || savedView === 'calendar') {
-            state.activeView = savedView;
+          } catch(e) {
+            console.warn('Nu s-au putut parsa datele salvate:', e);
           }
         }
 
-        // Salvare stare în localStorage
-        function saveState() {
-          localStorage.setItem('auracycle_state', JSON.stringify({
-            cycleStartDate: state.cycleStartDate
-          }));
+        const savedView = localStorage.getItem('auracycle_active_view');
+        if (savedView === 'dashboard' || savedView === 'calendar') {
+          state.activeView = savedView;
+        }
+      }
+
+      // Salvare stare în localStorage
+      function saveState() {
+        localStorage.setItem('auracycle_state', JSON.stringify({
+          cycleStartDate: state.cycleStartDate
+        }));
+      }
+
+      // Obținerea Zilei Curente a Ciclului pentru o anumită dată
+      function getCycleDayForDate(targetDate) {
+        if (!state.cycleStartDate) return null;
+        const start = parseDateISO(state.cycleStartDate);
+        const diffTime = targetDate.getTime() - start.getTime();
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        
+        if (diffDays < 0) {
+          return null;
         }
 
-        // Obținerea Zilei Curente a Ciclului pentru o anumită dată
-        function getCycleDayForDate(targetDate) {
-          if (!state.cycleStartDate) return null;
-          const start = parseDateISO(state.cycleStartDate);
-          const diffTime = targetDate.getTime() - start.getTime();
-          const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        const cycleDay = (diffDays % CYCLE_LENGTH) + 1; // 1 to 28
+        return cycleDay;
+      }
 
-          if (diffDays < 0) {
-            return null;
-          }
-
-          const cycleDay = (diffDays % CYCLE_LENGTH) + 1; // 1 to 28
-          return cycleDay;
+      // Identificarea Fazei pentru o anumită Zi a Ciclului (1-28)
+      // 1. Menstruație: Zilele 1–5 (#EE9DCB)
+      // 2. Foliculară: Zilele 6–10 (#FCEF9F)
+      // 3. Fereastră Fertilă: Zilele 11–13 și 15–16 (#B6F5A7)
+      // 4. Ovulație: Ziua 14 (#909CFC)
+      // 5. Luteală: Zilele 17–28 (#ACEDF3)
+      function getPhaseInfo(cycleDay) {
+        if (!cycleDay || cycleDay < 1 || cycleDay > CYCLE_LENGTH) {
+          return {
+            id: 'none',
+            name: 'Nedefinit',
+            colorHex: '#CBD5E1',
+            badgeBg: '#F1F5F9',
+            badgeText: '#475569',
+            chanceText: 'Apasă butonul de pornire',
+            advice: 'Setează începutul menstruației pentru a primi sfaturi personalizate.'
+          };
         }
 
-        // Identificarea Fazei pentru o anumită Zi a Ciclului (1-28)
-        // 1. Menstruație: Zilele 1–5 (#EE9DCB)
-        // 2. Foliculară: Zilele 6–10 (#FCEF9F)
-        // 3. Fereastră Fertilă: Zilele 11–13 și 15–16 (#B6F5A7)
-        // 4. Ovulație: Ziua 14 (#909CFC)
-        // 5. Luteală: Zilele 17–28 (#ACEDF3)
-        function getPhaseInfo(cycleDay) {
-          if (!cycleDay || cycleDay < 1 || cycleDay > CYCLE_LENGTH) {
-            return {
-              id: 'none',
-              name: 'Nedefinit',
-              colorHex: '#CBD5E1',
-              badgeBg: '#F1F5F9',
-              badgeText: '#475569',
-              chanceText: 'Apasă butonul de pornire',
-              advice: 'Setează începutul menstruației pentru a primi sfaturi personalizate.'
-            };
-          }
+        if (cycleDay >= 1 && cycleDay <= 5) {
+          return {
+            id: 'menstrual',
+            name: 'Menstruație',
+            colorHex: '#EE9DCB',
+            badgeBg: '#EE9DCB25',
+            badgeText: '#A0356C',
+            chanceText: 'Șanse minime de concepție',
+            advice: 'Nivelul de energie este scăzut natural. Oferă-ți căldură, hidratare și o pauză binemeritată.'
+          };
+        } else if (cycleDay >= 6 && cycleDay <= 10) {
+          return {
+            id: 'follicular',
+            name: 'Faza Foliculară',
+            colorHex: '#FCEF9F',
+            badgeBg: '#FCEF9F40',
+            badgeText: '#9A7B0C',
+            chanceText: 'Fertilitate moderată în creștere',
+            advice: 'Estrogenul crește, oferindu-ți vitalitate și claritate mentală. Moment optim pentru proiecte noi.'
+          };
+        } else if ((cycleDay >= 11 && cycleDay <= 13) || (cycleDay >= 15 && cycleDay <= 16)) {
+          return {
+            id: 'fertile',
+            name: 'Fereastră Fertilă',
+            colorHex: '#B6F5A7',
+            badgeBg: '#B6F5A730',
+            badgeText: '#2D6A28',
+            chanceText: 'Șanse ridicate de concepție',
+            advice: 'Fereastră fertilă activă. Corpul este la apogeu de receptivitate și energie.'
+          };
+        } else if (cycleDay === 14) {
+          return {
+            id: 'ovulation',
+            name: 'Ziua Ovulației',
+            colorHex: '#909CFC',
+            badgeBg: '#909CFC30',
+            badgeText: '#5866DB',
+            chanceText: 'Vârf maxim de fertilitate (Ovulație)',
+            advice: 'Ovulul a fost eliberat. Vârf de fertilitate și cel mai înalt nivel energetic din lună.'
+          };
+        } else {
+          return {
+            id: 'luteal',
+            name: 'Faza Luteală',
+            colorHex: '#ACEDF3',
+            badgeBg: '#ACEDF335',
+            badgeText: '#166574',
+            chanceText: 'Șanse minime de concepție',
+            advice: 'Progesteronul sporește nevoia de tihnă. Hidratează-te corespunzător și redu cafeina.'
+          };
+        }
+      }
 
-          if (cycleDay >= 1 && cycleDay <= 5) {
-            return {
-              id: 'menstrual',
-              name: 'Menstruație',
-              colorHex: '#EE9DCB',
-              badgeBg: '#EE9DCB25',
-              badgeText: '#A0356C',
-              chanceText: 'Șanse minime de concepție',
-              advice: 'Nivelul de energie este scăzut natural. Oferă-ți căldură, hidratare și o pauză binemeritată.'
-            };
-          } else if (cycleDay >= 6 && cycleDay <= 10) {
-            return {
-              id: 'follicular',
-              name: 'Faza Foliculară',
-              colorHex: '#FCEF9F',
-              badgeBg: '#FCEF9F40',
-              badgeText: '#9A7B0C',
-              chanceText: 'Fertilitate moderată în creștere',
-              advice: 'Estrogenul crește, oferindu-ți vitalitate și claritate mentală. Moment optim pentru proiecte noi.'
-            };
-          } else if ((cycleDay >= 11 && cycleDay <= 13) || (cycleDay >= 15 && cycleDay <= 16)) {
-            return {
-              id: 'fertile',
-              name: 'Fereastră Fertilă',
-              colorHex: '#B6F5A7',
-              badgeBg: '#B6F5A730',
-              badgeText: '#2D6A28',
-              chanceText: 'Șanse ridicate de concepție',
-              advice: 'Fereastră fertilă activă. Corpul este la apogeu de receptivitate și energie.'
-            };
-          } else if (cycleDay === 14) {
-            return {
-              id: 'ovulation',
-              name: 'Ziua Ovulației',
-              colorHex: '#909CFC',
-              badgeBg: '#909CFC30',
-              badgeText: '#5866DB',
-              chanceText: 'Vârf maxim de fertilitate (Ovulație)',
-              advice: 'Ovulul a fost eliberat. Vârf de fertilitate și cel mai înalt nivel energetic din lună.'
-            };
-          } else {
-            return {
-              id: 'luteal',
-              name: 'Faza Luteală',
-              colorHex: '#ACEDF3',
-              badgeBg: '#ACEDF335',
-              badgeText: '#166574',
-              chanceText: 'Șanse minime de concepție',
-              advice: 'Progesteronul sporește nevoia de tihnă. Hidratează-te corespunzător și redu cafeina.'
-            };
-          }
+      // Actualizare ceas status bar iOS
+      function updateClock() {
+        const now = new Date();
+        const hrs = String(now.getHours()).padStart(2, '0');
+        const mins = String(now.getMinutes()).padStart(2, '0');
+        
+        document.querySelectorAll('.statusBarTime').forEach(el => {
+          el.textContent = `${hrs}:${mins}`;
+        });
+
+        const todayStr = `${now.getDate()} ${MONTH_NAMES_RO[now.getMonth()]} ${now.getFullYear()}`;
+        document.querySelectorAll('.todayDateSubtitle').forEach(el => {
+          el.textContent = todayStr;
+        });
+      }
+
+      // Comutare între Pagina 1 (Calendar) și Pagina 2 (Dashboard / Ceas)
+      function switchView(viewName) {
+        state.activeView = viewName;
+        localStorage.setItem('auracycle_active_view', viewName);
+
+        const view1 = document.getElementById('viewCalendar');
+        const view2 = document.getElementById('viewDashboard');
+        const ind1 = document.getElementById('navTabCalendarIndicator');
+        const ind2 = document.getElementById('navTabDashboardIndicator');
+
+        if (viewName === 'calendar') {
+          view1.classList.remove('hidden');
+          view2.classList.add('hidden');
+
+          ind1.className = 'w-10 h-10 rounded-full bg-gradient-to-tr from-[#909CFC] to-[#EE9DCB] text-white flex items-center justify-center shadow-md';
+          ind2.className = 'w-10 h-10 rounded-full flex items-center justify-center text-gray-500';
+        } else {
+          view1.classList.add('hidden');
+          view2.classList.remove('hidden');
+
+          ind1.className = 'w-10 h-10 rounded-full flex items-center justify-center text-gray-500';
+          ind2.className = 'w-10 h-10 rounded-full bg-gradient-to-tr from-[#909CFC] to-[#EE9DCB] text-white flex items-center justify-center shadow-md';
         }
 
-        // Actualizare ceas status bar iOS
-        function updateClock() {
-          const now = new Date();
-          const hrs = String(now.getHours()).padStart(2, '0');
-          const mins = String(now.getMinutes()).padStart(2, '0');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
 
-          document.querySelectorAll('.statusBarTime').forEach(el => {
-            el.textContent = `${hrs}:${mins}`;
-          });
+      // Randare Generală
+      function renderAll() {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
 
-          const todayStr = `${now.getDate()} ${MONTH_NAMES_RO[now.getMonth()]} ${now.getFullYear()}`;
-          document.querySelectorAll('.todayDateSubtitle').forEach(el => {
-            el.textContent = todayStr;
-          });
+        const currentCycleDay = getCycleDayForDate(today);
+        const currentPhase = getPhaseInfo(currentCycleDay);
+
+        // 1. Selector de Lună & Etichetă
+        const monthLabel = document.getElementById('currentMonthYearLabel');
+        if (monthLabel) {
+          monthLabel.textContent = `${MONTH_NAMES_RO[state.calendarMonth]} ${state.calendarYear}`;
         }
 
-        // Comutare între Pagina 1 (Calendar) și Pagina 2 (Dashboard / Ceas)
-        function switchView(viewName) {
-          state.activeView = viewName;
-          localStorage.setItem('auracycle_active_view', viewName);
+        // 2. Buton Principal de Declanșare Pagina 1
+        const btnPeriodActionText = document.getElementById('btnPeriodActionText');
+        const dailyAdviceText = document.getElementById('dailyAdviceText');
 
-          const view1 = document.getElementById('viewCalendar');
-          const view2 = document.getElementById('viewDashboard');
-          const ind1 = document.getElementById('navTabCalendarIndicator');
-          const ind2 = document.getElementById('navTabDashboardIndicator');
-
-          if (viewName === 'calendar') {
-            view1.classList.remove('hidden');
-            view2.classList.add('hidden');
-
-            ind1.className = 'w-10 h-10 rounded-full bg-gradient-to-tr from-[#909CFC] to-[#EE9DCB] text-white flex items-center justify-center shadow-md';
-            ind2.className = 'w-10 h-10 rounded-full flex items-center justify-center text-gray-500';
-          } else {
-            view1.classList.add('hidden');
-            view2.classList.remove('hidden');
-
-            ind1.className = 'w-10 h-10 rounded-full flex items-center justify-center text-gray-500';
-            ind2.className = 'w-10 h-10 rounded-full bg-gradient-to-tr from-[#909CFC] to-[#EE9DCB] text-white flex items-center justify-center shadow-md';
-          }
-
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Randare Generală
-        function renderAll() {
-          const today = new Date();
-          today.setHours(0, 0, 0, 0);
-
-          const currentCycleDay = getCycleDayForDate(today);
-          const currentPhase = getPhaseInfo(currentCycleDay);
-
-          // 1. Selector de Lună & Etichetă
-          const monthLabel = document.getElementById('currentMonthYearLabel');
-          if (monthLabel) {
-            monthLabel.textContent = `${MONTH_NAMES_RO[state.calendarMonth]} ${state.calendarYear}`;
-          }
-
-          // 2. Buton Principal de Declanșare Pagina 1
-          const btnPeriodActionText = document.getElementById('btnPeriodActionText');
-          const dailyAdviceText = document.getElementById('dailyAdviceText');
-
-          if (state.cycleStartDate) {
-            if (currentCycleDay) {
-              btnPeriodActionText.textContent = `Menstruație înregistrată (Ziua ${currentCycleDay})`;
-              dailyAdviceText.textContent = currentPhase.advice;
-            } else {
-              btnPeriodActionText.textContent = `+ A început menstruația astăzi`;
-              dailyAdviceText.textContent = `Data de start este setată în viitor. Reajusteaz-o pentru a calcula ciclul.`;
-            }
+        if (state.cycleStartDate) {
+          if (currentCycleDay) {
+            btnPeriodActionText.textContent = `Menstruație înregistrată (Ziua ${currentCycleDay})`;
+            dailyAdviceText.textContent = currentPhase.advice;
           } else {
             btnPeriodActionText.textContent = `+ A început menstruația astăzi`;
-            dailyAdviceText.textContent = `Apasă pe butonul de mai sus sau pe orice zi din calendar pentru a genera instantaneu prognoza biologică.`;
+            dailyAdviceText.textContent = `Data de start este setată în viitor. Reajusteaz-o pentru a calcula ciclul.`;
           }
-
-          // 3. Randare Grilă Calendar (Pagina 1)
-          renderCalendar();
-
-          // 4. Pilule Verticale Proporționale (Evidențiere activă)
-          ['Menstrual', 'Follicular', 'Fertile', 'Ovulation', 'Luteal'].forEach(pName => {
-            const pill = document.getElementById(`pill${pName}`);
-            if (pill) {
-              const inner = pill.firstElementChild;
-              if (currentPhase.id === pName.toLowerCase()) {
-                inner.classList.add('ring-4', 'ring-[#909CFC]', 'ring-offset-2', 'shadow-md', '-translate-y-1');
-              } else {
-                inner.classList.remove('ring-4', 'ring-[#909CFC]', 'ring-offset-2', 'shadow-md', '-translate-y-1');
-              }
-            }
-          });
-
-          // 5. Carduri de Faze (Evidențiere activă)
-          const phaseCards = {
-            menstrual: document.getElementById('cardPhaseMenstrual'),
-            follicular: document.getElementById('cardPhaseFollicular'),
-            fertile: document.getElementById('cardPhaseFertile'),
-            ovulation: document.getElementById('cardPhaseOvulation'),
-            luteal: document.getElementById('cardPhaseLuteal')
-          };
-
-          Object.keys(phaseCards).forEach(key => {
-            const card = phaseCards[key];
-            if (card) {
-              if (currentPhase.id === key) {
-                card.classList.add('ring-2', 'ring-[#909CFC]', 'ring-offset-2', 'bg-white', 'shadow-lg');
-              } else {
-                card.classList.remove('ring-2', 'ring-[#909CFC]', 'ring-offset-2', 'bg-white', 'shadow-lg');
-              }
-            }
-          });
-
-          // 6. Cele 4 Carduri Informative (Stitch - Pagina 2)
-          const stitchNextPeriodDate = document.getElementById('stitchNextPeriodDate');
-          const stitchNextPeriodCountdown = document.getElementById('stitchNextPeriodCountdown');
-          const stitchFertileWindowRange = document.getElementById('stitchFertileWindowRange');
-          const stitchOvulationDate = document.getElementById('stitchOvulationDate');
-          const stitchCycleDayRatio = document.getElementById('stitchCycleDayRatio');
-          const stitchCurrentPhaseName = document.getElementById('stitchCurrentPhaseName');
-
-          if (state.cycleStartDate) {
-            const startDate = parseDateISO(state.cycleStartDate);
-
-            let diffDays = Math.floor((today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
-            let cyclesPassed = Math.max(0, Math.floor(diffDays / CYCLE_LENGTH));
-
-            const nextPeriod = new Date(startDate);
-            nextPeriod.setDate(startDate.getDate() + (cyclesPassed + 1) * CYCLE_LENGTH);
-            stitchNextPeriodDate.textContent = formatRomanianDate(nextPeriod);
-
-            const daysLeft = Math.ceil((nextPeriod.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
-            stitchNextPeriodCountdown.textContent = daysLeft > 0 ? `În aproximativ ${daysLeft} zile` : `Astăzi`;
-
-            const currentCycleStart = new Date(startDate);
-            currentCycleStart.setDate(startDate.getDate() + cyclesPassed * CYCLE_LENGTH);
-
-            const fertileStart = new Date(currentCycleStart);
-            fertileStart.setDate(currentCycleStart.getDate() + 10); // Ziua 11 (index 10)
-
-            const fertileEnd = new Date(currentCycleStart);
-            fertileEnd.setDate(currentCycleStart.getDate() + 15); // Ziua 16 (index 15)
-
-            stitchFertileWindowRange.textContent = `${fertileStart.getDate()} - ${fertileEnd.getDate()} ${MONTH_NAMES_RO[fertileEnd.getMonth()].substring(0, 3)}`;
-
-            const ovulDate = new Date(currentCycleStart);
-            ovulDate.setDate(currentCycleStart.getDate() + 13); // Ziua 14 (index 13)
-            stitchOvulationDate.textContent = formatRomanianDate(ovulDate);
-
-            stitchCycleDayRatio.textContent = currentCycleDay ? `Ziua ${currentCycleDay} / ${CYCLE_LENGTH}` : `Ziua -- / 28`;
-            stitchCurrentPhaseName.textContent = currentPhase.name;
-          } else {
-            stitchNextPeriodDate.textContent = '--';
-            stitchNextPeriodCountdown.textContent = 'Alege data de start';
-            stitchFertileWindowRange.textContent = '--';
-            stitchOvulationDate.textContent = '--';
-            stitchCycleDayRatio.textContent = 'Ziua -- / 28';
-            stitchCurrentPhaseName.textContent = 'Ciclul nu este setat';
-          }
-
-          // 7. Cycle Ring Info (dacă există în DOM)
-          const cycleDayText = document.getElementById('cycleDayText');
-          const ringMainTitle = document.getElementById('ringMainTitle');
-          const conceptionChanceBadge = document.getElementById('conceptionChanceBadge');
-          const conceptionChanceText = document.getElementById('conceptionChanceText');
-
-          if (cycleDayText && ringMainTitle && conceptionChanceBadge && conceptionChanceText) {
-            if (state.cycleStartDate && currentCycleDay) {
-              cycleDayText.textContent = `ZIUA ${currentCycleDay} DIN ${CYCLE_LENGTH}`;
-              const daysUntilNext = CYCLE_LENGTH - currentCycleDay;
-              if (daysUntilNext === 0) {
-                ringMainTitle.textContent = 'Menstruație nouă estimată astăzi';
-              } else if (daysUntilNext === 1) {
-                ringMainTitle.textContent = 'Următoarea menstruație mâine';
-              } else {
-                ringMainTitle.textContent = `Următoarea menstruație în ${daysUntilNext} zile`;
-              }
-              conceptionChanceText.textContent = currentPhase.chanceText;
-              conceptionChanceBadge.style.backgroundColor = currentPhase.badgeBg;
-              conceptionChanceBadge.style.color = currentPhase.badgeText;
-            } else {
-              cycleDayText.textContent = `CICLU NESETAT`;
-              ringMainTitle.textContent = `Alege o zi pentru a începe`;
-              conceptionChanceText.textContent = `Nicio dată înregistrată`;
-              conceptionChanceBadge.style.backgroundColor = '#F1F5F9';
-              conceptionChanceBadge.style.color = '#475569';
-            }
-          }
-        }
-
-        // Randare Grilă Calendar
-        function renderCalendar() {
-          const grid = document.getElementById('calendarDaysGrid');
-          if (!grid) return;
-
-          grid.innerHTML = '';
-
-          const firstDayOfMonth = new Date(state.calendarYear, state.calendarMonth, 1);
-          const daysInMonth = new Date(state.calendarYear, state.calendarMonth + 1, 0).getDate();
-
-          let startingDayOfWeek = firstDayOfMonth.getDay() - 1;
-          if (startingDayOfWeek < 0) startingDayOfWeek = 6;
-
-          for (let i = 0; i < startingDayOfWeek; i++) {
-            const emptyCell = document.createElement('div');
-            emptyCell.className = 'h-10';
-            grid.appendChild(emptyCell);
-          }
-
-          const today = new Date();
-          const todayISO = formatDateISO(today);
-
-          for (let dayNum = 1; dayNum <= daysInMonth; dayNum++) {
-            const cellDate = new Date(state.calendarYear, state.calendarMonth, dayNum);
-            const cellDateISO = formatDateISO(cellDate);
-            const isToday = (cellDateISO === todayISO);
-
-            const cycleDay = getCycleDayForDate(cellDate);
-            const phase = getPhaseInfo(cycleDay);
-
-            const dayBtn = document.createElement('button');
-            dayBtn.type = 'button';
-            dayBtn.className = 'h-10 w-full rounded-2xl flex flex-col items-center justify-center relative font-semibold text-xs transition transform active:scale-95';
-            dayBtn.setAttribute('data-date', cellDateISO);
-            dayBtn.setAttribute('title', `${dayNum} ${MONTH_NAMES_RO[state.calendarMonth]}: ${phase.name}`);
-
-            const daySpan = document.createElement('span');
-            daySpan.textContent = dayNum;
-            dayBtn.appendChild(daySpan);
-
-            if (cycleDay) {
-              if (cycleDay >= 1 && cycleDay <= 5) {
-                dayBtn.style.backgroundColor = '#EE9DCB';
-                dayBtn.style.color = '#FFFFFF';
-                dayBtn.classList.add('shadow-xs');
-              } else if (cycleDay >= 6 && cycleDay <= 10) {
-                dayBtn.style.backgroundColor = '#FCEF9F';
-                dayBtn.style.color = '#78350F';
-              } else if ((cycleDay >= 11 && cycleDay <= 13) || (cycleDay >= 15 && cycleDay <= 16)) {
-                dayBtn.style.backgroundColor = '#B6F5A7';
-                dayBtn.style.color = '#065F46';
-              } else if (cycleDay === 14) {
-                dayBtn.style.backgroundColor = '#909CFC';
-                dayBtn.style.color = '#FFFFFF';
-                dayBtn.classList.add('ring-2', 'ring-offset-1', 'ring-[#909CFC]', 'font-bold');
-
-                const ovuDot = document.createElement('span');
-                ovuDot.className = 'absolute top-0.5 right-1 text-[9px] pointer-events-none select-none';
-                ovuDot.textContent = '⭐';
-                dayBtn.appendChild(ovuDot);
-              } else {
-                dayBtn.style.backgroundColor = '#ACEDF3';
-                dayBtn.style.color = '#155E75';
-              }
-            } else {
-              dayBtn.classList.add('hover:bg-purple-50', 'text-gray-700');
-            }
-
-            if (isToday) {
-              const todayDot = document.createElement('span');
-              todayDot.className = 'w-1 h-1 rounded-full bg-purple-600 absolute bottom-1';
-              dayBtn.appendChild(todayDot);
-            }
-
-            dayBtn.addEventListener('click', () => {
-              state.cycleStartDate = cellDateISO;
-              saveState();
-              renderAll();
-            });
-
-            grid.appendChild(dayBtn);
-          }
-        }
-
-        // Inițializare & Evenimente
-        function init() {
-          loadState();
-          updateClock();
-          setInterval(updateClock, 30000);
-
-          // Activare vizualizare inițială
-          switchView(state.activeView);
-
-          // Tab Switching din Bottom Navigation Bar
-          const navBtnTabCalendar = document.getElementById('navBtnTabCalendar');
-          const navBtnTabDashboard = document.getElementById('navBtnTabDashboard');
-
-          if (navBtnTabCalendar) {
-            navBtnTabCalendar.addEventListener('click', () => switchView('calendar'));
-          }
-          if (navBtnTabDashboard) {
-            navBtnTabDashboard.addEventListener('click', () => switchView('dashboard'));
-          }
-
-          // Butonul Principal de Declanșare Pagina 1
-          const btnMainPeriodAction = document.getElementById('btnMainPeriodAction');
-          if (btnMainPeriodAction) {
-            btnMainPeriodAction.addEventListener('click', () => {
-              const today = new Date();
-              state.cycleStartDate = formatDateISO(today);
-              state.calendarYear = today.getFullYear();
-              state.calendarMonth = today.getMonth();
-              saveState();
-              renderAll();
-            });
-          }
-
-          // Navigare Luni
-          const btnPrevMonth = document.getElementById('btnPrevMonth');
-          const btnNextMonth = document.getElementById('btnNextMonth');
-          const btnCurrentMonth = document.getElementById('btnCurrentMonth');
-
-          if (btnPrevMonth) {
-            btnPrevMonth.addEventListener('click', () => {
-              state.calendarMonth--;
-              if (state.calendarMonth < 0) {
-                state.calendarMonth = 11;
-                state.calendarYear--;
-              }
-              renderAll();
-            });
-          }
-
-          if (btnNextMonth) {
-            btnNextMonth.addEventListener('click', () => {
-              state.calendarMonth++;
-              if (state.calendarMonth > 11) {
-                state.calendarMonth = 0;
-                state.calendarYear++;
-              }
-              renderAll();
-            });
-          }
-
-          if (btnCurrentMonth) {
-            btnCurrentMonth.addEventListener('click', () => {
-              const now = new Date();
-              state.calendarYear = now.getFullYear();
-              state.calendarMonth = now.getMonth();
-              renderAll();
-            });
-          }
-
-          // Resetare Date (toate butoanele de reset)
-          const handleReset = () => {
-            if (confirm('Dorești să resetezi datele ciclului pentru a alege o dată de la început?')) {
-              state.cycleStartDate = null;
-              localStorage.removeItem('auracycle_state');
-              renderAll();
-            }
-          };
-
-          document.querySelectorAll('.btnResetTrigger').forEach(btn => {
-            btn.addEventListener('click', handleReset);
-          });
-
-          const navBtnReset = document.getElementById('navBtnReset');
-          if (navBtnReset) navBtnReset.addEventListener('click', handleReset);
-
-          // Modal Date Picker (Nav bar Tab 3: Alege data manual)
-          const datePickerModal = document.getElementById('datePickerModal');
-          const navBtnDateSelect = document.getElementById('navBtnDateSelect');
-          const btnCloseDatePicker = document.getElementById('btnCloseDatePicker');
-          const btnApplyCustomDate = document.getElementById('btnApplyCustomDate');
-          const customDateInput = document.getElementById('customDateInput');
-
-          const openDatePicker = () => {
-            if (state.cycleStartDate) {
-              customDateInput.value = state.cycleStartDate;
-            } else {
-              customDateInput.value = formatDateISO(new Date());
-            }
-            if (datePickerModal.showModal) datePickerModal.showModal();
-          };
-
-          if (navBtnDateSelect) navBtnDateSelect.addEventListener('click', openDatePicker);
-
-          if (btnCloseDatePicker) {
-            btnCloseDatePicker.addEventListener('click', () => {
-              datePickerModal.close();
-            });
-          }
-
-          if (btnApplyCustomDate) {
-            btnApplyCustomDate.addEventListener('click', () => {
-              if (customDateInput.value) {
-                state.cycleStartDate = customDateInput.value;
-                const chosen = parseDateISO(customDateInput.value);
-                state.calendarYear = chosen.getFullYear();
-                state.calendarMonth = chosen.getMonth();
-                saveState();
-                renderAll();
-                datePickerModal.close();
-              }
-            });
-          }
-
-          // Modal Informații
-          const infoModal = document.getElementById('infoModal');
-          const btnCloseInfoModal = document.getElementById('btnCloseInfoModal');
-          const btnCloseInfoModalBottom = document.getElementById('btnCloseInfoModalBottom');
-
-          document.querySelectorAll('.btnInfoTrigger').forEach(btn => {
-            btn.addEventListener('click', () => {
-              if (infoModal.showModal) infoModal.showModal();
-            });
-          });
-
-          const closeInfo = () => infoModal.close();
-          if (btnCloseInfoModal) btnCloseInfoModal.addEventListener('click', closeInfo);
-          if (btnCloseInfoModalBottom) btnCloseInfoModalBottom.addEventListener('click', closeInfo);
-
-          // Randare inițială
-          renderAll();
-        }
-
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', init);
         } else {
-          init();
+          btnPeriodActionText.textContent = `+ A început menstruația astăzi`;
+          dailyAdviceText.textContent = `Apasă pe butonul de mai sus sau pe orice zi din calendar pentru a genera instantaneu prognoza biologică.`;
         }
-      })();
+
+        // 3. Randare Grilă Calendar (Pagina 1)
+        renderCalendar();
+
+        // 4. Pilule Verticale Proporționale (Evidențiere activă)
+        ['Menstrual', 'Follicular', 'Fertile', 'Ovulation', 'Luteal'].forEach(pName => {
+          const pill = document.getElementById(`pill${pName}`);
+          if (pill) {
+            const inner = pill.firstElementChild;
+            if (currentPhase.id === pName.toLowerCase()) {
+              inner.classList.add('ring-4', 'ring-[#909CFC]', 'ring-offset-2', 'shadow-md', '-translate-y-1');
+            } else {
+              inner.classList.remove('ring-4', 'ring-[#909CFC]', 'ring-offset-2', 'shadow-md', '-translate-y-1');
+            }
+          }
+        });
+
+        // 5. Carduri de Faze (Evidențiere activă)
+        const phaseCards = {
+          menstrual: document.getElementById('cardPhaseMenstrual'),
+          follicular: document.getElementById('cardPhaseFollicular'),
+          fertile: document.getElementById('cardPhaseFertile'),
+          ovulation: document.getElementById('cardPhaseOvulation'),
+          luteal: document.getElementById('cardPhaseLuteal')
+        };
+
+        Object.keys(phaseCards).forEach(key => {
+          const card = phaseCards[key];
+          if (card) {
+            if (currentPhase.id === key) {
+              card.classList.add('ring-2', 'ring-[#909CFC]', 'ring-offset-2', 'bg-white', 'shadow-lg');
+            } else {
+              card.classList.remove('ring-2', 'ring-[#909CFC]', 'ring-offset-2', 'bg-white', 'shadow-lg');
+            }
+          }
+        });
+
+        // 6. Cele 4 Carduri Informative (Stitch - Pagina 2)
+        const stitchNextPeriodDate = document.getElementById('stitchNextPeriodDate');
+        const stitchNextPeriodCountdown = document.getElementById('stitchNextPeriodCountdown');
+        const stitchFertileWindowRange = document.getElementById('stitchFertileWindowRange');
+        const stitchOvulationDate = document.getElementById('stitchOvulationDate');
+        const stitchCycleDayRatio = document.getElementById('stitchCycleDayRatio');
+        const stitchCurrentPhaseName = document.getElementById('stitchCurrentPhaseName');
+
+        if (state.cycleStartDate) {
+          const startDate = parseDateISO(state.cycleStartDate);
+          
+          let diffDays = Math.floor((today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+          let cyclesPassed = Math.max(0, Math.floor(diffDays / CYCLE_LENGTH));
+          
+          const nextPeriod = new Date(startDate);
+          nextPeriod.setDate(startDate.getDate() + (cyclesPassed + 1) * CYCLE_LENGTH);
+          stitchNextPeriodDate.textContent = formatRomanianDate(nextPeriod);
+          
+          const daysLeft = Math.ceil((nextPeriod.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+          stitchNextPeriodCountdown.textContent = daysLeft > 0 ? `În aproximativ ${daysLeft} zile` : `Astăzi`;
+
+          const currentCycleStart = new Date(startDate);
+          currentCycleStart.setDate(startDate.getDate() + cyclesPassed * CYCLE_LENGTH);
+
+          const fertileStart = new Date(currentCycleStart);
+          fertileStart.setDate(currentCycleStart.getDate() + 10); // Ziua 11 (index 10)
+
+          const fertileEnd = new Date(currentCycleStart);
+          fertileEnd.setDate(currentCycleStart.getDate() + 15); // Ziua 16 (index 15)
+
+          stitchFertileWindowRange.textContent = `${fertileStart.getDate()} - ${fertileEnd.getDate()} ${MONTH_NAMES_RO[fertileEnd.getMonth()].substring(0, 3)}`;
+
+          const ovulDate = new Date(currentCycleStart);
+          ovulDate.setDate(currentCycleStart.getDate() + 13); // Ziua 14 (index 13)
+          stitchOvulationDate.textContent = formatRomanianDate(ovulDate);
+
+          stitchCycleDayRatio.textContent = currentCycleDay ? `Ziua ${currentCycleDay} / ${CYCLE_LENGTH}` : `Ziua -- / 28`;
+          stitchCurrentPhaseName.textContent = currentPhase.name;
+        } else {
+          stitchNextPeriodDate.textContent = '--';
+          stitchNextPeriodCountdown.textContent = 'Alege data de start';
+          stitchFertileWindowRange.textContent = '--';
+          stitchOvulationDate.textContent = '--';
+          stitchCycleDayRatio.textContent = 'Ziua -- / 28';
+          stitchCurrentPhaseName.textContent = 'Ciclul nu este setat';
+        }
+
+        // 7. Cycle Ring Info (dacă există în DOM)
+        const cycleDayText = document.getElementById('cycleDayText');
+        const ringMainTitle = document.getElementById('ringMainTitle');
+        const conceptionChanceBadge = document.getElementById('conceptionChanceBadge');
+        const conceptionChanceText = document.getElementById('conceptionChanceText');
+
+        if (cycleDayText && ringMainTitle && conceptionChanceBadge && conceptionChanceText) {
+          if (state.cycleStartDate && currentCycleDay) {
+            cycleDayText.textContent = `ZIUA ${currentCycleDay} DIN ${CYCLE_LENGTH}`;
+            const daysUntilNext = CYCLE_LENGTH - currentCycleDay;
+            if (daysUntilNext === 0) {
+              ringMainTitle.textContent = 'Menstruație nouă estimată astăzi';
+            } else if (daysUntilNext === 1) {
+              ringMainTitle.textContent = 'Următoarea menstruație mâine';
+            } else {
+              ringMainTitle.textContent = `Următoarea menstruație în ${daysUntilNext} zile`;
+            }
+            conceptionChanceText.textContent = currentPhase.chanceText;
+            conceptionChanceBadge.style.backgroundColor = currentPhase.badgeBg;
+            conceptionChanceBadge.style.color = currentPhase.badgeText;
+          } else {
+            cycleDayText.textContent = `CICLU NESETAT`;
+            ringMainTitle.textContent = `Alege o zi pentru a începe`;
+            conceptionChanceText.textContent = `Nicio dată înregistrată`;
+            conceptionChanceBadge.style.backgroundColor = '#F1F5F9';
+            conceptionChanceBadge.style.color = '#475569';
+          }
+        }
+      }
+
+      // Randare Grilă Calendar
+      function renderCalendar() {
+        const grid = document.getElementById('calendarDaysGrid');
+        if (!grid) return;
+
+        grid.innerHTML = '';
+
+        const firstDayOfMonth = new Date(state.calendarYear, state.calendarMonth, 1);
+        const daysInMonth = new Date(state.calendarYear, state.calendarMonth + 1, 0).getDate();
+
+        let startingDayOfWeek = firstDayOfMonth.getDay() - 1;
+        if (startingDayOfWeek < 0) startingDayOfWeek = 6;
+
+        for (let i = 0; i < startingDayOfWeek; i++) {
+          const emptyCell = document.createElement('div');
+          emptyCell.className = 'h-10';
+          grid.appendChild(emptyCell);
+        }
+
+        const today = new Date();
+        const todayISO = formatDateISO(today);
+
+        for (let dayNum = 1; dayNum <= daysInMonth; dayNum++) {
+          const cellDate = new Date(state.calendarYear, state.calendarMonth, dayNum);
+          const cellDateISO = formatDateISO(cellDate);
+          const isToday = (cellDateISO === todayISO);
+
+          const cycleDay = getCycleDayForDate(cellDate);
+          const phase = getPhaseInfo(cycleDay);
+
+          const dayBtn = document.createElement('button');
+          dayBtn.type = 'button';
+          dayBtn.className = 'h-10 w-full rounded-2xl flex flex-col items-center justify-center relative font-semibold text-xs transition transform active:scale-95';
+          dayBtn.setAttribute('data-date', cellDateISO);
+          dayBtn.setAttribute('title', `${dayNum} ${MONTH_NAMES_RO[state.calendarMonth]}: ${phase.name}`);
+
+          const daySpan = document.createElement('span');
+          daySpan.textContent = dayNum;
+          dayBtn.appendChild(daySpan);
+
+          if (cycleDay) {
+            if (cycleDay >= 1 && cycleDay <= 5) {
+              dayBtn.style.backgroundColor = '#EE9DCB';
+              dayBtn.style.color = '#FFFFFF';
+              dayBtn.classList.add('shadow-xs');
+            } else if (cycleDay >= 6 && cycleDay <= 10) {
+              dayBtn.style.backgroundColor = '#FCEF9F';
+              dayBtn.style.color = '#78350F';
+            } else if ((cycleDay >= 11 && cycleDay <= 13) || (cycleDay >= 15 && cycleDay <= 16)) {
+              dayBtn.style.backgroundColor = '#B6F5A7';
+              dayBtn.style.color = '#065F46';
+            } else if (cycleDay === 14) {
+              dayBtn.style.backgroundColor = '#909CFC';
+              dayBtn.style.color = '#FFFFFF';
+              dayBtn.classList.add('ring-2', 'ring-offset-1', 'ring-[#909CFC]', 'font-bold');
+              
+              const ovuDot = document.createElement('span');
+              ovuDot.className = 'absolute top-0.5 right-1 text-[9px] pointer-events-none select-none';
+              ovuDot.textContent = '⭐';
+              dayBtn.appendChild(ovuDot);
+            } else {
+              dayBtn.style.backgroundColor = '#ACEDF3';
+              dayBtn.style.color = '#155E75';
+            }
+          } else {
+            dayBtn.classList.add('hover:bg-purple-50', 'text-gray-700');
+          }
+
+          if (isToday) {
+            const todayDot = document.createElement('span');
+            todayDot.className = 'w-1 h-1 rounded-full bg-purple-600 absolute bottom-1';
+            dayBtn.appendChild(todayDot);
+          }
+
+          dayBtn.addEventListener('click', () => {
+            state.cycleStartDate = cellDateISO;
+            saveState();
+            renderAll();
+          });
+
+          grid.appendChild(dayBtn);
+        }
+      }
+
+      // Inițializare & Evenimente
+      function init() {
+        loadState();
+        updateClock();
+        setInterval(updateClock, 30000);
+
+        // Activare vizualizare inițială
+        switchView(state.activeView);
+
+        // Tab Switching din Bottom Navigation Bar
+        const navBtnTabCalendar = document.getElementById('navBtnTabCalendar');
+        const navBtnTabDashboard = document.getElementById('navBtnTabDashboard');
+
+        if (navBtnTabCalendar) {
+          navBtnTabCalendar.addEventListener('click', () => switchView('calendar'));
+        }
+        if (navBtnTabDashboard) {
+          navBtnTabDashboard.addEventListener('click', () => switchView('dashboard'));
+        }
+
+        // Butonul Principal de Declanșare Pagina 1
+        const btnMainPeriodAction = document.getElementById('btnMainPeriodAction');
+        if (btnMainPeriodAction) {
+          btnMainPeriodAction.addEventListener('click', () => {
+            const today = new Date();
+            state.cycleStartDate = formatDateISO(today);
+            state.calendarYear = today.getFullYear();
+            state.calendarMonth = today.getMonth();
+            saveState();
+            renderAll();
+          });
+        }
+
+        // Navigare Luni
+        const btnPrevMonth = document.getElementById('btnPrevMonth');
+        const btnNextMonth = document.getElementById('btnNextMonth');
+        const btnCurrentMonth = document.getElementById('btnCurrentMonth');
+
+        if (btnPrevMonth) {
+          btnPrevMonth.addEventListener('click', () => {
+            state.calendarMonth--;
+            if (state.calendarMonth < 0) {
+              state.calendarMonth = 11;
+              state.calendarYear--;
+            }
+            renderAll();
+          });
+        }
+
+        if (btnNextMonth) {
+          btnNextMonth.addEventListener('click', () => {
+            state.calendarMonth++;
+            if (state.calendarMonth > 11) {
+              state.calendarMonth = 0;
+              state.calendarYear++;
+            }
+            renderAll();
+          });
+        }
+
+        if (btnCurrentMonth) {
+          btnCurrentMonth.addEventListener('click', () => {
+            const now = new Date();
+            state.calendarYear = now.getFullYear();
+            state.calendarMonth = now.getMonth();
+            renderAll();
+          });
+        }
+
+        // Resetare Date (toate butoanele de reset)
+        const handleReset = () => {
+          if (confirm('Dorești să resetezi datele ciclului pentru a alege o dată de la început?')) {
+            state.cycleStartDate = null;
+            localStorage.removeItem('auracycle_state');
+            renderAll();
+          }
+        };
+
+        document.querySelectorAll('.btnResetTrigger').forEach(btn => {
+          btn.addEventListener('click', handleReset);
+        });
+
+        const navBtnReset = document.getElementById('navBtnReset');
+        if (navBtnReset) navBtnReset.addEventListener('click', handleReset);
+
+        // Modal Date Picker (Nav bar Tab 3: Alege data manual)
+        const datePickerModal = document.getElementById('datePickerModal');
+        const navBtnDateSelect = document.getElementById('navBtnDateSelect');
+        const btnCloseDatePicker = document.getElementById('btnCloseDatePicker');
+        const btnApplyCustomDate = document.getElementById('btnApplyCustomDate');
+        const customDateInput = document.getElementById('customDateInput');
+
+        const openDatePicker = () => {
+          if (state.cycleStartDate) {
+            customDateInput.value = state.cycleStartDate;
+          } else {
+            customDateInput.value = formatDateISO(new Date());
+          }
+          if (datePickerModal.showModal) datePickerModal.showModal();
+        };
+
+        if (navBtnDateSelect) navBtnDateSelect.addEventListener('click', openDatePicker);
+
+        if (btnCloseDatePicker) {
+          btnCloseDatePicker.addEventListener('click', () => {
+            datePickerModal.close();
+          });
+        }
+
+        if (btnApplyCustomDate) {
+          btnApplyCustomDate.addEventListener('click', () => {
+            if (customDateInput.value) {
+              state.cycleStartDate = customDateInput.value;
+              const chosen = parseDateISO(customDateInput.value);
+              state.calendarYear = chosen.getFullYear();
+              state.calendarMonth = chosen.getMonth();
+              saveState();
+              renderAll();
+              datePickerModal.close();
+            }
+          });
+        }
+
+        // Modal Informații
+        const infoModal = document.getElementById('infoModal');
+        const btnCloseInfoModal = document.getElementById('btnCloseInfoModal');
+        const btnCloseInfoModalBottom = document.getElementById('btnCloseInfoModalBottom');
+
+        document.querySelectorAll('.btnInfoTrigger').forEach(btn => {
+          btn.addEventListener('click', () => {
+            if (infoModal.showModal) infoModal.showModal();
+          });
+        });
+
+        const closeInfo = () => infoModal.close();
+        if (btnCloseInfoModal) btnCloseInfoModal.addEventListener('click', closeInfo);
+        if (btnCloseInfoModalBottom) btnCloseInfoModalBottom.addEventListener('click', closeInfo);
+
+        // Randare inițială
+        renderAll();
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    })();
   </script>
 </body>
-
 </html>
