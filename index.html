@@ -40,6 +40,17 @@
   </script>
 
   <style>
+    /* Prevenire totală overflow orizontal pe dispozitive mobile & touch */
+    html, body {
+      overflow-x: clip;
+      max-width: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      overscroll-behavior-x: none;
+      touch-action: pan-y pinch-zoom;
+    }
+
     /* Stiluri iOS Glassmorphism & fundal ambiental difuz */
     body {
       font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
@@ -85,17 +96,19 @@
     }
   </style>
 </head>
-<body class="relative overflow-x-hidden min-h-screen flex justify-center py-0 sm:py-6 selection:bg-[#EE9DCB]/30">
+<body class="relative min-h-screen flex justify-center py-0 sm:py-6 selection:bg-[#EE9DCB]/30 overflow-x-clip">
 
-  <!-- Ambient Light Gradients (Glassmorphism Glow) -->
-  <div class="blob w-84 h-84 bg-[#EE9DCB]/35 top-0 left-[-10%] sm:left-[10%]"></div>
-  <div class="blob w-72 h-72 bg-[#909CFC]/30 top-[25%] right-[-10%] sm:right-[15%]"></div>
-  <div class="blob w-80 h-80 bg-[#FCEF9F]/40 top-[50%] left-[-5%]"></div>
-  <div class="blob w-72 h-72 bg-[#B6F5A7]/35 top-[70%] right-[-5%]"></div>
-  <div class="blob w-84 h-84 bg-[#ACEDF3]/40 bottom-0 left-[10%]"></div>
+  <!-- Ambient Light Gradients (Clipped safely inside fixed viewport wrapper) -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none -z-10" aria-hidden="true">
+    <div class="blob w-80 h-80 bg-[#EE9DCB]/35 top-0 -left-12 sm:left-12"></div>
+    <div class="blob w-72 h-72 bg-[#909CFC]/30 top-[25%] -right-12 sm:right-16"></div>
+    <div class="blob w-80 h-80 bg-[#FCEF9F]/40 top-[50%] -left-8"></div>
+    <div class="blob w-72 h-72 bg-[#B6F5A7]/35 top-[70%] -right-8"></div>
+    <div class="blob w-80 h-80 bg-[#ACEDF3]/40 bottom-0 left-8"></div>
+  </div>
 
   <!-- Mobile Container (max-w-md conform layoutului iOS Stitch) -->
-  <div class="relative z-10 w-full max-w-md min-h-screen sm:min-h-0 sm:rounded-[40px] bg-white/40 sm:border sm:border-white/80 shadow-2xl backdrop-blur-3xl flex flex-col pb-28">
+  <div class="relative z-10 w-full max-w-md min-h-screen sm:min-h-0 sm:rounded-[40px] bg-white/40 sm:border sm:border-white/80 shadow-2xl backdrop-blur-3xl flex flex-col pb-28 overflow-x-clip">
 
     <!-- ========================================== -->
     <!-- 1. HEADER & BUTON PRINCIPAL DE DECLANȘARE -->
@@ -556,7 +569,7 @@
     <!-- ========================================== -->
     <!-- 8. FLOATING BOTTOM NAVIGATION BAR (iOS)    -->
     <!-- ========================================== -->
-    <nav class="fixed bottom-4 left-1/2 transform -translate-x-1/2 w-[92%] max-w-sm glass-panel rounded-full py-2 px-6 shadow-2xl flex items-center justify-between border border-white/80 z-40" aria-label="Navigare rapidă">
+    <nav class="fixed bottom-4 left-4 right-4 mx-auto max-w-sm glass-panel rounded-full py-2 px-6 shadow-2xl flex items-center justify-between border border-white/80 z-40" aria-label="Navigare rapidă">
       <!-- Home Tab (Active) -->
       <button id="navBtnHome" class="flex flex-col items-center justify-center text-[#909CFC] hover:opacity-80 transition" aria-label="Acasă">
         <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-[#909CFC] to-[#EE9DCB] text-white flex items-center justify-center shadow-md">
@@ -850,9 +863,9 @@
           if (pill) {
             const inner = pill.firstElementChild;
             if (currentPhase.id === pName.toLowerCase()) {
-              inner.classList.add('ring-4', 'ring-[#909CFC]', 'ring-offset-2', 'shadow-md', 'scale-105');
+              inner.classList.add('ring-4', 'ring-[#909CFC]', 'ring-offset-2', 'shadow-md', '-translate-y-1');
             } else {
-              inner.classList.remove('ring-4', 'ring-[#909CFC]', 'ring-offset-2', 'shadow-md', 'scale-105');
+              inner.classList.remove('ring-4', 'ring-[#909CFC]', 'ring-offset-2', 'shadow-md', '-translate-y-1');
             }
           }
         });
@@ -1009,7 +1022,7 @@
               dayBtn.classList.add('ring-2', 'ring-offset-1', 'ring-[#909CFC]', 'font-bold');
               
               const ovuDot = document.createElement('span');
-              ovuDot.className = 'absolute -top-1 -right-1 text-[9px]';
+              ovuDot.className = 'absolute top-0.5 right-1 text-[9px] pointer-events-none select-none';
               ovuDot.textContent = '⭐';
               dayBtn.appendChild(ovuDot);
             } else {
