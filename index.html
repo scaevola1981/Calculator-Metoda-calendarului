@@ -152,6 +152,15 @@
           </div>
 
           <div class="flex items-center gap-1.5">
+            <!-- Buton Refresh Aplicație -->
+            <button
+              class="btnRefreshTrigger w-9 h-9 rounded-full glass-card flex items-center justify-center text-gray-600 hover:text-[#3B47B8] transition active:scale-95 shadow-sm"
+              aria-label="Reîmprospătează aplicația" title="Refresh / Actualizează pagina">
+              <svg class="w-4 h-4 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+            </button>
             <!-- Buton Info Metodă -->
             <button
               class="btnInfoTrigger w-9 h-9 rounded-full glass-card flex items-center justify-center text-gray-600 hover:text-[#909CFC] transition active:scale-95 shadow-sm"
@@ -405,6 +414,15 @@
           </div>
 
           <div class="flex items-center gap-1.5">
+            <!-- Buton Refresh Aplicație -->
+            <button
+              class="btnRefreshTrigger w-9 h-9 rounded-full glass-card flex items-center justify-center text-gray-600 hover:text-[#3B47B8] transition active:scale-95 shadow-sm"
+              aria-label="Reîmprospătează aplicația" title="Refresh / Actualizează pagina">
+              <svg class="w-4 h-4 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+            </button>
             <button
               class="btnInfoTrigger w-9 h-9 rounded-full glass-card flex items-center justify-center text-gray-600 hover:text-[#909CFC] transition active:scale-95 shadow-sm"
               aria-label="Deschide detalii metodă" title="Informații Metoda Calendarului">
@@ -640,7 +658,16 @@
       </svg>
     </button>
 
-    <!-- Tab 4: Resetare Ciclul -->
+    <!-- Tab 4: Refresh Aplicație -->
+    <button id="navBtnRefresh" class="btnRefreshTrigger p-2 text-gray-500 hover:text-[#3B47B8] transition active:scale-95"
+      aria-label="Reîmprospătează aplicația" title="Refresh / Actualizează pagina">
+      <svg class="w-6 h-6 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+      </svg>
+    </button>
+
+    <!-- Tab 5: Resetare Ciclul -->
     <button id="navBtnReset" class="p-2 text-gray-500 hover:text-red-500 transition active:scale-95"
       aria-label="Resetează datele" title="Resetează ciclul">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1808,6 +1835,22 @@
           const closeInfo = () => infoModal.close();
           if (btnCloseInfoModal) btnCloseInfoModal.addEventListener('click', closeInfo);
           if (btnCloseInfoModalBottom) btnCloseInfoModalBottom.addEventListener('click', closeInfo);
+
+          // Buton Refresh Aplicație (Header Pagina 1, Header Pagina 2 & NavBar)
+          document.querySelectorAll('.btnRefreshTrigger').forEach(btn => {
+            btn.addEventListener('click', () => {
+              const svg = btn.querySelector('svg');
+              if (svg) {
+                svg.classList.add('animate-spin');
+              }
+              saveState();
+              setTimeout(() => {
+                const url = new URL(window.location.href);
+                url.searchParams.set('v', Date.now().toString());
+                window.location.replace(url.toString());
+              }, 200);
+            });
+          });
 
           // Randare inițială
           renderAll();
