@@ -216,7 +216,7 @@
             <h2 class="text-sm font-bold text-gray-900 tracking-tight flex items-center gap-1.5">
               <span>🗓️</span> Grila Calendarului Lunar
             </h2>
-            <span class="text-[11px] font-semibold" style="color: #404CB0;">Click pe o zi = Ziua 1</span>
+            <span id="calendarMonthStatusBadge" class="text-[11px] font-semibold" style="color: #404CB0;">Click pe o zi = Ziua 1</span>
           </div>
 
           <!-- Zilele Săptămânii -->
@@ -784,7 +784,8 @@
 
         // Stare aplicație
         let state = {
-          cycleStartDate: null, // format 'YYYY-MM-DD'
+          cycleStartDate: null, // format 'YYYY-MM-DD' (ultima menstruație înregistrată)
+          recordedCycles: {},   // Evidență per lună: { 'YYYY-MM': 'YYYY-MM-DD' }
           calendarYear: new Date().getFullYear(),
           calendarMonth: new Date().getMonth(), // 0-11
           activeView: 'calendar' // 'calendar' (Pagina 1) sau 'dashboard' (Pagina 2)
@@ -824,6 +825,12 @@
                   state.calendarMonth = d.getMonth();
                 }
               }
+              if (parsed.recordedCycles && typeof parsed.recordedCycles === 'object') {
+                state.recordedCycles = parsed.recordedCycles;
+              } else if (state.cycleStartDate) {
+                const key = state.cycleStartDate.substring(0, 7);
+                state.recordedCycles = { [key]: state.cycleStartDate };
+              }
             } catch (e) {
               console.warn('Nu s-au putut parsa datele salvate:', e);
             }
@@ -838,23 +845,38 @@
         // Salvare stare în localStorage
         function saveState() {
           localStorage.setItem('auracycle_state', JSON.stringify({
-            cycleStartDate: state.cycleStartDate
+            cycleStartDate: state.cycleStartDate,
+            recordedCycles: state.recordedCycles
           }));
         }
 
+        // Înregistrarea datei de început a menstruației (alocată pe luna respectivă)
+        function setCycleStartDate(dateISO) {
+          state.cycleStartDate = dateISO;
+          if (dateISO) {
+            const monthKey = dateISO.substring(0, 7);
+            state.recordedCycles[monthKey] = dateISO;
+          }
+          saveState();
+        }
+
         // Obținerea Zilei Curente a Ciclului pentru o anumită dată
+        // STRICT pentru luna în care a fost înregistrat ciclul; nu se proiectează automat pe alte luni
         function getCycleDayForDate(targetDate) {
-          if (!state.cycleStartDate) return null;
-          const start = parseDateISO(state.cycleStartDate);
+          if (!targetDate) return null;
+          const monthKey = formatDateISO(targetDate).substring(0, 7);
+          const startISO = state.recordedCycles[monthKey];
+          if (!startISO) return null;
+
+          const start = parseDateISO(startISO);
           const diffTime = targetDate.getTime() - start.getTime();
           const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
 
-          if (diffDays < 0) {
+          if (diffDays < 0 || diffDays >= CYCLE_LENGTH) {
             return null;
           }
 
-          const cycleDay = (diffDays % CYCLE_LENGTH) + 1; // 1 to 28
-          return cycleDay;
+          return diffDays + 1; // 1 la 28
         }
 
         // Identificarea Fazei pentru o anumită Zi a Ciclului (1-28)
@@ -986,18 +1008,22 @@
             monthLabel.textContent = `${MONTH_NAMES_RO[state.calendarMonth]} ${state.calendarYear}`;
           }
 
-          // 2. Buton Principal de Declanșare Pagina 1
+          // 2. Buton Principal de Declanșare Pagina 1 & Recomandare
           const btnPeriodActionText = document.getElementById('btnPeriodActionText');
           const dailyAdviceText = document.getElementById('dailyAdviceText');
 
-          if (state.cycleStartDate) {
-            if (currentCycleDay) {
-              btnPeriodActionText.textContent = `Menstruație înregistrată (Ziua ${currentCycleDay})`;
-              dailyAdviceText.textContent = currentPhase.advice;
-            } else {
-              btnPeriodActionText.textContent = `+ A început menstruația astăzi`;
-              dailyAdviceText.textContent = `Data de start este setată în viitor. Reajusteaz-o pentru a calcula ciclul.`;
-            }
+          const currentMonthKey = formatDateISO(today).substring(0, 7);
+          const currentMonthStartISO = state.recordedCycles[currentMonthKey];
+
+          if (currentCycleDay) {
+            btnPeriodActionText.textContent = `Menstruație înregistrată (Ziua ${currentCycleDay})`;
+            dailyAdviceText.textContent = currentPhase.advice;
+          } else if (currentMonthStartISO) {
+            btnPeriodActionText.textContent = `+ A început menstruația astăzi`;
+            dailyAdviceText.textContent = `Ciclul de 28 de zile s-a încheiat pentru această lună. Când începe noua menstruație, selectează ziua de debut.`;
+          } else if (state.cycleStartDate) {
+            btnPeriodActionText.textContent = `+ A început menstruația astăzi`;
+            dailyAdviceText.textContent = `În așteptarea noului ciclu pentru luna în curs. Apasă pe butonul de mai sus sau pe ziua de start din calendar când începe menstruația.`;
           } else {
             btnPeriodActionText.textContent = `+ A început menstruația astăzi`;
             dailyAdviceText.textContent = `Apasă pe butonul de mai sus sau pe orice zi din calendar pentru a genera instantaneu prognoza biologică.`;
@@ -1011,7 +1037,7 @@
             const pill = document.getElementById(`pill${pName}`);
             if (pill) {
               const inner = pill.firstElementChild;
-              if (currentPhase.id === pName.toLowerCase()) {
+              if (currentCycleDay && currentPhase.id === pName.toLowerCase()) {
                 inner.classList.add('ring-4', 'ring-[#909CFC]', 'ring-offset-2', 'shadow-md', '-translate-y-1');
               } else {
                 inner.classList.remove('ring-4', 'ring-[#909CFC]', 'ring-offset-2', 'shadow-md', '-translate-y-1');
@@ -1031,7 +1057,7 @@
           Object.keys(phaseCards).forEach(key => {
             const card = phaseCards[key];
             if (card) {
-              if (currentPhase.id === key) {
+              if (currentCycleDay && currentPhase.id === key) {
                 card.classList.add('ring-2', 'ring-[#909CFC]', 'ring-offset-2', 'shadow-md', 'scale-[1.01]');
               } else {
                 card.classList.remove('ring-2', 'ring-[#909CFC]', 'ring-offset-2', 'shadow-md', 'scale-[1.01]');
@@ -1039,7 +1065,7 @@
             }
           });
 
-          // 6. Cele 4 Carduri Informative (Stitch - Pagina 2)
+          // 6. Cele 4 Carduri Informative (Stitch - Pagina 1 & Pagina 2)
           const stitchNextPeriodDate = document.getElementById('stitchNextPeriodDate');
           const stitchNextPeriodCountdown = document.getElementById('stitchNextPeriodCountdown');
           const stitchFertileWindowRange = document.getElementById('stitchFertileWindowRange');
@@ -1047,36 +1073,51 @@
           const stitchCycleDayRatio = document.getElementById('stitchCycleDayRatio');
           const stitchCurrentPhaseName = document.getElementById('stitchCurrentPhaseName');
 
-          if (state.cycleStartDate) {
-            const startDate = parseDateISO(state.cycleStartDate);
-
-            let diffDays = Math.floor((today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
-            let cyclesPassed = Math.max(0, Math.floor(diffDays / CYCLE_LENGTH));
-
+          if (currentMonthStartISO && currentCycleDay) {
+            const startDate = parseDateISO(currentMonthStartISO);
             const nextPeriod = new Date(startDate);
-            nextPeriod.setDate(startDate.getDate() + (cyclesPassed + 1) * CYCLE_LENGTH);
+            nextPeriod.setDate(startDate.getDate() + CYCLE_LENGTH);
             stitchNextPeriodDate.textContent = formatRomanianDate(nextPeriod);
 
             const daysLeft = Math.ceil((nextPeriod.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
             stitchNextPeriodCountdown.textContent = daysLeft > 0 ? `În aproximativ ${daysLeft} zile` : `Astăzi`;
 
-            const currentCycleStart = new Date(startDate);
-            currentCycleStart.setDate(startDate.getDate() + cyclesPassed * CYCLE_LENGTH);
+            const fertileStart = new Date(startDate);
+            fertileStart.setDate(startDate.getDate() + 10); // Ziua 11 (index 10)
 
-            const fertileStart = new Date(currentCycleStart);
-            fertileStart.setDate(currentCycleStart.getDate() + 10); // Ziua 11 (index 10)
-
-            const fertileEnd = new Date(currentCycleStart);
-            fertileEnd.setDate(currentCycleStart.getDate() + 15); // Ziua 16 (index 15)
+            const fertileEnd = new Date(startDate);
+            fertileEnd.setDate(startDate.getDate() + 15); // Ziua 16 (index 15)
 
             stitchFertileWindowRange.textContent = `${fertileStart.getDate()} - ${fertileEnd.getDate()} ${MONTH_NAMES_RO[fertileEnd.getMonth()].substring(0, 3)}`;
 
-            const ovulDate = new Date(currentCycleStart);
-            ovulDate.setDate(currentCycleStart.getDate() + 13); // Ziua 14 (index 13)
+            const ovulDate = new Date(startDate);
+            ovulDate.setDate(startDate.getDate() + 13); // Ziua 14 (index 13)
             stitchOvulationDate.textContent = formatRomanianDate(ovulDate);
 
-            stitchCycleDayRatio.textContent = currentCycleDay ? `Ziua ${currentCycleDay} / ${CYCLE_LENGTH}` : `Ziua -- / 28`;
+            stitchCycleDayRatio.textContent = `Ziua ${currentCycleDay} / ${CYCLE_LENGTH}`;
             stitchCurrentPhaseName.textContent = currentPhase.name;
+          } else if (currentMonthStartISO && !currentCycleDay) {
+            // Ciclul acestei luni s-a încheiat (depășite cele 28 de zile)
+            const startDate = parseDateISO(currentMonthStartISO);
+            const nextPeriod = new Date(startDate);
+            nextPeriod.setDate(startDate.getDate() + CYCLE_LENGTH);
+            stitchNextPeriodDate.textContent = formatRomanianDate(nextPeriod);
+            stitchNextPeriodCountdown.textContent = 'În așteptare (pentru luna viitoare)';
+            stitchFertileWindowRange.textContent = '--';
+            stitchOvulationDate.textContent = '--';
+            stitchCycleDayRatio.textContent = 'Ziua -- / 28';
+            stitchCurrentPhaseName.textContent = 'Ciclu încheiat (în așteptare)';
+          } else if (state.cycleStartDate) {
+            // Există un ciclu anterior înregistrat, dar luna curentă este în așteptare
+            const lastStartDate = parseDateISO(state.cycleStartDate);
+            const estimatedNext = new Date(lastStartDate);
+            estimatedNext.setDate(lastStartDate.getDate() + CYCLE_LENGTH);
+            stitchNextPeriodDate.textContent = formatRomanianDate(estimatedNext);
+            stitchNextPeriodCountdown.textContent = 'În așteptare (pentru luna în curs)';
+            stitchFertileWindowRange.textContent = '--';
+            stitchOvulationDate.textContent = '--';
+            stitchCycleDayRatio.textContent = 'Ziua -- / 28';
+            stitchCurrentPhaseName.textContent = 'În așteptare menstruație nouă';
           } else {
             stitchNextPeriodDate.textContent = '--';
             stitchNextPeriodCountdown.textContent = 'Alege data de start';
@@ -1086,14 +1127,14 @@
             stitchCurrentPhaseName.textContent = 'Ciclul nu este setat';
           }
 
-          // 7. Cycle Ring Info (dacă există în DOM)
+          // 7. Cycle Ring Info (Pagina 2)
           const cycleDayText = document.getElementById('cycleDayText');
           const ringMainTitle = document.getElementById('ringMainTitle');
           const conceptionChanceBadge = document.getElementById('conceptionChanceBadge');
           const conceptionChanceText = document.getElementById('conceptionChanceText');
 
           if (cycleDayText && ringMainTitle && conceptionChanceBadge && conceptionChanceText) {
-            if (state.cycleStartDate && currentCycleDay) {
+            if (currentCycleDay) {
               cycleDayText.textContent = `ZIUA ${currentCycleDay} DIN ${CYCLE_LENGTH}`;
               const daysUntilNext = CYCLE_LENGTH - currentCycleDay;
               if (daysUntilNext === 0) {
@@ -1106,6 +1147,12 @@
               conceptionChanceText.textContent = currentPhase.chanceText;
               conceptionChanceBadge.style.backgroundColor = currentPhase.badgeBg;
               conceptionChanceBadge.style.color = currentPhase.badgeText;
+            } else if (state.cycleStartDate) {
+              cycleDayText.textContent = `ÎN AȘTEPTARE`;
+              ringMainTitle.textContent = `Așteptare menstruație nouă`;
+              conceptionChanceText.textContent = `Înregistrează Ziua 1 când începe menstruația`;
+              conceptionChanceBadge.style.backgroundColor = '#F1F5F9';
+              conceptionChanceBadge.style.color = '#475569';
             } else {
               cycleDayText.textContent = `CICLU NESETAT`;
               ringMainTitle.textContent = `Alege o zi pentru a începe`;
@@ -1122,6 +1169,21 @@
           if (!grid) return;
 
           grid.innerHTML = '';
+
+          const viewingMonthKey = `${state.calendarYear}-${String(state.calendarMonth + 1).padStart(2, '0')}`;
+          const viewingMonthStartISO = state.recordedCycles[viewingMonthKey];
+          const calendarMonthStatusBadge = document.getElementById('calendarMonthStatusBadge');
+
+          if (calendarMonthStatusBadge) {
+            if (viewingMonthStartISO) {
+              const sDate = parseDateISO(viewingMonthStartISO);
+              calendarMonthStatusBadge.textContent = `Ciclu activ: Z1 pe ${sDate.getDate()} ${MONTH_NAMES_RO[sDate.getMonth()]}`;
+              calendarMonthStatusBadge.style.color = '#A0356C';
+            } else {
+              calendarMonthStatusBadge.textContent = 'În așteptare: Click pe o zi = Ziua 1';
+              calendarMonthStatusBadge.style.color = '#404CB0';
+            }
+          }
 
           const firstDayOfMonth = new Date(state.calendarYear, state.calendarMonth, 1);
           const daysInMonth = new Date(state.calendarYear, state.calendarMonth + 1, 0).getDate();
@@ -1199,8 +1261,7 @@
             }
 
             dayBtn.addEventListener('click', () => {
-              state.cycleStartDate = cellDateISO;
-              saveState();
+              setCycleStartDate(cellDateISO);
               renderAll();
             });
 
@@ -1233,10 +1294,9 @@
           if (btnMainPeriodAction) {
             btnMainPeriodAction.addEventListener('click', () => {
               const today = new Date();
-              state.cycleStartDate = formatDateISO(today);
+              setCycleStartDate(formatDateISO(today));
               state.calendarYear = today.getFullYear();
               state.calendarMonth = today.getMonth();
-              saveState();
               renderAll();
             });
           }
@@ -1304,6 +1364,7 @@
           if (btnConfirmResetAction) {
             btnConfirmResetAction.addEventListener('click', () => {
               state.cycleStartDate = null;
+              state.recordedCycles = {};
               localStorage.removeItem('auracycle_state');
               renderAll();
               if (resetConfirmModal) resetConfirmModal.close();
@@ -1391,10 +1452,11 @@
           }
 
           const openDatePicker = () => {
-            const baseDate = state.cycleStartDate ? parseDateISO(state.cycleStartDate) : new Date();
-            modalPickerYear = baseDate.getFullYear();
-            modalPickerMonth = baseDate.getMonth();
-            modalSelectedDateISO = state.cycleStartDate || formatDateISO(new Date());
+            const currentMonthKey = `${state.calendarYear}-${String(state.calendarMonth + 1).padStart(2, '0')}`;
+            const monthStartISO = state.recordedCycles[currentMonthKey];
+            modalPickerYear = state.calendarYear;
+            modalPickerMonth = state.calendarMonth;
+            modalSelectedDateISO = monthStartISO || (state.cycleStartDate || formatDateISO(new Date()));
             renderModalPicker();
             if (datePickerModal.showModal) datePickerModal.showModal();
           };
@@ -1443,11 +1505,10 @@
           if (btnApplyCustomDate) {
             btnApplyCustomDate.addEventListener('click', () => {
               if (modalSelectedDateISO) {
-                state.cycleStartDate = modalSelectedDateISO;
+                setCycleStartDate(modalSelectedDateISO);
                 const chosen = parseDateISO(modalSelectedDateISO);
                 state.calendarYear = chosen.getFullYear();
                 state.calendarMonth = chosen.getMonth();
-                saveState();
                 renderAll();
                 closeDatePicker();
               }
