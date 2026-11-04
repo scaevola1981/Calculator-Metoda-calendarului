@@ -520,6 +520,81 @@
             </div>
           </div>
         </section>
+
+        <!-- ======================================================== -->
+        <!-- 7B. GRAFIC REGULARITATEA ÎNCEPERII MENSTRUAȚIEI -->
+        <!-- ======================================================== -->
+        <section aria-label="Grafic Regularitatea Menstruației"
+          class="rounded-3xl p-5 shadow-xs mt-1"
+          style="background: linear-gradient(135deg, rgba(144, 156, 252, 0.20) 0%, rgba(238, 157, 203, 0.20) 50%, rgba(255, 255, 255, 0.92) 100%); border: 1px solid rgba(144, 156, 252, 0.40); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);">
+          <div class="flex items-center justify-between mb-2">
+            <div>
+              <h2 class="text-sm font-extrabold text-gray-800 flex items-center gap-1.5">
+                <span>📈</span> Regularitatea Menstruației
+              </h2>
+              <p class="text-[11px] text-gray-500 font-medium mt-0.5">
+                La câte zile vine următoarea menstruație
+              </p>
+            </div>
+            <span id="regularityAvgBadge"
+              class="text-[11px] font-extrabold px-2.5 py-1 rounded-full bg-purple-100/80 text-purple-800">
+              Medie: 28 zile
+            </span>
+          </div>
+
+          <!-- Sumar Rapid: Ultimul Interval vs Medie vs Status -->
+          <div class="grid grid-cols-3 gap-2 my-3">
+            <div class="rounded-2xl p-2.5 bg-white/80 border border-purple-100 text-center shadow-2xs">
+              <span class="text-[10px] font-bold text-gray-400 uppercase block">Ultimul Ciclu</span>
+              <span id="regLastCycleDays" class="text-sm font-extrabold text-gray-800 mt-0.5 block">-- zile</span>
+            </div>
+            <div class="rounded-2xl p-2.5 bg-white/80 border border-purple-100 text-center shadow-2xs">
+              <span class="text-[10px] font-bold text-gray-400 uppercase block">Media Ta</span>
+              <span id="regAvgCycleDays" class="text-sm font-extrabold text-purple-700 mt-0.5 block">28 zile</span>
+            </div>
+            <div class="rounded-2xl p-2.5 bg-white/80 border border-purple-100 text-center shadow-2xs">
+              <span class="text-[10px] font-bold text-gray-400 uppercase block">Ritmicitate</span>
+              <span id="regStatusLabel" class="text-xs font-extrabold text-emerald-700 mt-1 block">Regulat</span>
+            </div>
+          </div>
+
+          <!-- Zona Graficului cu Bare & Linie de Referință 28 zile -->
+          <div class="relative rounded-2xl bg-white/75 border border-white/90 p-3.5 pt-6 pb-2 shadow-inner">
+            <!-- Linie orizontală de referință 28 zile -->
+            <div class="flex items-center justify-between text-[10px] font-semibold text-gray-400 mb-1">
+              <span>Interval între menstruații (zile)</span>
+              <span class="text-purple-600 font-bold">Referință standard: 28z</span>
+            </div>
+
+            <!-- Container bare dinamice -->
+            <div id="regularityBarsContainer"
+              class="relative h-36 flex items-end justify-around gap-2 pt-5 pb-1 border-b border-gray-200/80">
+              <!-- Generat dinamic prin JS -->
+            </div>
+
+            <!-- Legendă culori regularitate -->
+            <div class="flex flex-wrap items-center justify-center gap-3 mt-2.5 pt-1 text-[10px] font-semibold text-gray-600">
+              <span class="flex items-center gap-1">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 inline-block"></span> Regulat (26–30z)
+              </span>
+              <span class="flex items-center gap-1">
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-400 inline-block"></span> Mai scurt (&lt;26z)
+              </span>
+              <span class="flex items-center gap-1">
+                <span class="w-2.5 h-2.5 rounded-full bg-rose-400 inline-block"></span> Mai lung (&gt;30z)
+              </span>
+            </div>
+          </div>
+
+          <!-- Istoric Menstruații Înregistrate & Explicație -->
+          <div id="regularityHistoryList" class="mt-3 space-y-1.5">
+            <!-- Generat dinamic prin JS -->
+          </div>
+
+          <p class="text-[11px] text-gray-500 mt-2.5 leading-relaxed">
+            💡 <strong>Cum funcționează:</strong> De fiecare dată când selectezi o nouă zi de început a menstruației în calendar (ex: 30 Octombrie, apoi 22 Noiembrie), graficul calculează automat după câte zile a venit menstruația (ex: <strong>23 zile</strong>).
+          </p>
+        </section>
       </main>
     </div>
 
@@ -751,6 +826,7 @@
         let state = {
           cycleStartDate: null, // format 'YYYY-MM-DD' (ultima menstruație înregistrată)
           recordedCycles: {},   // Evidență per lună: { 'YYYY-MM': 'YYYY-MM-DD' }
+          cycleHistory: [],     // Istoric cronologic al datelor de început (ex: ['2026-10-30', '2026-11-22'])
           calendarYear: new Date().getFullYear(),
           calendarMonth: new Date().getMonth(), // 0-11
           activeView: 'calendar' // 'calendar' (Pagina 1) sau 'dashboard' (Pagina 2)
@@ -791,6 +867,13 @@
                   state.calendarMonth = d.getMonth();
                 }
               }
+              if (Array.isArray(parsed.cycleHistory) && parsed.cycleHistory.length > 0) {
+                state.cycleHistory = parsed.cycleHistory
+                  .filter(Boolean)
+                  .sort((a, b) => a.localeCompare(b));
+              } else if (state.cycleStartDate) {
+                state.cycleHistory = [state.cycleStartDate];
+              }
             } catch (e) {
               console.warn('Nu s-au putut parsa datele salvate:', e);
             }
@@ -806,7 +889,8 @@
         function saveState() {
           localStorage.setItem('auracycle_state', JSON.stringify({
             cycleStartDate: state.cycleStartDate,
-            recordedCycles: state.recordedCycles
+            recordedCycles: state.recordedCycles,
+            cycleHistory: state.cycleHistory
           }));
         }
 
@@ -814,6 +898,24 @@
         function setCycleStartDate(dateISO) {
           state.cycleStartDate = dateISO;
           state.recordedCycles = dateISO ? { [dateISO]: dateISO } : {};
+
+          if (dateISO) {
+            const newDate = parseDateISO(dateISO);
+            if (newDate) {
+              // Dacă există deja o dată în istoric la mai puțin de 10 zile distanță, o înlocuim (corecție a aceluiași ciclu).
+              // Dacă este la >= 10 zile distanță (ex: 30 Oct -> 22 Noi = 23 zile), o păstrăm ca menstruație nouă pentru calculul regularității.
+              const filtered = (state.cycleHistory || []).filter(existingISO => {
+                const exDate = parseDateISO(existingISO);
+                if (!exDate) return false;
+                const diff = Math.abs(Math.round((newDate.getTime() - exDate.getTime()) / (1000 * 60 * 60 * 24)));
+                return diff >= 10;
+              });
+              filtered.push(dateISO);
+              filtered.sort((a, b) => a.localeCompare(b));
+              state.cycleHistory = filtered.slice(-8); // păstrăm ultimele 8 menstruații
+            }
+          }
+
           saveState();
         }
 
@@ -1122,6 +1224,203 @@
               conceptionChanceBadge.style.color = '#475569';
             }
           }
+
+          // 8. Grafic Regularitatea Începerii Menstruației (Pagina 2)
+          renderRegularityChart();
+        }
+
+        // Randare Grafic Regularitatea Menstruației (La câte zile vine următoarea menstruație)
+        function renderRegularityChart() {
+          const barsContainer = document.getElementById('regularityBarsContainer');
+          const historyList = document.getElementById('regularityHistoryList');
+          const avgBadge = document.getElementById('regularityAvgBadge');
+          const lastCycleEl = document.getElementById('regLastCycleDays');
+          const avgCycleEl = document.getElementById('regAvgCycleDays');
+          const statusLabelEl = document.getElementById('regStatusLabel');
+
+          if (!barsContainer || !historyList) return;
+
+          barsContainer.innerHTML = '';
+          historyList.innerHTML = '';
+
+          // Ordonăm istoricul cronologic
+          const dates = (state.cycleHistory || [])
+            .filter(Boolean)
+            .slice()
+            .sort((a, b) => a.localeCompare(b));
+
+          // Calculăm intervalele în zile dintre menstruații consecutive
+          const intervals = [];
+          for (let i = 1; i < dates.length; i++) {
+            const d1 = parseDateISO(dates[i - 1]);
+            const d2 = parseDateISO(dates[i]);
+            if (d1 && d2) {
+              const days = Math.round((d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
+              if (days > 0) {
+                intervals.push({
+                  fromISO: dates[i - 1],
+                  toISO: dates[i],
+                  fromLabel: `${d1.getDate()} ${MONTH_NAMES_RO[d1.getMonth()].substring(0, 3)}`,
+                  toLabel: `${d2.getDate()} ${MONTH_NAMES_RO[d2.getMonth()].substring(0, 3)}`,
+                  days: days,
+                  isEstimated: false
+                });
+              }
+            }
+          }
+
+          // Calculăm media și statusul de regularitate
+          let avgDays = CYCLE_LENGTH;
+          if (intervals.length > 0) {
+            const sum = intervals.reduce((acc, item) => acc + item.days, 0);
+            avgDays = Math.round(sum / intervals.length);
+            const lastDays = intervals[intervals.length - 1].days;
+
+            if (lastCycleEl) lastCycleEl.textContent = `${lastDays} zile`;
+            if (avgCycleEl) avgCycleEl.textContent = `${avgDays} zile`;
+            if (avgBadge) avgBadge.textContent = `Medie: ${avgDays} zile`;
+
+            if (statusLabelEl) {
+              if (lastDays >= 26 && lastDays <= 30) {
+                statusLabelEl.textContent = 'Regulat';
+                statusLabelEl.className = 'text-xs font-extrabold text-emerald-600 mt-1 block';
+              } else if (lastDays < 26) {
+                statusLabelEl.textContent = `Mai scurt (${lastDays}z)`;
+                statusLabelEl.className = 'text-xs font-extrabold text-amber-600 mt-1 block';
+              } else {
+                statusLabelEl.textContent = `Mai lung (${lastDays}z)`;
+                statusLabelEl.className = 'text-xs font-extrabold text-rose-600 mt-1 block';
+              }
+            }
+          } else {
+            if (lastCycleEl) lastCycleEl.textContent = state.cycleStartDate ? '28z (est.)' : '-- zile';
+            if (avgCycleEl) avgCycleEl.textContent = '28 zile';
+            if (avgBadge) avgBadge.textContent = 'Standard: 28 zile';
+            if (statusLabelEl) {
+              statusLabelEl.textContent = state.cycleStartDate ? 'În monitorizare' : 'Nesetat';
+              statusLabelEl.className = 'text-xs font-extrabold text-purple-600 mt-1 block';
+            }
+          }
+
+          // Construim barele de afișat în grafic (intervalele înregistrate + următorul ciclu estimat la 28 zile)
+          const chartItems = intervals.slice(-5);
+          if (state.cycleStartDate) {
+            const latestStart = parseDateISO(state.cycleStartDate);
+            if (latestStart) {
+              const estNext = new Date(latestStart);
+              estNext.setDate(latestStart.getDate() + CYCLE_LENGTH);
+              chartItems.push({
+                fromISO: state.cycleStartDate,
+                toISO: formatDateISO(estNext),
+                fromLabel: `${latestStart.getDate()} ${MONTH_NAMES_RO[latestStart.getMonth()].substring(0, 3)}`,
+                toLabel: `${estNext.getDate()} ${MONTH_NAMES_RO[estNext.getMonth()].substring(0, 3)}`,
+                days: CYCLE_LENGTH,
+                isEstimated: true
+              });
+            }
+          }
+
+          // Linie punctată orizontală pentru referința de 28 zile (înălțime max scalată la 40 zile)
+          const maxScale = 40;
+          const refBottomPct = Math.min(92, Math.max(15, Math.round((28 / maxScale) * 100)));
+          const refLine = document.createElement('div');
+          refLine.className = 'absolute left-0 right-0 border-t border-dashed border-purple-400/70 pointer-events-none z-0';
+          refLine.style.bottom = `${refBottomPct}%`;
+          barsContainer.appendChild(refLine);
+
+          if (chartItems.length === 0) {
+            const emptyMsg = document.createElement('div');
+            emptyMsg.className = 'w-full h-full flex items-center justify-center text-xs text-gray-400 font-medium text-center px-4';
+            emptyMsg.textContent = 'Selectează data primei zile de menstruație în calendar pentru a vedea graficul regularității.';
+            barsContainer.appendChild(emptyMsg);
+            return;
+          }
+
+          chartItems.forEach((item) => {
+            const col = document.createElement('div');
+            col.className = 'flex-1 flex flex-col items-center justify-end h-full z-10 max-w-[68px]';
+
+            const heightPct = Math.min(95, Math.max(22, Math.round((item.days / maxScale) * 100)));
+
+            let barColorClass = 'bg-emerald-400 text-emerald-950 border border-emerald-500/30';
+            if (item.isEstimated) {
+              barColorClass = 'bg-purple-200/80 text-purple-900 border border-dashed border-purple-400';
+            } else if (item.days < 26) {
+              barColorClass = 'bg-amber-400 text-amber-950 border border-amber-500/30';
+            } else if (item.days > 30) {
+              barColorClass = 'bg-rose-400 text-white border border-rose-500/30';
+            }
+
+            const topBadge = document.createElement('span');
+            topBadge.className = 'text-[10px] font-extrabold text-gray-800 mb-1 whitespace-nowrap';
+            topBadge.textContent = item.isEstimated ? `${item.days}z (est.)` : `${item.days} zile`;
+
+            const bar = document.createElement('div');
+            bar.className = `w-full rounded-t-xl transition-all duration-500 flex items-center justify-center shadow-xs ${barColorClass}`;
+            bar.style.height = `${heightPct}%`;
+
+            const lbl = document.createElement('span');
+            lbl.className = 'text-[9px] font-bold text-gray-600 mt-1.5 text-center leading-tight whitespace-nowrap';
+            lbl.textContent = `${item.fromLabel} → ${item.toLabel}`;
+
+            col.appendChild(topBadge);
+            col.appendChild(bar);
+            col.appendChild(lbl);
+            barsContainer.appendChild(col);
+          });
+
+          // Listă istoric menstruații înregistrate (cu opțiune de ștergere individuală)
+          if (dates.length > 0) {
+            const titleEl = document.createElement('div');
+            titleEl.className = 'text-[10px] font-bold text-gray-500 uppercase tracking-wider pt-1 flex items-center justify-between';
+            titleEl.innerHTML = `<span>Menstruații înregistrate (${dates.length})</span><span>Interval</span>`;
+            historyList.appendChild(titleEl);
+
+            dates.slice().reverse().forEach((iso, revIdx) => {
+              const origIdx = dates.length - 1 - revIdx;
+              const dObj = parseDateISO(iso);
+              const prevISO = origIdx > 0 ? dates[origIdx - 1] : null;
+              let diffBadgeHtml = '<span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-gray-100 text-gray-600">Primul ciclu înregistrat</span>';
+
+              if (prevISO) {
+                const prevObj = parseDateISO(prevISO);
+                const diffDays = Math.round((dObj.getTime() - prevObj.getTime()) / (1000 * 60 * 60 * 24));
+                if (diffDays >= 26 && diffDays <= 30) {
+                  diffBadgeHtml = `<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">La ${diffDays} zile (Regulat)</span>`;
+                } else if (diffDays < 26) {
+                  diffBadgeHtml = `<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-amber-100 text-amber-900">La ${diffDays} zile (Mai devreme)</span>`;
+                } else {
+                  diffBadgeHtml = `<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-rose-100 text-rose-800">La ${diffDays} zile (Mai târziu)</span>`;
+                }
+              }
+
+              const row = document.createElement('div');
+              row.className = 'flex items-center justify-between rounded-xl bg-white/80 border border-purple-100/80 px-3 py-2 text-xs';
+              row.innerHTML = `
+                <div class="flex items-center gap-2">
+                  <span>🩸</span>
+                  <span class="font-bold text-gray-800">${dObj.getDate()} ${MONTH_NAMES_RO[dObj.getMonth()]} ${dObj.getFullYear()}</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  ${diffBadgeHtml}
+                  <button type="button" data-del-iso="${iso}" class="text-gray-400 hover:text-red-500 font-bold text-xs px-1" title="Șterge această dată">✕</button>
+                </div>
+              `;
+              const delBtn = row.querySelector('[data-del-iso]');
+              if (delBtn) {
+                delBtn.addEventListener('click', () => {
+                  state.cycleHistory = (state.cycleHistory || []).filter(x => x !== iso);
+                  if (state.cycleStartDate === iso) {
+                    state.cycleStartDate = state.cycleHistory.length > 0 ? state.cycleHistory[state.cycleHistory.length - 1] : null;
+                    state.recordedCycles = state.cycleStartDate ? { [state.cycleStartDate]: state.cycleStartDate } : {};
+                  }
+                  saveState();
+                  renderAll();
+                });
+              }
+              historyList.appendChild(row);
+            });
+          }
         }
 
         // Randare Grilă Calendar
@@ -1332,6 +1631,7 @@
             btnConfirmResetAction.addEventListener('click', () => {
               state.cycleStartDate = null;
               state.recordedCycles = {};
+              state.cycleHistory = [];
               localStorage.removeItem('auracycle_state');
               renderAll();
               if (resetConfirmModal) resetConfirmModal.close();
