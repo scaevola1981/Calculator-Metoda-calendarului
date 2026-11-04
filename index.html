@@ -246,62 +246,51 @@
             <span class="text-[10px] font-bold" style="color: #A0356C;">Ciclul de 28z</span>
           </div>
 
-          <!-- Cele 5 pilule verticale proporționale -->
+          <!-- Cele 4 pilule verticale proporționale (5z + 3z + 12z + 8z = 28z) -->
           <div class="flex items-end justify-between gap-2.5 pt-3 pb-1 px-1 h-44">
-            <!-- 1. Menstruație: 5 zile -> 68px -->
+            <!-- 1. Menstruație: 5 zile -> 68px (Galben) -->
             <div id="pillMenstrual" class="flex-1 flex flex-col items-center justify-end transition-all duration-300">
               <div
-                class="w-full rounded-2xl flex flex-col items-center justify-between py-2.5 px-1 shadow-sm transition-all border border-[#EE9DCB]/60"
-                style="background-color: #EE9DCB; height: 68px;">
-                <span class="text-[11px] font-extrabold text-white">5z</span>
-                <span class="text-[9px] font-bold text-white/90 truncate">Menstr.</span>
+                class="w-full rounded-2xl flex flex-col items-center justify-between py-2.5 px-1 shadow-sm transition-all border border-amber-300/80"
+                style="background-color: #FCEF9F; height: 68px;">
+                <span class="text-[11px] font-extrabold text-amber-900">5z</span>
+                <span class="text-[9px] font-bold text-amber-800 truncate">Menstr. 🩸</span>
               </div>
               <span class="text-[10px] font-semibold text-gray-600 mt-2">Z 1-5</span>
             </div>
 
-            <!-- 2. Foliculară: 5 zile -> 68px -->
+            <!-- 2. Post-menstrual (Ciclu sigur): 3 zile -> 48px (Galben) -->
             <div id="pillFollicular"
               class="flex-1 flex flex-col items-center justify-end transition-all duration-300">
               <div
-                class="w-full rounded-2xl flex flex-col items-center justify-between py-2.5 px-1 shadow-sm transition-all border border-[#FCEF9F]/80"
-                style="background-color: #FCEF9F; height: 68px;">
-                <span class="text-[11px] font-extrabold text-amber-900">5z</span>
-                <span class="text-[9px] font-bold text-amber-800 truncate">Folic.</span>
+                class="w-full rounded-2xl flex flex-col items-center justify-between py-2 px-1 shadow-sm transition-all border border-amber-300/80"
+                style="background-color: #FCEF9F; height: 48px;">
+                <span class="text-[11px] font-extrabold text-amber-900 leading-none">3z</span>
+                <span class="text-[9px] font-bold text-amber-800 truncate leading-none">Folic.</span>
               </div>
-              <span class="text-[10px] font-semibold text-gray-600 mt-2">Z 6-10</span>
+              <span class="text-[10px] font-semibold text-gray-600 mt-2">Z 6-8</span>
             </div>
 
-            <!-- 3. Fertilă: 5 zile -> 68px -->
+            <!-- 3. Fereastră Fertilă: 12 zile -> 136px (Roșu cu bebeluș 👶) -->
             <div id="pillFertile" class="flex-1 flex flex-col items-center justify-end transition-all duration-300">
               <div
-                class="w-full rounded-2xl flex flex-col items-center justify-between py-2.5 px-1 shadow-sm transition-all border border-[#B6F5A7]/80"
-                style="background-color: #B6F5A7; height: 68px;">
-                <span class="text-[11px] font-extrabold text-emerald-900">5z</span>
-                <span class="text-[9px] font-bold text-emerald-800 truncate">Fertil</span>
+                class="w-full rounded-2xl flex flex-col items-center justify-between py-3 px-1 shadow-sm transition-all border border-red-500"
+                style="background-color: #EF4444; height: 136px;">
+                <span class="text-[11px] font-extrabold text-white">12z</span>
+                <span class="text-[10px] font-bold text-white/95 truncate">Fertil 👶</span>
               </div>
-              <span class="text-[10px] font-semibold text-gray-600 mt-2">Z 11-16</span>
+              <span class="text-[10px] font-semibold text-gray-600 mt-2">Z 9-20</span>
             </div>
 
-            <!-- 4. Ovulație: 1 zi -> 36px (cea mai mică pilulă) -->
-            <div id="pillOvulation" class="flex-1 flex flex-col items-center justify-end transition-all duration-300">
-              <div
-                class="w-full rounded-2xl flex flex-col items-center justify-between py-1.5 px-1 shadow-sm transition-all border border-[#909CFC]"
-                style="background-color: #909CFC; height: 36px;">
-                <span class="text-[11px] font-extrabold text-white leading-none">1z</span>
-                <span class="text-[8px] font-bold text-white/95 leading-none">Ovul.</span>
-              </div>
-              <span class="text-[10px] font-semibold text-gray-600 mt-2">Z 14</span>
-            </div>
-
-            <!-- 5. Luteală: 12 zile -> 136px (cea mai înaltă pilulă) -->
+            <!-- 4. Luteală: 8 zile -> 96px (Galben) -->
             <div id="pillLuteal" class="flex-1 flex flex-col items-center justify-end transition-all duration-300">
               <div
-                class="w-full rounded-2xl flex flex-col items-center justify-between py-3 px-1 shadow-sm transition-all border border-[#ACEDF3]"
-                style="background-color: #ACEDF3; height: 136px;">
-                <span class="text-[11px] font-extrabold text-cyan-900">12z</span>
-                <span class="text-[10px] font-bold text-cyan-800 truncate">Luteală</span>
+                class="w-full rounded-2xl flex flex-col items-center justify-between py-2.5 px-1 shadow-sm transition-all border border-amber-300/80"
+                style="background-color: #FCEF9F; height: 96px;">
+                <span class="text-[11px] font-extrabold text-amber-900">8z</span>
+                <span class="text-[10px] font-bold text-amber-800 truncate">Luteală</span>
               </div>
-              <span class="text-[10px] font-semibold text-gray-600 mt-2">Z 17-28</span>
+              <span class="text-[10px] font-semibold text-gray-600 mt-2">Z 21-28</span>
             </div>
           </div>
         </section>
@@ -334,12 +323,12 @@
                 <span class="text-xs font-bold" style="color: #1F5C1B;">Fereastră Fertilă</span>
                 <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-xs"
                   style="background-color: rgba(182, 245, 167, 0.50); color: #1F5C1B;">
-                  🌿
+                  👶
                 </div>
               </div>
               <div>
                 <p id="stitchFertileWindowRange" class="text-base font-extrabold text-gray-900 leading-tight">--</p>
-                <p class="text-[11px] font-semibold mt-0.5" style="color: #1F5C1B;">Șanse ridicate</p>
+                <p class="text-[11px] font-semibold mt-0.5" style="color: #1F5C1B;">12 zile fertile (Z9–20)</p>
               </div>
             </div>
 
@@ -350,7 +339,7 @@
                 <span class="text-xs font-bold" style="color: #3B47B8;">Ziua Ovulației</span>
                 <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-xs"
                   style="background-color: rgba(144, 156, 252, 0.38); color: #35409E;">
-                  ⭐
+                  👶
                 </div>
               </div>
               <div>
@@ -442,14 +431,14 @@
           </div>
 
           <div class="space-y-2.5">
-            <!-- Card 1: Menstruație (#EE9DCB - Roz Pastel) -->
+            <!-- Card 1: Menstruație (#FCEF9F - Galben) -->
             <div id="cardPhaseMenstrual"
-              class="rounded-2xl p-4 transition-all duration-300 border-l-4 border-l-[#EE9DCB] shadow-xs"
-              style="background: linear-gradient(135deg, rgba(238, 157, 203, 0.28) 0%, rgba(255, 255, 255, 0.90) 100%); border-top: 1px solid rgba(238, 157, 203, 0.35); border-right: 1px solid rgba(238, 157, 203, 0.35); border-bottom: 1px solid rgba(238, 157, 203, 0.35); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);">
+              class="rounded-2xl p-4 transition-all duration-300 border-l-4 border-l-[#F59E0B] shadow-xs"
+              style="background: linear-gradient(135deg, rgba(252, 239, 159, 0.45) 0%, rgba(255, 255, 255, 0.90) 100%); border-top: 1px solid rgba(252, 239, 159, 0.6); border-right: 1px solid rgba(252, 239, 159, 0.6); border-bottom: 1px solid rgba(252, 239, 159, 0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);">
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3">
                   <div class="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-base shadow-xs"
-                    style="background-color: rgba(238, 157, 203, 0.40); color: #8F225B;">
+                    style="background-color: rgba(252, 239, 159, 0.75); color: #855302;">
                     🩸
                   </div>
                   <div>
@@ -457,14 +446,14 @@
                     <p class="text-xs text-gray-500">Zilele 1 – 5 • Eliminarea endometrului</p>
                   </div>
                 </div>
-                <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-[#EE9DCB]/35 text-[#8F225B]">5 zile</span>
+                <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-[#FCEF9F]/80 text-amber-950">5 zile</span>
               </div>
               <p class="text-xs text-gray-700 mt-2 pl-12 leading-relaxed">
                 Estrogen și progesteron la nivel minim. Corpul se reînnoiește; acordă atenție odihnei și hidratării.
               </p>
             </div>
 
-            <!-- Card 2: Foliculară (#FCEF9F - Galben Pastel) -->
+            <!-- Card 2: Foliculară / Post-Menstruală (#FCEF9F - Galben) -->
             <div id="cardPhaseFollicular"
               class="rounded-2xl p-4 transition-all duration-300 border-l-4 border-l-[#FCEF9F] shadow-xs"
               style="background: linear-gradient(135deg, rgba(252, 239, 159, 0.40) 0%, rgba(255, 255, 255, 0.90) 100%); border-top: 1px solid rgba(252, 239, 159, 0.5); border-right: 1px solid rgba(252, 239, 159, 0.5); border-bottom: 1px solid rgba(252, 239, 159, 0.5); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);">
@@ -475,80 +464,58 @@
                     🌱
                   </div>
                   <div>
-                    <h3 class="text-sm font-bold text-gray-900">Foliculară</h3>
-                    <p class="text-xs text-gray-500">Zilele 6 – 10 • Creșterea estrogenului</p>
+                    <h3 class="text-sm font-bold text-gray-900">Foliculară (Post-Menstruală)</h3>
+                    <p class="text-xs text-gray-500">Zilele 6 – 8 • Creșterea estrogenului</p>
                   </div>
                 </div>
-                <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-[#FCEF9F]/65 text-amber-950">5 zile</span>
+                <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-[#FCEF9F]/65 text-amber-950">3 zile</span>
               </div>
               <p class="text-xs text-gray-700 mt-2 pl-12 leading-relaxed">
-                Foliculii ovarieni se maturizează. Energia fizică și claritatea mentală sunt în creștere continuă.
+                Cele 3 zile imediat următoare menstruației. Foliculii ovarieni încep maturizarea, iar fertilitatea este scăzută.
               </p>
             </div>
 
-            <!-- Card 3: Fereastră Fertilă (#B6F5A7 - Verde Pastel) -->
+            <!-- Card 3: Fereastră Fertilă (#EF4444 - Roșu cu bebeluș 👶) -->
             <div id="cardPhaseFertile"
-              class="rounded-2xl p-4 transition-all duration-300 border-l-4 border-l-[#B6F5A7] shadow-xs"
-              style="background: linear-gradient(135deg, rgba(182, 245, 167, 0.35) 0%, rgba(255, 255, 255, 0.90) 100%); border-top: 1px solid rgba(182, 245, 167, 0.45); border-right: 1px solid rgba(182, 245, 167, 0.45); border-bottom: 1px solid rgba(182, 245, 167, 0.45); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);">
+              class="rounded-2xl p-4 transition-all duration-300 border-l-4 border-l-[#EF4444] shadow-xs"
+              style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.22) 0%, rgba(255, 255, 255, 0.92) 100%); border-top: 1px solid rgba(239, 68, 68, 0.35); border-right: 1px solid rgba(239, 68, 68, 0.35); border-bottom: 1px solid rgba(239, 68, 68, 0.35); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);">
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3">
                   <div class="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-base shadow-xs"
-                    style="background-color: rgba(182, 245, 167, 0.50); color: #1F5C1B;">
-                    🌿
+                    style="background-color: rgba(239, 68, 68, 0.25); color: #991B1B;">
+                    👶
                   </div>
                   <div>
-                    <h3 class="text-sm font-bold text-gray-900">Fereastră Fertilă</h3>
-                    <p class="text-xs text-gray-500">Zilele 11 – 16 • Șanse maxime de concepție</p>
+                    <h3 class="text-sm font-bold text-gray-900">Perioadă Fertilă (Ovulație Z14)</h3>
+                    <p class="text-xs text-gray-500">Zilele 9 – 20 • Șanse ridicate de concepție</p>
                   </div>
                 </div>
-                <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-[#B6F5A7]/50 text-emerald-950">5-6 zile</span>
+                <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-red-500 text-white">12 zile</span>
               </div>
               <p class="text-xs text-gray-700 mt-2 pl-12 leading-relaxed">
-                Spermatozoizii pot supraviețui până la 5 zile în mucusul cervical fertil pregătind fertilizarea ovulului.
+                Perioada fertilă de 12 zile marcată în roșu cu 👶, incluzând Ziua Ovulației (Z14). Șanse maxime de concepție.
               </p>
             </div>
 
-            <!-- Card 4: Ovulație (#909CFC - Bleu/Wisteria Pastel) -->
-            <div id="cardPhaseOvulation"
-              class="rounded-2xl p-4 transition-all duration-300 border-l-4 border-l-[#909CFC] shadow-xs"
-              style="background: linear-gradient(135deg, rgba(144, 156, 252, 0.28) 0%, rgba(255, 255, 255, 0.90) 100%); border-top: 1px solid rgba(144, 156, 252, 0.4); border-right: 1px solid rgba(144, 156, 252, 0.4); border-bottom: 1px solid rgba(144, 156, 252, 0.4); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);">
-              <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                  <div class="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-base shadow-xs"
-                    style="background-color: rgba(144, 156, 252, 0.38); color: #35409E;">
-                    ⭐
-                  </div>
-                  <div>
-                    <h3 class="text-sm font-bold text-gray-900">Ovulație</h3>
-                    <p class="text-xs text-gray-500">Ziua 14 • Vârful fertilității</p>
-                  </div>
-                </div>
-                <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-[#909CFC]/35 text-indigo-950">1 zi</span>
-              </div>
-              <p class="text-xs text-gray-700 mt-2 pl-12 leading-relaxed">
-                Ovulul este eliberat de ovar și rămâne viabil pentru fertilizare timp de 12–24 ore.
-              </p>
-            </div>
-
-            <!-- Card 5: Faza Luteală (#ACEDF3 - Aqua Pastel) -->
+            <!-- Card 4: Faza Luteală (#FCEF9F - Galben) -->
             <div id="cardPhaseLuteal"
-              class="rounded-2xl p-4 transition-all duration-300 border-l-4 border-l-[#ACEDF3] shadow-xs"
-              style="background: linear-gradient(135deg, rgba(172, 237, 243, 0.35) 0%, rgba(255, 255, 255, 0.90) 100%); border-top: 1px solid rgba(172, 237, 243, 0.45); border-right: 1px solid rgba(172, 237, 243, 0.45); border-bottom: 1px solid rgba(172, 237, 243, 0.45); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);">
+              class="rounded-2xl p-4 transition-all duration-300 border-l-4 border-l-[#FCEF9F] shadow-xs"
+              style="background: linear-gradient(135deg, rgba(252, 239, 159, 0.40) 0%, rgba(255, 255, 255, 0.90) 100%); border-top: 1px solid rgba(252, 239, 159, 0.5); border-right: 1px solid rgba(252, 239, 159, 0.5); border-bottom: 1px solid rgba(252, 239, 159, 0.5); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);">
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3">
                   <div class="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-base shadow-xs"
-                    style="background-color: rgba(172, 237, 243, 0.50); color: #0E7490;">
+                    style="background-color: rgba(252, 239, 159, 0.65); color: #855302;">
                     🌙
                   </div>
                   <div>
                     <h3 class="text-sm font-bold text-gray-900">Faza Luteală</h3>
-                    <p class="text-xs text-gray-500">Zilele 17 – 28 • Fertilitate minimă</p>
+                    <p class="text-xs text-gray-500">Zilele 21 – 28 • Fertilitate minimă</p>
                   </div>
                 </div>
-                <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-[#ACEDF3]/50 text-cyan-950">12 zile</span>
+                <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-[#FCEF9F]/65 text-amber-950">8 zile</span>
               </div>
               <p class="text-xs text-gray-700 mt-2 pl-12 leading-relaxed">
-                Progesteronul domină pentru pregătirea uterului. Faza se încheie la debutul următorului ciclu.
+                Cele 8 zile post-fertile colorate în galben. Faza se încheie la debutul următorului ciclu menstrual.
               </p>
             </div>
           </div>
@@ -715,14 +682,12 @@
       </div>
 
       <div class="text-xs text-gray-600 space-y-2.5 leading-relaxed">
-        <p><strong>Despre algoritm:</strong> Aplicația utilizează logica fiziologică standard a ciclului menstrual
-          regulat de 28 de zile:</p>
+        <p><strong>Despre algoritm:</strong> Aplicația utilizează logica metodei calendarului pe un ciclu de 28 de zile:</p>
         <ul class="space-y-1.5 list-disc pl-4 text-[11px]">
-          <li><span class="font-bold text-[#EE9DCB]">Zilele 1–5:</span> Menstruație (sângerare normală).</li>
-          <li><span class="font-bold text-amber-600">Zilele 6–10:</span> Faza foliculară (estrogen în creștere).</li>
-          <li><span class="font-bold text-emerald-600">Zilele 11–13 & 15–16:</span> Fereastra fertilă.</li>
-          <li><span class="font-bold text-indigo-600">Ziua 14:</span> Ziua Ovulației (vârful fertil).</li>
-          <li><span class="font-bold text-cyan-700">Zilele 17–28:</span> Faza luteală (fertilitate scăzută).</li>
+          <li><span class="font-bold text-amber-600">Zilele 1–5 (Galben 🩸):</span> Menstruație (5 zile).</li>
+          <li><span class="font-bold text-amber-600">Zilele 6–8 (Galben):</span> Perioadă post-menstruală (3 zile).</li>
+          <li><span class="font-bold text-red-600">Zilele 9–20 (Roșu 👶):</span> Fereastra fertilă (12 zile, cu Ovulația în Ziua 14).</li>
+          <li><span class="font-bold text-amber-600">Zilele 21–28 (Galben):</span> Faza luteală / post-fertilă (8 zile).</li>
         </ul>
         <p class="text-[10px] text-gray-400 italic">Notă medicală: Această aplicație are scop educativ și informativ.
           Metoda calendarului nu este o metodă contraceptivă sigură 100%.</p>
@@ -888,11 +853,10 @@
         }
 
         // Identificarea Fazei pentru o anumită Zi a Ciclului (1-28)
-        // 1. Menstruație: Zilele 1–5 (#EE9DCB)
-        // 2. Foliculară: Zilele 6–10 (#FCEF9F)
-        // 3. Fereastră Fertilă: Zilele 11–13 și 15–16 (#B6F5A7)
-        // 4. Ovulație: Ziua 14 (#909CFC)
-        // 5. Luteală: Zilele 17–28 (#ACEDF3)
+        // 1. Menstruație: Zilele 1–5 (Galben #FCEF9F)
+        // 2. Post-menstrual / Foliculară: Zilele 6–8 (Galben #FCEF9F)
+        // 3. Fereastră Fertilă: Zilele 9–20 (Roșu #EF4444 cu 👶)
+        // 4. Luteală: Zilele 21–28 (Galben #FCEF9F)
         function getPhaseInfo(cycleDay) {
           if (!cycleDay || cycleDay < 1 || cycleDay > CYCLE_LENGTH) {
             return {
@@ -910,49 +874,39 @@
             return {
               id: 'menstrual',
               name: 'Menstruație',
-              colorHex: '#EE9DCB',
-              badgeBg: '#EE9DCB25',
-              badgeText: '#A0356C',
+              colorHex: '#FCEF9F',
+              badgeBg: '#FCEF9F60',
+              badgeText: '#78350F',
               chanceText: 'Șanse minime de concepție',
               advice: 'Nivelul de energie este scăzut natural. Oferă-ți căldură, hidratare și o pauză binemeritată.'
             };
-          } else if (cycleDay >= 6 && cycleDay <= 10) {
+          } else if (cycleDay >= 6 && cycleDay <= 8) {
             return {
               id: 'follicular',
               name: 'Faza Foliculară',
               colorHex: '#FCEF9F',
-              badgeBg: '#FCEF9F40',
-              badgeText: '#9A7B0C',
-              chanceText: 'Fertilitate moderată în creștere',
-              advice: 'Estrogenul crește, oferindu-ți vitalitate și claritate mentală. Moment optim pentru proiecte noi.'
+              badgeBg: '#FCEF9F60',
+              badgeText: '#78350F',
+              chanceText: 'Fertilitate scăzută (Z6–8)',
+              advice: 'Estrogenul crește treptat, oferindu-ți vitalitate și claritate mentală după menstruație.'
             };
-          } else if ((cycleDay >= 11 && cycleDay <= 13) || (cycleDay >= 15 && cycleDay <= 16)) {
+          } else if (cycleDay >= 9 && cycleDay <= 20) {
             return {
               id: 'fertile',
-              name: 'Fereastră Fertilă',
-              colorHex: '#B6F5A7',
-              badgeBg: '#B6F5A730',
-              badgeText: '#2D6A28',
-              chanceText: 'Șanse ridicate de concepție',
-              advice: 'Fereastră fertilă activă. Corpul este la apogeu de receptivitate și energie.'
-            };
-          } else if (cycleDay === 14) {
-            return {
-              id: 'ovulation',
-              name: 'Ziua Ovulației',
-              colorHex: '#909CFC',
-              badgeBg: '#909CFC30',
-              badgeText: '#5866DB',
-              chanceText: 'Vârf maxim de fertilitate (Ovulație)',
-              advice: 'Ovulul a fost eliberat. Vârf de fertilitate și cel mai înalt nivel energetic din lună.'
+              name: cycleDay === 14 ? 'Ziua Ovulației 👶' : 'Perioadă Fertilă 👶',
+              colorHex: '#EF4444',
+              badgeBg: '#FEE2E2',
+              badgeText: '#991B1B',
+              chanceText: cycleDay === 14 ? 'Vârf maxim de fertilitate (Ovulație 👶)' : 'Șanse ridicate de concepție 👶',
+              advice: 'Perioadă fertilă activă (Zilele 9–20). Șanse ridicate de concepție conform metodei calendarului.'
             };
           } else {
             return {
               id: 'luteal',
               name: 'Faza Luteală',
-              colorHex: '#ACEDF3',
-              badgeBg: '#ACEDF335',
-              badgeText: '#166574',
+              colorHex: '#FCEF9F',
+              badgeBg: '#FCEF9F60',
+              badgeText: '#78350F',
               chanceText: 'Șanse minime de concepție',
               advice: 'Progesteronul sporește nevoia de tihnă. Hidratează-te corespunzător și redu cafeina.'
             };
@@ -1043,7 +997,7 @@
           renderCalendar();
 
           // 4. Pilule Verticale Proporționale (Evidențiere activă)
-          ['Menstrual', 'Follicular', 'Fertile', 'Ovulation', 'Luteal'].forEach(pName => {
+          ['Menstrual', 'Follicular', 'Fertile', 'Luteal'].forEach(pName => {
             const pill = document.getElementById(`pill${pName}`);
             if (pill) {
               const inner = pill.firstElementChild;
@@ -1060,7 +1014,6 @@
             menstrual: document.getElementById('cardPhaseMenstrual'),
             follicular: document.getElementById('cardPhaseFollicular'),
             fertile: document.getElementById('cardPhaseFertile'),
-            ovulation: document.getElementById('cardPhaseOvulation'),
             luteal: document.getElementById('cardPhaseLuteal')
           };
 
@@ -1093,10 +1046,10 @@
             stitchNextPeriodCountdown.textContent = daysLeft > 0 ? `În aproximativ ${daysLeft} zile` : (daysLeft === 0 ? `Astăzi` : `În așteptare`);
 
             const fertileStart = new Date(startDate);
-            fertileStart.setDate(startDate.getDate() + 10); // Ziua 11 (index 10)
+            fertileStart.setDate(startDate.getDate() + 8); // Ziua 9 (index 8)
 
             const fertileEnd = new Date(startDate);
-            fertileEnd.setDate(startDate.getDate() + 15); // Ziua 16 (index 15)
+            fertileEnd.setDate(startDate.getDate() + 19); // Ziua 20 (index 19)
 
             if (fertileStart.getMonth() === fertileEnd.getMonth()) {
               stitchFertileWindowRange.textContent = `${fertileStart.getDate()} - ${fertileEnd.getDate()} ${MONTH_NAMES_RO[fertileEnd.getMonth()].substring(0, 3)}`;
@@ -1233,35 +1186,36 @@
 
             if (cycleDay) {
               if (cycleDay >= 1 && cycleDay <= 5) {
-                dayBtn.style.backgroundColor = '#EE9DCB';
-                dayBtn.style.color = '#FFFFFF';
+                // Zilele 1–5: Menstruație (Galben #FCEF9F)
+                dayBtn.style.backgroundColor = '#FCEF9F';
+                dayBtn.style.color = '#78350F';
                 dayBtn.classList.add('shadow-xs');
 
                 if (cycleDay === 1) {
-                  dayBtn.classList.add('ring-2', 'ring-offset-1', 'ring-[#EE9DCB]', 'font-bold');
+                  dayBtn.classList.add('ring-2', 'ring-offset-1', 'ring-[#F59E0B]', 'font-bold');
                   const dropDot = document.createElement('span');
                   dropDot.className = 'absolute top-0.5 right-1 text-[9px] pointer-events-none select-none';
                   dropDot.textContent = '🩸';
                   dayBtn.appendChild(dropDot);
                 }
-              } else if (cycleDay >= 6 && cycleDay <= 10) {
+              } else if (cycleDay >= 6 && cycleDay <= 8) {
+                // Zilele 6–8: Următoarele 3 zile (Galben #FCEF9F)
                 dayBtn.style.backgroundColor = '#FCEF9F';
                 dayBtn.style.color = '#78350F';
-              } else if ((cycleDay >= 11 && cycleDay <= 13) || (cycleDay >= 15 && cycleDay <= 16)) {
-                dayBtn.style.backgroundColor = '#B6F5A7';
-                dayBtn.style.color = '#065F46';
-              } else if (cycleDay === 14) {
-                dayBtn.style.backgroundColor = '#909CFC';
+              } else if (cycleDay >= 9 && cycleDay <= 20) {
+                // Zilele 9–20: Cele 12 zile fertile (Roșu #EF4444 + bebeluș 👶 pe fiecare zi)
+                dayBtn.style.backgroundColor = '#EF4444';
                 dayBtn.style.color = '#FFFFFF';
-                dayBtn.classList.add('ring-2', 'ring-offset-1', 'ring-[#909CFC]', 'font-bold');
+                dayBtn.classList.add('shadow-xs', 'font-bold');
 
-                const ovuDot = document.createElement('span');
-                ovuDot.className = 'absolute top-0.5 right-1 text-[9px] pointer-events-none select-none';
-                ovuDot.textContent = '⭐';
-                dayBtn.appendChild(ovuDot);
+                const babyDot = document.createElement('span');
+                babyDot.className = 'absolute top-0 right-0.5 text-[9px] leading-none pointer-events-none select-none';
+                babyDot.textContent = '👶';
+                dayBtn.appendChild(babyDot);
               } else {
-                dayBtn.style.backgroundColor = '#ACEDF3';
-                dayBtn.style.color = '#155E75';
+                // Zilele 21–28: Ultimele 8 zile (Galben #FCEF9F)
+                dayBtn.style.backgroundColor = '#FCEF9F';
+                dayBtn.style.color = '#78350F';
               }
             } else {
               dayBtn.classList.add('hover:bg-purple-50', 'text-gray-700');
