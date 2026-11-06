@@ -1029,20 +1029,131 @@ if (typeof tailwind !== 'undefined') {
     if (btnCloseInfoModalBottom) btnCloseInfoModalBottom.addEventListener('click', closeInfo);
 
     // Buton Refresh Aplicație (Header Pagina 1, Header Pagina 2 & NavBar)
+    let pendingRemoteSignature = null;
+
+    const performHardRefresh = () => {
+      if (pendingRemoteSignature) {
+        localStorage.setItem('auracycle_accepted_signature', pendingRemoteSignature);
+      }
+      saveState();
+      const reloadWithCacheBuster = () => {
+        const url = new URL(window.location.href);
+        url.searchParams.set('v', Date.now().toString());
+        window.location.replace(url.toString());
+      };
+      if ('caches' in window) {
+        caches.keys().then(names => Promise.all(names.map(n => caches.delete(n)))).finally(reloadWithCacheBuster);
+      } else {
+        reloadWithCacheBuster();
+      }
+    };
+
     document.querySelectorAll('.btnRefreshTrigger').forEach(btn => {
       btn.addEventListener('click', () => {
         const svg = btn.querySelector('svg');
         if (svg) {
           svg.classList.add('animate-spin');
         }
-        saveState();
-        setTimeout(() => {
-          const url = new URL(window.location.href);
-          url.searchParams.set('v', Date.now().toString());
-          window.location.replace(url.toString());
-        }, 200);
+        setTimeout(performHardRefresh, 200);
       });
     });
+
+    // Modal Notificare Update Aplicație (Verificare automată la deschidere, la revenirea în aplicație și periodic)
+    const updateAvailableModal = document.getElementById('updateAvailableModal');
+    const btnAcceptUpdateModal = document.getElementById('btnAcceptUpdateModal');
+    const btnDismissUpdateModal = document.getElementById('btnDismissUpdateModal');
+    const updateModalVersionBadge = document.getElementById('updateModalVersionBadge');
+    const updateModalTitle = document.getElementById('updateModalTitle');
+    const updateModalMessage = document.getElementById('updateModalMessage');
+    const updateModalSpinner = document.getElementById('updateModalSpinner');
+
+    let updateDismissedThisSession = false;
+
+    if (btnDismissUpdateModal) {
+      btnDismissUpdateModal.addEventListener('click', () => {
+        updateDismissedThisSession = true;
+        if (updateAvailableModal) updateAvailableModal.close();
+      });
+    }
+
+    if (btnAcceptUpdateModal) {
+      btnAcceptUpdateModal.addEventListener('click', () => {
+        if (updateModalSpinner) {
+          updateModalSpinner.classList.add('animate-spin');
+        }
+        setTimeout(performHardRefresh, 220);
+      });
+    }
+
+    // Hash rapid (FNV-1a 32-bit) pentru a detecta automat orice modificare în index.html, app.js sau version.json
+    function computeFastHash(str) {
+      let h = 0x811c9dc5;
+      for (let i = 0; i < str.length; i++) {
+        h ^= str.charCodeAt(i);
+        h = Math.imul(h, 0x01000193);
+      }
+      return (h >>> 0).toString(16);
+    }
+
+    async function checkForAppUpdate() {
+      if (updateDismissedThisSession) return;
+      try {
+        const ts = Date.now();
+        const [verRes, htmlRes, jsRes] = await Promise.all([
+          fetch(`version.json?t=${ts}`, { cache: 'no-store' }),
+          fetch(`index.html?t=${ts}`, { cache: 'no-store' }),
+          fetch(`app.js?t=${ts}`, { cache: 'no-store' })
+        ]);
+
+        let verData = {
+          version: '1.5.0',
+          title: 'Actualizare Nouă Disponibilă ✨',
+          message: 'Am adăugat îmbunătățiri noi în aplicație. Apasă pe butonul de mai jos pentru a actualiza aplicația fără a pierde datele tale salvate.'
+        };
+
+        if (verRes.ok) {
+          try {
+            verData = await verRes.json();
+          } catch (_) {
+            // păstrăm fallback-ul
+          }
+        }
+
+        const htmlText = htmlRes.ok ? await htmlRes.text() : '';
+        const jsText = jsRes.ok ? await jsRes.text() : '';
+        const contentHash = computeFastHash(`${verData.version}|${htmlText}|${jsText}`);
+        const remoteSignature = `${verData.version}-${contentHash}`;
+
+        pendingRemoteSignature = remoteSignature;
+        const acceptedSignature = localStorage.getItem('auracycle_accepted_signature');
+
+        if (acceptedSignature !== remoteSignature) {
+          if (updateModalVersionBadge && verData.version) {
+            updateModalVersionBadge.textContent = `Versiunea ${verData.version}`;
+          }
+          if (updateModalTitle && verData.title) {
+            updateModalTitle.textContent = verData.title;
+          }
+          if (updateModalMessage && verData.message) {
+            updateModalMessage.textContent = verData.message;
+          }
+          if (updateAvailableModal && updateAvailableModal.showModal && !updateAvailableModal.open) {
+            updateAvailableModal.showModal();
+          }
+        }
+      } catch (err) {
+        // Ignorăm erorile de rețea când dispozitivul este offline
+      }
+    }
+
+    // Verificăm update-urile la pornire, când clienta revine în aplicație pe telefon și la fiecare 60 secunde
+    setTimeout(checkForAppUpdate, 600);
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') {
+        checkForAppUpdate();
+      }
+    });
+    setInterval(checkForAppUpdate, 60000);
 
     // Randare inițială
     renderAll();
