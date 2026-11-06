@@ -13,6 +13,13 @@ if (typeof tailwind !== 'undefined') {
             fertile: '#B6F5A7',
             ovulation: '#909CFC',
             luteal: '#ACEDF3',
+          },
+          complement: {
+            ovulation: '#FCF090',   // Complementară pentru #909CFC
+            menstrual: '#9DEEBF',   // Complementară pentru #EE9DCB
+            follicular: '#9FA7FC',  // Complementară pentru #FCEF9F
+            luteal: '#F3B2AC',      // Complementară pentru #ACEDF3
+            fertile: '#E6A7F5',     // Complementară pentru #B6F5A7
           }
         },
         boxShadow: {
@@ -912,7 +919,7 @@ if (typeof tailwind !== 'undefined') {
           dayBtn.classList.add('shadow-xs');
 
           if (cycleDay === 1) {
-            dayBtn.classList.add('ring-2', 'ring-offset-1', 'ring-[#F59E0B]', 'font-bold', 'animate-soft-glow');
+            dayBtn.classList.add('font-extrabold', 'animate-day1-pulse', 'z-10');
             const dropDot = document.createElement('span');
             dropDot.className = 'absolute top-0.5 right-1 text-[9px] pointer-events-none select-none animate-icon-float';
             dropDot.textContent = '🩸';

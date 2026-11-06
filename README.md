@@ -11,7 +11,7 @@ Aplicație web progresivă (PWA / Single Page Application), găzduită pe GitHub
 Calculul pornește din **Ziua 1** (prima zi de menstruație selectată) și parcurge 28 de zile împărțite în 4 etape distincte (`5 + 3 + 12 + 8 = 28 zile`):
 
 1. **Menstruație (Zilele 1 – 5 • 5 zile):**
-   - **Culoare:** Galben (`#FCEF9F`) cu simbolul `🩸` pe Ziua 1.
+   - **Culoare:** Galben (`#FCEF9F`) cu simbolul `🩸` și pulsație complementară intensă pe Ziua 1.
    - **Fertilitate:** Șanse minime de concepție.
 2. **Faza Foliculară / Post-Menstruală (Zilele 6 – 8 • 3 zile):**
    - **Culoare:** Galben (`#FCEF9F`).
@@ -22,6 +22,16 @@ Calculul pornește din **Ziua 1** (prima zi de menstruație selectată) și parc
 4. **Faza Luteală / Post-Fertilă (Zilele 21 – 28 • 8 zile):**
    - **Culoare:** Galben (`#FCEF9F`).
    - **Fertilitate:** Șanse minime de concepție până la următoarea menstruație.
+
+### 🌈 Paleta Cromatică Oficială (5 Culori Principale + 5 Culori Complementare)
+
+| Culoare Principală | Cod HEX | Culoare Complementară | Cod HEX Complementar | Utilizare în Aplicație |
+| :--- | :---: | :--- | :---: | :--- |
+| **Albastru-Liliac (Ovulație)** | `#909CFC` | **Galben Solar** | `#FCF090` | Selector lună, buton „Azi”, card Ziua Ovulației |
+| **Roz Trandafiriu (Menstruație)** | `#EE9DCB` | **Verde Mentă** | `#9DEEBF` | Buton principal, Refresh Header, card Următoarea Menstruație |
+| **Galben Cald (Foliculară / Zile sigure)** | `#FCEF9F` | **Indigo-Lavandă** | `#9FA7FC` | Zile sigure în calendar, pulsație Ziua 1, card Ziua din Ciclu |
+| **Bleu Ciel / Acvamarin (Luteală)** | `#ACEDF3` | **Coral-Piersică** | `#F3B2AC` | Card Recomandare Zilnică, halo pulsație complementară |
+| **Verde Pastel (Fereastră Fertilă)** | `#B6F5A7` | **Orhidee / Liliac** | `#E6A7F5` | Card Fereastră Fertilă, inel exterior pulsație Ziua 1 |
 
 ---
 

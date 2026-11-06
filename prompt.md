@@ -1,11 +1,11 @@
 Generează o aplicație web completă într-o singură pagină (Single Page Application - SPA), găzduită pe GitHub Pages (un singur fișier autoconținut `index.html`), cu design mobil iOS Glassmorphism inspirat din ecranul de calendar Stitch din imagine.
 
-### 🎨 Sistemul Cromatic Strict (coduri HEX exacte):
-1. **Faza Menstruală:** `#EE9DCB` (Roz trandafiriu)
-2. **Faza Foliculară:** `#FCEF9F` (Galben cald / unt)
-3. **Fereastra Fertilă:** `#B6F5A7` (Verde pastel)
-4. **Ziua Ovulației:** `#909CFC` (Albastru-liliac / periwinkle)
-5. **Faza Luteală:** `#ACEDF3` (Bleu ciel / acvamarin)
+### 🎨 Sistemul Cromatic Strict (coduri HEX exacte — 5 Principale + 5 Complementare):
+1. **Faza Menstruală:** `#EE9DCB` (Roz trandafiriu) ↔ **Complementară:** `#9DEEBF` (Verde mentă)
+2. **Faza Foliculară:** `#FCEF9F` (Galben cald / unt) ↔ **Complementară:** `#9FA7FC` (Indigo-lavandă)
+3. **Fereastra Fertilă:** `#B6F5A7` (Verde pastel) ↔ **Complementară:** `#E6A7F5` (Orhidee / liliac)
+4. **Ziua Ovulației:** `#909CFC` (Albastru-liliac / periwinkle) ↔ **Complementară:** `#FCF090` (Galben solar)
+5. **Faza Luteală:** `#ACEDF3` (Bleu ciel / acvamarin) ↔ **Complementară:** `#F3B2AC` (Coral-piersică)
 
 Fundalul general: alb-crem cald cu degradeuri difuze (`backdrop-blur-3xl`) și carduri translucide stil iOS cu margini `border-white/40` și `rounded-3xl`.
 
