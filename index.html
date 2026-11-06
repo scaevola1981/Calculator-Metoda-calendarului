@@ -550,22 +550,37 @@
             </div>
           </div>
 
-          <!-- Zona Graficului cu Bare & Linie de Referință 28 zile -->
-          <div class="relative rounded-2xl bg-white/75 border border-white/90 p-3.5 pt-6 pb-2 shadow-inner">
-            <!-- Linie orizontală de referință 28 zile -->
-            <div class="flex items-center justify-between text-[10px] font-semibold text-gray-400 mb-1">
-              <span>Interval între menstruații (zile)</span>
-              <span class="text-purple-600 font-bold">Referință standard: 28z</span>
+          <!-- Comutator Stil Grafic (3 Variante: Bare Orizontale, Linie Curbată, Cadran Semicircular) -->
+          <div class="flex items-center justify-between bg-white/70 p-1 rounded-2xl border border-purple-100/90 mb-3 shadow-2xs"
+            role="tablist" aria-label="Alege tipul de grafic">
+            <button type="button" data-chart-mode="horizontal"
+              class="regChartModeBtn flex-1 py-1.5 px-2 rounded-xl text-[11px] font-extrabold transition flex items-center justify-center gap-1 bg-gradient-to-r from-[#909CFC] to-[#EE9DCB] text-white shadow-xs">
+              <span>📊</span><span>Orizontal</span>
+            </button>
+            <button type="button" data-chart-mode="line"
+              class="regChartModeBtn flex-1 py-1.5 px-2 rounded-xl text-[11px] font-bold text-gray-600 hover:text-gray-900 transition flex items-center justify-center gap-1">
+              <span>📈</span><span>Curbă</span>
+            </button>
+            <button type="button" data-chart-mode="gauge"
+              class="regChartModeBtn flex-1 py-1.5 px-2 rounded-xl text-[11px] font-bold text-gray-600 hover:text-gray-900 transition flex items-center justify-center gap-1">
+              <span>🎯</span><span>Cadran</span>
+            </button>
+          </div>
+
+          <!-- Zona Graficului Dinamic (Suportă 3 moduri vizuale) -->
+          <div class="relative rounded-2xl bg-white/80 border border-white/95 p-3.5 shadow-inner">
+            <div class="flex items-center justify-between text-[10px] font-semibold text-gray-400 mb-2">
+              <span id="regularityChartSubtitle">Interval între menstruații (zile)</span>
+              <span class="text-purple-600 font-bold">Referință: 28z</span>
             </div>
 
-            <!-- Container bare dinamice -->
-            <div id="regularityBarsContainer"
-              class="relative h-36 flex items-end justify-around gap-2 pt-5 pb-1 border-b border-gray-200/80">
-              <!-- Generat dinamic prin JS -->
+            <!-- Container grafic dinamic -->
+            <div id="regularityBarsContainer" class="relative min-h-[156px] flex flex-col justify-center">
+              <!-- Generat dinamic prin JS în funcție de modul selectat -->
             </div>
 
             <!-- Legendă culori regularitate -->
-            <div class="flex flex-wrap items-center justify-center gap-3 mt-2.5 pt-1 text-[10px] font-semibold text-gray-600">
+            <div class="flex flex-wrap items-center justify-center gap-3 mt-2.5 pt-2 border-t border-gray-100 text-[10px] font-semibold text-gray-600">
               <span class="flex items-center gap-1">
                 <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 inline-block"></span> Regulat (26–30z)
               </span>

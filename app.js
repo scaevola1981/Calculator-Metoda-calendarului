@@ -46,6 +46,7 @@ if (typeof tailwind !== 'undefined') {
     cycleStartDate: null, // format 'YYYY-MM-DD' (ultima menstruație înregistrată)
     recordedCycles: {},   // Evidență per lună: { 'YYYY-MM': 'YYYY-MM-DD' }
     cycleHistory: [],     // Istoric cronologic al datelor de început (ex: ['2026-10-30', '2026-11-22'])
+    chartMode: 'horizontal', // 'horizontal' | 'line' | 'gauge'
     calendarYear: new Date().getFullYear(),
     calendarMonth: new Date().getMonth(), // 0-11
     activeView: 'calendar' // 'calendar' (Pagina 1) sau 'dashboard' (Pagina 2)
@@ -93,6 +94,9 @@ if (typeof tailwind !== 'undefined') {
         } else if (state.cycleStartDate) {
           state.cycleHistory = [state.cycleStartDate];
         }
+        if (parsed.chartMode === 'horizontal' || parsed.chartMode === 'line' || parsed.chartMode === 'gauge') {
+          state.chartMode = parsed.chartMode;
+        }
       } catch (e) {
         console.warn('Nu s-au putut parsa datele salvate:', e);
       }
@@ -109,7 +113,8 @@ if (typeof tailwind !== 'undefined') {
     localStorage.setItem('auracycle_state', JSON.stringify({
       cycleStartDate: state.cycleStartDate,
       recordedCycles: state.recordedCycles,
-      cycleHistory: state.cycleHistory
+      cycleHistory: state.cycleHistory,
+      chartMode: state.chartMode
     }));
   }
 
@@ -539,54 +544,236 @@ if (typeof tailwind !== 'undefined') {
       }
     }
 
-    // Linie punctată orizontală pentru referința de 28 zile (înălțime max scalată la 40 zile)
-    const maxScale = 40;
-    const refBottomPct = Math.min(92, Math.max(15, Math.round((28 / maxScale) * 100)));
-    const refLine = document.createElement('div');
-    refLine.className = 'absolute left-0 right-0 border-t border-dashed border-purple-400/70 pointer-events-none z-0';
-    refLine.style.bottom = `${refBottomPct}%`;
-    barsContainer.appendChild(refLine);
+    // Actualizăm starea vizuală a butoanelor de comutare a modului de grafic
+    const mode = state.chartMode || 'horizontal';
+    document.querySelectorAll('.regChartModeBtn').forEach(btn => {
+      const btnMode = btn.getAttribute('data-chart-mode');
+      if (btnMode === mode) {
+        btn.className = 'regChartModeBtn flex-1 py-1.5 px-2 rounded-xl text-[11px] font-extrabold transition flex items-center justify-center gap-1 bg-gradient-to-r from-[#909CFC] to-[#EE9DCB] text-white shadow-xs';
+      } else {
+        btn.className = 'regChartModeBtn flex-1 py-1.5 px-2 rounded-xl text-[11px] font-bold text-gray-600 hover:text-gray-900 transition flex items-center justify-center gap-1';
+      }
+    });
 
     if (chartItems.length === 0) {
       const emptyMsg = document.createElement('div');
-      emptyMsg.className = 'w-full h-full flex items-center justify-center text-xs text-gray-400 font-medium text-center px-4';
+      emptyMsg.className = 'w-full py-10 flex items-center justify-center text-xs text-gray-400 font-medium text-center px-4';
       emptyMsg.textContent = 'Selectează data primei zile de menstruație în calendar pentru a vedea graficul regularității.';
       barsContainer.appendChild(emptyMsg);
       return;
     }
 
-    chartItems.forEach((item) => {
-      const col = document.createElement('div');
-      col.className = 'flex-1 flex flex-col items-center justify-end h-full z-10 max-w-[68px]';
-
-      const heightPct = Math.min(95, Math.max(22, Math.round((item.days / maxScale) * 100)));
-
-      let barColorClass = 'bg-emerald-400 text-emerald-950 border border-emerald-500/30';
+    const getStatusColorInfo = (item) => {
       if (item.isEstimated) {
-        barColorClass = 'bg-purple-200/80 text-purple-900 border border-dashed border-purple-400';
-      } else if (item.days < 26) {
-        barColorClass = 'bg-amber-400 text-amber-950 border border-amber-500/30';
-      } else if (item.days > 30) {
-        barColorClass = 'bg-rose-400 text-white border border-rose-500/30';
+        return {
+          hex: '#909CFC',
+          bgClass: 'bg-gradient-to-r from-[#909CFC]/70 to-[#EE9DCB]/70 border border-dashed border-purple-400',
+          badgeClass: 'bg-purple-100 text-purple-800',
+          tagText: `${item.days} zile (Estimat)`
+        };
       }
+      if (item.days >= 26 && item.days <= 30) {
+        return {
+          hex: '#10B981',
+          bgClass: 'bg-gradient-to-r from-emerald-400 to-teal-400',
+          badgeClass: 'bg-emerald-100 text-emerald-800',
+          tagText: `${item.days} zile • Regulat`
+        };
+      }
+      if (item.days < 26) {
+        return {
+          hex: '#F59E0B',
+          bgClass: 'bg-gradient-to-r from-amber-400 to-yellow-400',
+          badgeClass: 'bg-amber-100 text-amber-900',
+          tagText: `${item.days} zile • Mai scurt`
+        };
+      }
+      return {
+        hex: '#F43F5E',
+        bgClass: 'bg-gradient-to-r from-rose-400 to-red-400',
+        badgeClass: 'bg-rose-100 text-rose-800',
+        tagText: `${item.days} zile • Mai lung`
+      };
+    };
 
-      const topBadge = document.createElement('span');
-      topBadge.className = 'text-[10px] font-extrabold text-gray-800 mb-1 whitespace-nowrap';
-      topBadge.textContent = item.isEstimated ? `${item.days}z (est.)` : `${item.days} zile`;
+    if (mode === 'horizontal') {
+      // VARIANTA 1: Bare Orizontale Progresive pe Cicluri (stil Clue)
+      const listWrap = document.createElement('div');
+      listWrap.className = 'space-y-2.5 py-1';
+      const maxDaysHoriz = 36;
+      const ref28Pct = Math.round((28 / maxDaysHoriz) * 100);
 
-      const bar = document.createElement('div');
-      bar.className = `w-full rounded-t-xl transition-all duration-500 flex items-center justify-center shadow-xs ${barColorClass}`;
-      bar.style.height = `${heightPct}%`;
+      chartItems.slice().reverse().forEach((item) => {
+        const info = getStatusColorInfo(item);
+        const widthPct = Math.min(100, Math.max(25, Math.round((item.days / maxDaysHoriz) * 100)));
 
-      const lbl = document.createElement('span');
-      lbl.className = 'text-[9px] font-bold text-gray-600 mt-1.5 text-center leading-tight whitespace-nowrap';
-      lbl.textContent = `${item.fromLabel} → ${item.toLabel}`;
+        const rowCard = document.createElement('div');
+        rowCard.className = 'rounded-xl bg-gray-50/90 border border-gray-100 p-2.5 shadow-2xs';
+        rowCard.innerHTML = `
+          <div class="flex items-center justify-between text-xs mb-1.5">
+            <span class="font-extrabold text-gray-800 flex items-center gap-1">
+              <span>${item.isEstimated ? '⏳' : '🩸'}</span>
+              <span>${item.fromLabel} → ${item.toLabel}</span>
+            </span>
+            <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full ${info.badgeClass}">
+              ${info.tagText}
+            </span>
+          </div>
+          <div class="relative h-4 w-full rounded-full bg-gray-200/75 overflow-hidden">
+            <!-- Marcaj vertical la 28 zile -->
+            <div class="absolute top-0 bottom-0 border-l-2 border-dashed border-purple-600/70 z-20" style="left: ${ref28Pct}%" title="Referință 28 zile"></div>
+            <div class="h-full rounded-full transition-all duration-500 ${info.bgClass}" style="width: ${widthPct}%"></div>
+          </div>
+          <div class="flex items-center justify-between text-[9px] font-semibold text-gray-400 mt-1 px-0.5">
+            <span>Ziua 1</span>
+            <span class="text-purple-600 font-bold">Țintă: 28 zile</span>
+            <span>36z</span>
+          </div>
+        `;
+        listWrap.appendChild(rowCard);
+      });
+      barsContainer.appendChild(listWrap);
+    } else if (mode === 'line') {
+      // VARIANTA 2: Grafic cu Linie Curbată & Puncte Luminoase (stil Apple Health / Flo)
+      const svgW = 310;
+      const svgH = 148;
+      const padLeft = 28;
+      const padRight = 24;
+      const padTop = 24;
+      const padBottom = 28;
+      const plotW = svgW - padLeft - padRight;
+      const plotH = svgH - padTop - padBottom;
+      const minYDays = 18;
+      const maxYDays = 38;
 
-      col.appendChild(topBadge);
-      col.appendChild(bar);
-      col.appendChild(lbl);
-      barsContainer.appendChild(col);
-    });
+      const dayToY = (d) => {
+        const clamped = Math.min(maxYDays, Math.max(minYDays, d));
+        const ratio = (clamped - minYDays) / (maxYDays - minYDays);
+        return Math.round(padTop + plotH * (1 - ratio));
+      };
+
+      // Dacă există un singur punct, adăugăm un punct de referință inițial la 28z ca linia curbată să fie vizibilă și elegantă
+      const pointsData = chartItems.length === 1
+        ? [{ fromLabel: 'Ref.', toLabel: '28z', days: 28, isEstimated: true, isBaseline: true }, chartItems[0]]
+        : chartItems;
+
+      const coords = pointsData.map((pt, idx) => {
+        const x = pointsData.length === 1
+          ? padLeft + plotW / 2
+          : Math.round(padLeft + (idx / (pointsData.length - 1)) * plotW);
+        const y = dayToY(pt.days);
+        return { x, y, pt };
+      });
+
+      // Construim curba Bezier netedă
+      let pathD = `M ${coords[0].x} ${coords[0].y}`;
+      for (let i = 1; i < coords.length; i++) {
+        const prev = coords[i - 1];
+        const curr = coords[i];
+        const cpx1 = Math.round(prev.x + (curr.x - prev.x) / 2);
+        const cpx2 = Math.round(prev.x + (curr.x - prev.x) / 2);
+        pathD += ` C ${cpx1} ${prev.y}, ${cpx2} ${curr.y}, ${curr.x} ${curr.y}`;
+      }
+      const areaD = `${pathD} L ${coords[coords.length - 1].x} ${padTop + plotH} L ${coords[0].x} ${padTop + plotH} Z`;
+
+      const y30 = dayToY(30);
+      const y26 = dayToY(26);
+      const y28 = dayToY(28);
+
+      const nodesSvg = coords.map(({ x, y, pt }) => {
+        const info = getStatusColorInfo(pt);
+        const labelTop = pt.isBaseline ? 'Standard 28z' : (pt.isEstimated ? `${pt.days}z (est.)` : `${pt.days}z`);
+        const labelBottom = pt.isBaseline ? 'Referință' : `${pt.fromLabel}→${pt.toLabel}`;
+        return `
+          <g>
+            <circle cx="${x}" cy="${y}" r="8" fill="${info.hex}" fill-opacity="0.22" />
+            <circle cx="${x}" cy="${y}" r="4.5" fill="${info.hex}" stroke="#FFFFFF" stroke-width="2" />
+            <text x="${x}" y="${y - 10}" text-anchor="middle" font-size="9.5" font-weight="800" fill="#1F2937">${labelTop}</text>
+            <text x="${x}" y="${svgH - 8}" text-anchor="middle" font-size="8.5" font-weight="700" fill="#6B7280">${labelBottom}</text>
+          </g>
+        `;
+      }).join('');
+
+      barsContainer.innerHTML = `
+        <svg viewBox="0 0 ${svgW} ${svgH}" class="w-full h-36 overflow-visible">
+          <defs>
+            <linearGradient id="regLineAreaGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#909CFC" stop-opacity="0.38" />
+              <stop offset="100%" stop-color="#EE9DCB" stop-opacity="0.03" />
+            </linearGradient>
+            <linearGradient id="regLineStrokeGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#909CFC" />
+              <stop offset="100%" stop-color="#EE9DCB" />
+            </linearGradient>
+          </defs>
+
+          <!-- Bandă verde orizontală pentru zona regulată (26 - 30 zile) -->
+          <rect x="${padLeft - 6}" y="${y30}" width="${plotW + 12}" height="${Math.max(8, y26 - y30)}" rx="6" fill="#10B981" fill-opacity="0.12" />
+
+          <!-- Linie punctată de referință la 28 zile -->
+          <line x1="${padLeft - 6}" y1="${y28}" x2="${svgW - padRight + 6}" y2="${y28}" stroke="#7C3AED" stroke-width="1.2" stroke-dasharray="4 3" stroke-opacity="0.65" />
+          <text x="2" y="${y28 + 3}" font-size="8.5" font-weight="700" fill="#7C3AED">28z</text>
+
+          <!-- Arie și curbă -->
+          <path d="${areaD}" fill="url(#regLineAreaGrad)" />
+          <path d="${pathD}" fill="none" stroke="url(#regLineStrokeGrad)" stroke-width="3" stroke-linecap="round" />
+
+          <!-- Puncte pentru fiecare ciclu -->
+          ${nodesSvg}
+        </svg>
+      `;
+    } else {
+      // VARIANTA 3: Cadran Semicircular (Gauge / Vitezometru de Regularitate 18z – 28z – 38z)
+      const activeItem = intervals.length > 0
+        ? intervals[intervals.length - 1]
+        : chartItems[chartItems.length - 1];
+      const daysVal = activeItem ? activeItem.days : 28;
+      const info = getStatusColorInfo(activeItem);
+
+      // Mapăm 18..38 zile pe unghiul -90 deg (stânga) .. +90 deg (dreapta)
+      const clampedDays = Math.min(38, Math.max(18, daysVal));
+      const ratio = (clampedDays - 18) / (38 - 18); // 0..1
+      const angleRad = Math.PI * (1 - ratio); // PI (stânga) -> 0 (dreapta)
+      const cx = 140;
+      const cy = 106;
+      const r = 76;
+      const dotX = (cx + r * Math.cos(angleRad)).toFixed(1);
+      const dotY = (cy - r * Math.sin(angleRad)).toFixed(1);
+
+      barsContainer.innerHTML = `
+        <div class="flex flex-col items-center justify-center py-1">
+          <svg viewBox="0 0 280 125" class="w-64 h-28 overflow-visible">
+            <!-- Arc Fundal Gri -->
+            <path d="M 64 106 A 76 76 0 0 1 216 106" fill="none" stroke="#F1F5F9" stroke-width="16" stroke-linecap="round" />
+
+            <!-- Zonă Mai Scurt (<26z: stânga, Galben/Amber) -->
+            <path d="M 64 106 A 76 76 0 0 1 108 37" fill="none" stroke="#FBBF24" stroke-width="14" stroke-linecap="round" stroke-opacity="0.85" />
+
+            <!-- Zonă Regulată (26z - 30z: centru-sus, Verde Smarald) -->
+            <path d="M 114 35 A 76 76 0 0 1 166 35" fill="none" stroke="#10B981" stroke-width="16" stroke-linecap="round" />
+
+            <!-- Zonă Mai Lung (>30z: dreapta, Roz/Roșu) -->
+            <path d="M 172 37 A 76 76 0 0 1 216 106" fill="none" stroke="#FB7185" stroke-width="14" stroke-linecap="round" stroke-opacity="0.85" />
+
+            <!-- Indicator Punct pe Arc -->
+            <circle cx="${dotX}" cy="${dotY}" r="11" fill="${info.hex}" fill-opacity="0.25" />
+            <circle cx="${dotX}" cy="${dotY}" r="7" fill="${info.hex}" stroke="#FFFFFF" stroke-width="2.5" />
+
+            <!-- Etichete repere -->
+            <text x="48" y="120" text-anchor="middle" font-size="9" font-weight="700" fill="#D97706">18z</text>
+            <text x="140" y="18" text-anchor="middle" font-size="9.5" font-weight="800" fill="#059669">Ideal: 28z</text>
+            <text x="232" y="120" text-anchor="middle" font-size="9" font-weight="700" fill="#E11D48">38z</text>
+
+            <!-- Valoare Centrală -->
+            <text x="140" y="88" text-anchor="middle" font-size="22" font-weight="800" fill="#1F2937">${daysVal} zile</text>
+            <text x="140" y="105" text-anchor="middle" font-size="10" font-weight="700" fill="#6B7280">${activeItem.fromLabel} → ${activeItem.toLabel}</text>
+          </svg>
+          <span class="text-[11px] font-extrabold px-3 py-1 rounded-full ${info.badgeClass} mt-0.5">
+            ${info.tagText}
+          </span>
+        </div>
+      `;
+    }
 
     // Listă istoric menstruații înregistrate (cu opțiune de ștergere individuală)
     if (dates.length > 0) {
@@ -773,6 +960,18 @@ if (typeof tailwind !== 'undefined') {
     if (navBtnTabDashboard) {
       navBtnTabDashboard.addEventListener('click', () => switchView('dashboard'));
     }
+
+    // Comutator Stil Grafic Regularitate (Orizontal | Curbă | Cadran)
+    document.querySelectorAll('.regChartModeBtn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const chosenMode = btn.getAttribute('data-chart-mode');
+        if (chosenMode) {
+          state.chartMode = chosenMode;
+          saveState();
+          renderRegularityChart();
+        }
+      });
+    });
 
     // Butonul Principal de Declanșare Pagina 1
     const btnMainPeriodAction = document.getElementById('btnMainPeriodAction');
