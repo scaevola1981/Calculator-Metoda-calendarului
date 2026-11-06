@@ -80,9 +80,12 @@
       scrollbar-width: none;
     }
 
-    /* Modal Dialog modern & containment */
+    /* Modal Dialog modern & containment + Animație Spring iOS (#6) */
     dialog:modal {
       overscroll-behavior: contain;
+    }
+    dialog[open] {
+      animation: modalSpringIn 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
     }
     dialog::backdrop {
       overflow: hidden;
@@ -90,6 +93,195 @@
       background: rgba(15, 23, 42, 0.4);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
+      animation: backdropFadeIn 0.25s ease-out forwards;
+    }
+
+    /* ========================================================
+       PACHET ANIMAȚII FLUIDE ÎN STIL iOS (1 - 6)
+       ======================================================== */
+    /* 1. Tranziție fluidă între Pagina 1 și Pagina 2 (Fade + Slide Up) */
+    @keyframes viewEnter {
+      0% {
+        opacity: 0;
+        transform: translateY(10px) scale(0.992);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    .animate-view-enter {
+      animation: viewEnter 0.36s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    /* 2. Efect de „Val / Cascadă" la colorarea celor 28 de zile în Calendar */
+    @keyframes dayCascadePop {
+      0% {
+        opacity: 0;
+        transform: scale(0.76) translateY(4px);
+      }
+      70% {
+        opacity: 1;
+        transform: scale(1.04) translateY(0);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+    .animate-day-cascade {
+      animation: dayCascadePop 0.34s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    /* 3. Respirație luminoasă („Soft Breathing Glow") pe Ziua 1, zilele fertile și etapa activă */
+    @keyframes softPulseGlow {
+      0%, 100% {
+        box-shadow: 0 0 0 0 rgba(144, 156, 252, 0.45), 0 4px 12px rgba(238, 157, 203, 0.22);
+      }
+      50% {
+        box-shadow: 0 0 0 5px rgba(144, 156, 252, 0), 0 6px 18px rgba(238, 157, 203, 0.38);
+      }
+    }
+    .animate-soft-glow {
+      animation: softPulseGlow 2.8s ease-in-out infinite;
+    }
+
+    @keyframes babyFloat {
+      0%, 100% {
+        transform: translateY(0) scale(1);
+      }
+      50% {
+        transform: translateY(-1.5px) scale(1.12);
+      }
+    }
+    .animate-icon-float {
+      animation: babyFloat 2.4s ease-in-out infinite;
+    }
+
+    /* 4. Animații la încărcarea Graficelor de Regularitate (Bare, Curbă SVG, Cadran) */
+    @keyframes barGrowWidth {
+      0% {
+        width: 0%;
+        opacity: 0.4;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+    .animate-bar-grow {
+      animation: barGrowWidth 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    @keyframes svgDrawLine {
+      0% {
+        stroke-dashoffset: 480;
+      }
+      100% {
+        stroke-dashoffset: 0;
+      }
+    }
+    .animate-svg-draw {
+      stroke-dasharray: 480;
+      animation: svgDrawLine 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    @keyframes svgAreaFade {
+      0% {
+        opacity: 0;
+        transform: translateY(4px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-svg-area {
+      animation: svgAreaFade 0.7s ease-out 0.15s both;
+    }
+
+    @keyframes nodePopIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.3);
+      }
+      80% {
+        opacity: 1;
+        transform: scale(1.12);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    .animate-node-pop {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: nodePopIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    /* 5. Luciu subtil („Shimmer Sheen") + Elastic Bounce pe butonul roz principal */
+    @keyframes btnShimmerSweep {
+      0% {
+        transform: translateX(-120%) skewX(-18deg);
+      }
+      35%, 100% {
+        transform: translateX(220%) skewX(-18deg);
+      }
+    }
+    .btn-shimmer-effect {
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-shimmer-effect::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 45%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.35) 50%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      animation: btnShimmerSweep 4.5s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    /* 6. Deschidere elastică (Spring Scale & Fade) pentru ferestrele modale */
+    @keyframes modalSpringIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.9) translateY(10px);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+    @keyframes backdropFadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .animate-view-enter,
+      .animate-day-cascade,
+      .animate-soft-glow,
+      .animate-icon-float,
+      .animate-bar-grow,
+      .animate-svg-draw,
+      .animate-svg-area,
+      .animate-node-pop,
+      .btn-shimmer-effect::after,
+      dialog[open] {
+        animation: none !important;
+      }
     }
   </style>
 </head>
@@ -184,8 +376,8 @@
         <!-- NOTĂ: Rândul redundant "Punct de start... Alege o dată manual" A FOST COMPLET ELIMINAT conform cerinței! -->
         <div>
           <button id="btnMainPeriodAction"
-            class="w-full py-4 px-6 rounded-2xl font-bold text-white shadow-lg transition-all transform active:scale-98 flex items-center justify-center gap-2.5 text-base tracking-wide bg-gradient-to-r from-[#EE9DCB] to-[#e47fb6] hover:brightness-105 shadow-[#EE9DCB]/35">
-            <span class="text-xl">💧</span>
+            class="btn-shimmer-effect w-full py-4 px-6 rounded-2xl font-bold text-white shadow-lg transition-all duration-200 transform hover:-translate-y-0.5 active:scale-95 flex items-center justify-center gap-2.5 text-base tracking-wide bg-gradient-to-r from-[#EE9DCB] to-[#e47fb6] hover:brightness-105 shadow-[#EE9DCB]/35">
+            <span class="text-xl animate-icon-float">💧</span>
             <span id="btnPeriodActionText">+ A început menstruația astăzi</span>
           </button>
         </div>
@@ -862,7 +1054,7 @@
   </dialog>
 
   <!-- JavaScript Logică Aplicată & Persistență LocalStorage -->
-  <script src="app.js?v=14"></script>
+  <script src="app.js?v=19"></script>
 </body>
 
 </html>

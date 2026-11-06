@@ -255,7 +255,7 @@ if (typeof tailwind !== 'undefined') {
     });
   }
 
-  // Comutare între Pagina 1 (Calendar) și Pagina 2 (Dashboard / Ceas)
+  // Comutare între Pagina 1 (Calendar) și Pagina 2 (Dashboard / Ceas) cu animație fluidă iOS (#1)
   function switchView(viewName) {
     state.activeView = viewName;
     localStorage.setItem('auracycle_active_view', viewName);
@@ -266,17 +266,24 @@ if (typeof tailwind !== 'undefined') {
     const ind2 = document.getElementById('navTabDashboardIndicator');
 
     if (viewName === 'calendar') {
-      view1.classList.remove('hidden');
+      view1.classList.remove('hidden', 'animate-view-enter');
+      void view1.offsetWidth; // Reflow pentru re-declanșarea animației
+      view1.classList.add('animate-view-enter');
       view2.classList.add('hidden');
+      view2.classList.remove('animate-view-enter');
 
-      ind1.className = 'w-10 h-10 rounded-full bg-gradient-to-tr from-[#909CFC] to-[#EE9DCB] text-white flex items-center justify-center shadow-md';
-      ind2.className = 'w-10 h-10 rounded-full flex items-center justify-center text-gray-500';
+      ind1.className = 'w-10 h-10 rounded-full bg-gradient-to-tr from-[#909CFC] to-[#EE9DCB] text-white flex items-center justify-center shadow-md transition-transform duration-300 scale-105';
+      ind2.className = 'w-10 h-10 rounded-full flex items-center justify-center text-gray-500 transition-transform duration-300';
     } else {
       view1.classList.add('hidden');
-      view2.classList.remove('hidden');
+      view1.classList.remove('animate-view-enter');
+      view2.classList.remove('hidden', 'animate-view-enter');
+      void view2.offsetWidth; // Reflow pentru re-declanșarea animației
+      view2.classList.add('animate-view-enter');
 
-      ind1.className = 'w-10 h-10 rounded-full flex items-center justify-center text-gray-500';
-      ind2.className = 'w-10 h-10 rounded-full bg-gradient-to-tr from-[#909CFC] to-[#EE9DCB] text-white flex items-center justify-center shadow-md';
+      ind1.className = 'w-10 h-10 rounded-full flex items-center justify-center text-gray-500 transition-transform duration-300';
+      ind2.className = 'w-10 h-10 rounded-full bg-gradient-to-tr from-[#909CFC] to-[#EE9DCB] text-white flex items-center justify-center shadow-md transition-transform duration-300 scale-105';
+      renderRegularityChart();
     }
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -322,20 +329,20 @@ if (typeof tailwind !== 'undefined') {
     // 3. Randare Grilă Calendar (Pagina 1)
     renderCalendar();
 
-    // 4. Pilule Verticale Proporționale (Evidențiere activă)
+    // 4. Pilule Verticale Proporționale (Evidențiere activă + Soft Glow #3)
     ['Menstrual', 'Follicular', 'Fertile', 'Luteal'].forEach(pName => {
       const pill = document.getElementById(`pill${pName}`);
       if (pill) {
         const inner = pill.firstElementChild;
         if (currentCycleDay && currentPhase.id === pName.toLowerCase()) {
-          inner.classList.add('ring-4', 'ring-[#909CFC]', 'ring-offset-2', 'shadow-md', '-translate-y-1');
+          inner.classList.add('ring-4', 'ring-[#909CFC]', 'ring-offset-2', 'shadow-md', '-translate-y-1', 'animate-soft-glow');
         } else {
-          inner.classList.remove('ring-4', 'ring-[#909CFC]', 'ring-offset-2', 'shadow-md', '-translate-y-1');
+          inner.classList.remove('ring-4', 'ring-[#909CFC]', 'ring-offset-2', 'shadow-md', '-translate-y-1', 'animate-soft-glow');
         }
       }
     });
 
-    // 5. Carduri de Faze (Evidențiere activă)
+    // 5. Carduri de Faze (Evidențiere activă + Soft Glow #3)
     const phaseCards = {
       menstrual: document.getElementById('cardPhaseMenstrual'),
       follicular: document.getElementById('cardPhaseFollicular'),
@@ -347,9 +354,9 @@ if (typeof tailwind !== 'undefined') {
       const card = phaseCards[key];
       if (card) {
         if (currentCycleDay && currentPhase.id === key) {
-          card.classList.add('ring-2', 'ring-[#909CFC]', 'ring-offset-2', 'shadow-md', 'scale-[1.01]');
+          card.classList.add('ring-2', 'ring-[#909CFC]', 'ring-offset-2', 'shadow-md', 'scale-[1.01]', 'animate-soft-glow');
         } else {
-          card.classList.remove('ring-2', 'ring-[#909CFC]', 'ring-offset-2', 'shadow-md', 'scale-[1.01]');
+          card.classList.remove('ring-2', 'ring-[#909CFC]', 'ring-offset-2', 'shadow-md', 'scale-[1.01]', 'animate-soft-glow');
         }
       }
     });
@@ -603,9 +610,10 @@ if (typeof tailwind !== 'undefined') {
       const maxDaysHoriz = 36;
       const ref28Pct = Math.round((28 / maxDaysHoriz) * 100);
 
-      chartItems.slice().reverse().forEach((item) => {
+      chartItems.slice().reverse().forEach((item, idx) => {
         const info = getStatusColorInfo(item);
         const widthPct = Math.min(100, Math.max(25, Math.round((item.days / maxDaysHoriz) * 100)));
+        const delayMs = idx * 80;
 
         const rowCard = document.createElement('div');
         rowCard.className = 'rounded-xl bg-gray-50/90 border border-gray-100 p-2.5 shadow-2xs';
@@ -622,7 +630,7 @@ if (typeof tailwind !== 'undefined') {
           <div class="relative h-4 w-full rounded-full bg-gray-200/75 overflow-hidden">
             <!-- Marcaj vertical la 28 zile -->
             <div class="absolute top-0 bottom-0 border-l-2 border-dashed border-purple-600/70 z-20" style="left: ${ref28Pct}%" title="Referință 28 zile"></div>
-            <div class="h-full rounded-full transition-all duration-500 ${info.bgClass}" style="width: ${widthPct}%"></div>
+            <div class="h-full rounded-full animate-bar-grow ${info.bgClass}" style="width: ${widthPct}%; animation-delay: ${delayMs}ms;"></div>
           </div>
           <div class="flex items-center justify-between text-[9px] font-semibold text-gray-400 mt-1 px-0.5">
             <span>Ziua 1</span>
@@ -680,12 +688,13 @@ if (typeof tailwind !== 'undefined') {
       const y26 = dayToY(26);
       const y28 = dayToY(28);
 
-      const nodesSvg = coords.map(({ x, y, pt }) => {
+      const nodesSvg = coords.map(({ x, y, pt }, idx) => {
         const info = getStatusColorInfo(pt);
         const labelTop = pt.isBaseline ? 'Standard 28z' : (pt.isEstimated ? `${pt.days}z (est.)` : `${pt.days}z`);
         const labelBottom = pt.isBaseline ? 'Referință' : `${pt.fromLabel}→${pt.toLabel}`;
+        const delayMs = 180 + idx * 120;
         return `
-          <g>
+          <g class="animate-node-pop" style="animation-delay: ${delayMs}ms;">
             <circle cx="${x}" cy="${y}" r="8" fill="${info.hex}" fill-opacity="0.22" />
             <circle cx="${x}" cy="${y}" r="4.5" fill="${info.hex}" stroke="#FFFFFF" stroke-width="2" />
             <text x="${x}" y="${y - 10}" text-anchor="middle" font-size="9.5" font-weight="800" fill="#1F2937">${labelTop}</text>
@@ -714,9 +723,9 @@ if (typeof tailwind !== 'undefined') {
           <line x1="${padLeft - 6}" y1="${y28}" x2="${svgW - padRight + 6}" y2="${y28}" stroke="#7C3AED" stroke-width="1.2" stroke-dasharray="4 3" stroke-opacity="0.65" />
           <text x="2" y="${y28 + 3}" font-size="8.5" font-weight="700" fill="#7C3AED">28z</text>
 
-          <!-- Arie și curbă -->
-          <path d="${areaD}" fill="url(#regLineAreaGrad)" />
-          <path d="${pathD}" fill="none" stroke="url(#regLineStrokeGrad)" stroke-width="3" stroke-linecap="round" />
+          <!-- Arie și curbă cu animație de desenare SVG (#4) -->
+          <path d="${areaD}" fill="url(#regLineAreaGrad)" class="animate-svg-area" />
+          <path d="${pathD}" fill="none" stroke="url(#regLineStrokeGrad)" stroke-width="3" stroke-linecap="round" class="animate-svg-draw" />
 
           <!-- Puncte pentru fiecare ciclu -->
           ${nodesSvg}
@@ -747,17 +756,19 @@ if (typeof tailwind !== 'undefined') {
             <path d="M 64 106 A 76 76 0 0 1 216 106" fill="none" stroke="#F1F5F9" stroke-width="16" stroke-linecap="round" />
 
             <!-- Zonă Mai Scurt (<26z: stânga, Galben/Amber) -->
-            <path d="M 64 106 A 76 76 0 0 1 108 37" fill="none" stroke="#FBBF24" stroke-width="14" stroke-linecap="round" stroke-opacity="0.85" />
+            <path d="M 64 106 A 76 76 0 0 1 108 37" fill="none" stroke="#FBBF24" stroke-width="14" stroke-linecap="round" stroke-opacity="0.85" class="animate-svg-draw" />
 
             <!-- Zonă Regulată (26z - 30z: centru-sus, Verde Smarald) -->
-            <path d="M 114 35 A 76 76 0 0 1 166 35" fill="none" stroke="#10B981" stroke-width="16" stroke-linecap="round" />
+            <path d="M 114 35 A 76 76 0 0 1 166 35" fill="none" stroke="#10B981" stroke-width="16" stroke-linecap="round" class="animate-svg-draw" />
 
             <!-- Zonă Mai Lung (>30z: dreapta, Roz/Roșu) -->
-            <path d="M 172 37 A 76 76 0 0 1 216 106" fill="none" stroke="#FB7185" stroke-width="14" stroke-linecap="round" stroke-opacity="0.85" />
+            <path d="M 172 37 A 76 76 0 0 1 216 106" fill="none" stroke="#FB7185" stroke-width="14" stroke-linecap="round" stroke-opacity="0.85" class="animate-svg-draw" />
 
             <!-- Indicator Punct pe Arc -->
-            <circle cx="${dotX}" cy="${dotY}" r="11" fill="${info.hex}" fill-opacity="0.25" />
-            <circle cx="${dotX}" cy="${dotY}" r="7" fill="${info.hex}" stroke="#FFFFFF" stroke-width="2.5" />
+            <g class="animate-node-pop" style="animation-delay: 260ms;">
+              <circle cx="${dotX}" cy="${dotY}" r="11" fill="${info.hex}" fill-opacity="0.25" />
+              <circle cx="${dotX}" cy="${dotY}" r="7" fill="${info.hex}" stroke="#FFFFFF" stroke-width="2.5" />
+            </g>
 
             <!-- Etichete repere -->
             <text x="48" y="120" text-anchor="middle" font-size="9" font-weight="700" fill="#D97706">18z</text>
@@ -890,6 +901,10 @@ if (typeof tailwind !== 'undefined') {
       dayBtn.appendChild(daySpan);
 
       if (cycleDay) {
+        // Efect de cascadă / val pentru cele 28 de zile ale ciclului (#2)
+        dayBtn.classList.add('animate-day-cascade');
+        dayBtn.style.animationDelay = `${(cycleDay - 1) * 14}ms`;
+
         if (cycleDay >= 1 && cycleDay <= 5) {
           // Zilele 1–5: Menstruație (Galben #FCEF9F)
           dayBtn.style.backgroundColor = '#FCEF9F';
@@ -897,9 +912,9 @@ if (typeof tailwind !== 'undefined') {
           dayBtn.classList.add('shadow-xs');
 
           if (cycleDay === 1) {
-            dayBtn.classList.add('ring-2', 'ring-offset-1', 'ring-[#F59E0B]', 'font-bold');
+            dayBtn.classList.add('ring-2', 'ring-offset-1', 'ring-[#F59E0B]', 'font-bold', 'animate-soft-glow');
             const dropDot = document.createElement('span');
-            dropDot.className = 'absolute top-0.5 right-1 text-[9px] pointer-events-none select-none';
+            dropDot.className = 'absolute top-0.5 right-1 text-[9px] pointer-events-none select-none animate-icon-float';
             dropDot.textContent = '🩸';
             dayBtn.appendChild(dropDot);
           }
@@ -914,7 +929,8 @@ if (typeof tailwind !== 'undefined') {
           dayBtn.classList.add('shadow-xs', 'font-bold');
 
           const babyDot = document.createElement('span');
-          babyDot.className = 'absolute top-0 right-0.5 text-[9px] leading-none pointer-events-none select-none';
+          babyDot.className = 'absolute top-0 right-0.5 text-[9px] leading-none pointer-events-none select-none animate-icon-float';
+          babyDot.style.animationDelay = `${(cycleDay - 9) * 120}ms`;
           babyDot.textContent = '👶';
           dayBtn.appendChild(babyDot);
         } else {
