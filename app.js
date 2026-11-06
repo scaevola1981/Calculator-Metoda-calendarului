@@ -1230,21 +1230,28 @@ if (typeof tailwind !== 'undefined') {
     // Buton Refresh Aplicație (Header Pagina 1, Header Pagina 2 & NavBar)
     let pendingRemoteSignature = null;
 
-    const performHardRefresh = () => {
+    const performHardRefresh = async () => {
       if (pendingRemoteSignature) {
         localStorage.setItem('auracycle_accepted_signature', pendingRemoteSignature);
       }
       saveState();
-      const reloadWithCacheBuster = () => {
-        const url = new URL(window.location.href);
-        url.searchParams.set('v', Date.now().toString());
-        window.location.replace(url.toString());
-      };
-      if ('caches' in window) {
-        caches.keys().then(names => Promise.all(names.map(n => caches.delete(n)))).finally(reloadWithCacheBuster);
-      } else {
-        reloadWithCacheBuster();
+      try {
+        await Promise.allSettled([
+          fetch('index.html', { cache: 'reload' }),
+          fetch('app.js', { cache: 'reload' }),
+          fetch('public/logo.png', { cache: 'reload' }),
+          fetch('version.json', { cache: 'reload' })
+        ]);
+        if ('caches' in window) {
+          const names = await caches.keys();
+          await Promise.all(names.map(n => caches.delete(n)));
+        }
+      } catch (_) {
+        // continuăm cu reload-ul
       }
+      const url = new URL(window.location.href);
+      url.searchParams.set('v', Date.now().toString());
+      window.location.replace(url.toString());
     };
 
     document.querySelectorAll('.btnRefreshTrigger').forEach(btn => {
